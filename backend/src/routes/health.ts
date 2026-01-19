@@ -1,11 +1,18 @@
 import { Router, Request, Response } from 'express';
 import prisma from '../lib/prisma';
 
+interface SeedStats {
+  categories: number;
+  products: number;
+  variants: number;
+  users: number;
+}
+
 const router = Router();
 
 router.get('/seed-status', async (req: Request, res: Response) => {
   try {
-    const stats: any[] = await prisma.$queryRaw`
+    const stats = await prisma.$queryRaw<SeedStats[]>`
       SELECT 
         (SELECT COUNT(*)::int FROM categories) as categories,
         (SELECT COUNT(*)::int FROM products) as products,

@@ -10,7 +10,7 @@ import prisma from './lib/prisma';
 import redis from './lib/redis';
 import stripe from './lib/stripe';
 import logger from './lib/logger';
-const promBundle = require('express-prom-bundle');
+import promBundle from 'express-prom-bundle';
 
 export const createApp = () => {
   const app = express();
