@@ -11,7 +11,7 @@ import { useCheckoutConfirm } from "../../hooks/useCheckout"
 import { useState } from "react"
 
 // TODO: Replace with env variable
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 interface PaymentStepProps {
   reservationId: string

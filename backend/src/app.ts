@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import checkoutRoutes from './routes/checkout.routes';
+import healthRoutes from './routes/health';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 import prisma from './lib/prisma';
@@ -91,6 +92,7 @@ export const createApp = () => {
   });
 
   app.use('/api/checkout', checkoutRoutes);
+  app.use('/api', healthRoutes);
 
   return app;
 };

@@ -8,10 +8,12 @@ services:
     restart: always
     environment:
       POSTGRES_USER: ${DB_USER:-pawpaw}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-pawpaw_secret}
-      POSTGRES_DB: ${DB_NAME:-pawpaw_db}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pawpaw_dev}
+      POSTGRES_DB: ${DB_NAME:-pawpaw}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./database/migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/001_initial_schema.sql
     networks:
       - pawpaw_net
     healthcheck:
@@ -49,10 +51,12 @@ services:
     environment:
       NODE_ENV: development
       PORT: 4000
-      DATABASE_URL: postgres://${DB_USER:-pawpaw}:${DB_PASSWORD:-pawpaw_secret}@postgres:5432/${DB_NAME:-pawpaw_db}
+      DATABASE_URL: postgres://${DB_USER:-pawpaw}:${DB_PASSWORD:-pawpaw_dev}@postgres:5432/${DB_NAME:-pawpaw}
       REDIS_URL: redis://redis:6379
       JWT_SECRET: ${JWT_SECRET:-dev_secret}
+      STRIPE_PUBLISHABLE_KEY: ${STRIPE_PUBLISHABLE_KEY}
       STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -72,9 +76,12 @@ services:
     build:
       context: ./frontend
       target: builder
+      args:
+        VITE_STRIPE_PUBLISHABLE_KEY: ${VITE_STRIPE_PUBLISHABLE_KEY}
     container_name: pawpaw_frontend
     environment:
       VITE_API_URL: http://localhost:4000
+      VITE_STRIPE_PUBLISHABLE_KEY: ${VITE_STRIPE_PUBLISHABLE_KEY}
     volumes:
       - ./frontend:/app
       - /app/node_modules

@@ -3,6 +3,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
+RUN apk add --no-cache openssl openssl-dev python3 make g++
 COPY package*.json ./
 COPY prisma ./prisma/
 
@@ -26,6 +27,9 @@ WORKDIR /app
 # Create non-root user
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 expressjs
+
+# Install OpenSSL for production
+RUN apk add --no-cache openssl
 
 # Install production dependencies only
 COPY package*.json ./
