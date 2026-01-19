@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const checkout_controller_1 = require("../controllers/checkout.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const idempotency_middleware_1 = require("../middleware/idempotency.middleware");
+const router = (0, express_1.Router)();
+const controller = new checkout_controller_1.CheckoutController();
+router.post('/reserve', auth_middleware_1.authMiddleware, idempotency_middleware_1.idempotencyMiddleware, controller.reserve);
+router.post('/confirm', auth_middleware_1.authMiddleware, idempotency_middleware_1.idempotencyMiddleware, controller.confirm);
+router.post('/cancel', auth_middleware_1.authMiddleware, controller.cancel);
+router.get('/status/:reservation_id', auth_middleware_1.authMiddleware, controller.status);
+exports.default = router;

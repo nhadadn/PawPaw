@@ -1,0 +1,213 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CheckoutService = void 0;
+const uuid_1 = require("uuid");
+const prisma_1 = __importDefault(require("../lib/prisma"));
+const redis_1 = __importDefault(require("../lib/redis"));
+const stripe_1 = __importDefault(require("../lib/stripe"));
+const checkout_repository_1 = require("../repositories/checkout.repository");
+const errors_1 = require("../utils/errors");
+const logger_1 = __importDefault(require("../lib/logger"));
+const RESERVATION_TTL = 600; // 10 minutes
+class CheckoutService {
+    constructor() {
+        this.repo = new checkout_repository_1.CheckoutRepository();
+    }
+    async reserve(userId, items) {
+        // 1. Check active reservation
+        const existingReservation = await redis_1.default.get(`reservation:user:${userId}`);
+        if (existingReservation) {
+            throw new errors_1.CheckoutError('ACTIVE_RESERVATION_EXISTS', 'User already has an active reservation');
+        }
+        // 2. Transaction
+        const reservationItems = [];
+        let totalCents = 0;
+        let currency = 'MXN';
+        try {
+            await prisma_1.default.$transaction(async (tx) => {
+                for (const item of items) {
+                    const variant = await this.repo.findVariantWithLock(tx, item.product_variant_id);
+                    if (!variant) {
+                        throw new errors_1.CheckoutError('PRODUCT_VARIANT_NOT_FOUND', `Variant ${item.product_variant_id} not found`);
+                    }
+                    // Calculate available stock
+                    const availableStock = variant.initial_stock - variant.reserved_stock;
+                    if (availableStock < item.quantity) {
+                        throw new errors_1.CheckoutError('INSUFFICIENT_STOCK', `Insufficient stock for variant ${item.product_variant_id}`);
+                    }
+                    // Check Max Per Customer
+                    if (variant.max_per_customer) {
+                        const pastPurchases = await this.repo.countUserPastPurchases(tx, userId, variant.product_id);
+                        if (pastPurchases + item.quantity > variant.max_per_customer) {
+                            throw new errors_1.CheckoutError('MAX_PER_CUSTOMER_EXCEEDED', `Limit of ${variant.max_per_customer} exceeded for product`);
+                        }
+                    }
+                    // Reserve
+                    await this.repo.updateReservedStock(tx, Number(variant.id), item.quantity);
+                    // Log
+                    await this.repo.createInventoryLog(tx, {
+                        productVariantId: Number(variant.id),
+                        changeType: 'reserve',
+                        quantityDiff: item.quantity
+                    });
+                    reservationItems.push({
+                        product_variant_id: Number(variant.id),
+                        quantity: item.quantity,
+                        unit_price_cents: variant.price_cents,
+                        total_price_cents: variant.price_cents * item.quantity,
+                        currency: variant.currency
+                    });
+                    totalCents += variant.price_cents * item.quantity;
+                    currency = variant.currency;
+                }
+            });
+        }
+        catch (error) {
+            if (error instanceof errors_1.CheckoutError)
+                throw error;
+            logger_1.default.error('Reservation transaction failed', { error });
+            const message = error instanceof Error ? error.message : 'Unknown error';
+            throw new Error('Transaction failed: ' + message);
+        }
+        // 3. Redis
+        const reservationId = (0, uuid_1.v4)();
+        const expiresAt = new Date(Date.now() + RESERVATION_TTL * 1000);
+        const payload = {
+            reservation_id: reservationId,
+            user_id: userId,
+            items: reservationItems,
+            total_cents: totalCents,
+            currency,
+            expires_at: expiresAt.toISOString()
+        };
+        await redis_1.default.multi()
+            .set(`reservation:${reservationId}`, JSON.stringify(payload), 'EX', RESERVATION_TTL)
+            .set(`reservation:user:${userId}`, reservationId, 'EX', RESERVATION_TTL)
+            .zadd('reservations:by_expiry', expiresAt.getTime(), reservationId)
+            .exec();
+        logger_1.default.info('Reservation created', { reservation_id: reservationId, user_id: userId });
+        return payload;
+    }
+    async confirm(userId, reservationId, paymentIntentId) {
+        // 1. Get Reservation
+        const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
+        if (!rawReservation) {
+            throw new errors_1.CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found or expired');
+        }
+        const reservation = JSON.parse(rawReservation);
+        if (reservation.user_id !== userId) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+        }
+        // 2. Validate Stripe
+        let paymentIntent;
+        try {
+            paymentIntent = await stripe_1.default.paymentIntents.retrieve(paymentIntentId);
+        }
+        catch (e) {
+            throw new errors_1.CheckoutError('PAYMENT_FAILED', 'Invalid Payment Intent');
+        }
+        if (paymentIntent.status !== 'succeeded') {
+            // If payment failed, we release stock as per prompt requirements
+            await this.cancel(userId, reservationId);
+            throw new errors_1.CheckoutError('PAYMENT_FAILED', `Payment status is ${paymentIntent.status}`);
+        }
+        // 3. Create Order & Update Stock
+        let order;
+        try {
+            order = await prisma_1.default.$transaction(async (tx) => {
+                // Create Order
+                const newOrder = await this.repo.createOrder(tx, {
+                    userId,
+                    totalCents: reservation.total_cents,
+                    currency: reservation.currency,
+                    stripePaymentIntentId: paymentIntentId,
+                    items: reservation.items.map((i) => ({
+                        productVariantId: i.product_variant_id,
+                        quantity: i.quantity,
+                        unitPriceCents: i.unit_price_cents,
+                        totalPriceCents: i.total_price_cents
+                    }))
+                });
+                // Update Stock (Permanent deduction)
+                for (const item of reservation.items) {
+                    await this.repo.confirmStockDeduction(tx, item.product_variant_id, item.quantity);
+                    await this.repo.createInventoryLog(tx, {
+                        productVariantId: item.product_variant_id,
+                        changeType: 'checkout_confirmed',
+                        quantityDiff: -item.quantity,
+                        orderId: Number(newOrder.id)
+                    });
+                }
+                return newOrder;
+            });
+        }
+        catch (e) {
+            logger_1.default.error('Order creation failed', { error: e });
+            throw new Error('Order creation failed');
+        }
+        // 4. Cleanup Redis
+        await redis_1.default.del(`reservation:${reservationId}`);
+        await redis_1.default.del(`reservation:user:${userId}`);
+        await redis_1.default.zrem('reservations:by_expiry', reservationId);
+        return {
+            order_id: order.id.toString(),
+            order_number: order.id.toString(), // Assuming ID is order number for now
+            status: 'paid',
+            total_cents: order.totalCents
+        };
+    }
+    async cancel(userId, reservationId) {
+        const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
+        if (!rawReservation) {
+            throw new errors_1.CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found');
+        }
+        const reservation = JSON.parse(rawReservation);
+        if (userId && reservation.user_id !== userId) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Mismatch');
+        }
+        // Release stock
+        await prisma_1.default.$transaction(async (tx) => {
+            for (const item of reservation.items) {
+                await this.repo.releaseStock(tx, item.product_variant_id, item.quantity);
+                await this.repo.createInventoryLog(tx, {
+                    productVariantId: item.product_variant_id,
+                    changeType: 'release',
+                    quantityDiff: item.quantity
+                });
+            }
+        });
+        // Cleanup
+        await redis_1.default.del(`reservation:${reservationId}`);
+        await redis_1.default.del(`reservation:user:${reservation.user_id}`);
+        await redis_1.default.zrem('reservations:by_expiry', reservationId);
+        return { status: 'cancelled', stock_released: true };
+    }
+    async getStatus(userId, reservationId) {
+        const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
+        if (!rawReservation) {
+            throw new errors_1.CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found');
+        }
+        const reservation = JSON.parse(rawReservation);
+        if (reservation.user_id !== userId) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+        }
+        const expiresAt = new Date(reservation.expires_at);
+        const now = new Date();
+        if (expiresAt.getTime() <= now.getTime()) {
+            throw new errors_1.CheckoutError('RESERVATION_EXPIRED', 'Reservation expired');
+        }
+        return {
+            reservation_id: reservation.reservation_id,
+            user_id: reservation.user_id,
+            items: reservation.items,
+            total_cents: reservation.total_cents,
+            currency: reservation.currency,
+            expires_at: reservation.expires_at,
+            status: 'reserved'
+        };
+    }
+}
+exports.CheckoutService = CheckoutService;
