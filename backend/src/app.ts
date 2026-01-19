@@ -24,13 +24,11 @@ export const createApp = () => {
     includePath: true,
     includeStatusCode: true,
     includeUp: true,
-    customLabels: { project_name: 'pawpaw-backend' },
-    promClient: {
-      collectDefaultMetrics: {
-      }
-    }
+    customLabels: { project_name: 'pawpaw', project_version: '1.0.0' },
+    metricsPath: '/metrics',
+    autoregister: false,
   });
-  app.use(metricsMiddleware);
+  app.use(metricsMiddleware as any);
 
   app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req: Request, res: Response) => {
     const signature = req.headers['stripe-signature'];
