@@ -17,12 +17,21 @@ class CheckoutService {
         this.repo = new checkout_repository_1.CheckoutRepository();
     }
     async reserve(userId, items) {
-        // 1. Check active reservation
         const existingReservation = await redis_1.default.get(`reservation:user:${userId}`);
         if (existingReservation) {
             throw new errors_1.CheckoutError('ACTIVE_RESERVATION_EXISTS', 'User already has an active reservation');
         }
-        // 2. Transaction
+        if (!Array.isArray(items) || items.length === 0) {
+            throw new errors_1.CheckoutError('INVALID_REQUEST', 'Items must be a non-empty array');
+        }
+        for (const item of items) {
+            if (!item || typeof item.product_variant_id !== 'number' || !Number.isInteger(item.product_variant_id) || item.product_variant_id <= 0) {
+                throw new errors_1.CheckoutError('INVALID_REQUEST', 'product_variant_id must be a positive integer');
+            }
+            if (typeof item.quantity !== 'number' || !Number.isInteger(item.quantity) || item.quantity <= 0) {
+                throw new errors_1.CheckoutError('INVALID_REQUEST', 'quantity must be a positive integer');
+            }
+        }
         const reservationItems = [];
         let totalCents = 0;
         let currency = 'MXN';

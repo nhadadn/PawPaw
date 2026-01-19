@@ -90,6 +90,7 @@ class CheckoutController {
         }
         if (error instanceof errors_1.CheckoutError) {
             const statusMap = {
+                'INVALID_REQUEST': 400,
                 'ACTIVE_RESERVATION_EXISTS': 409,
                 'INSUFFICIENT_STOCK': 409,
                 'MAX_PER_CUSTOMER_EXCEEDED': 409,

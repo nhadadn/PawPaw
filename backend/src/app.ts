@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import checkoutRoutes from './routes/checkout.routes';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './config/swagger';
 import prisma from './lib/prisma';
 import redis from './lib/redis';
 import stripe from './lib/stripe';
@@ -60,6 +62,8 @@ export const createApp = () => {
 
   app.use(express.json());
   app.use(morgan('dev'));
+
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
   app.get('/health', async (req: Request, res: Response) => {
     try {

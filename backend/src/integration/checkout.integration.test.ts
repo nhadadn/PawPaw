@@ -2,6 +2,7 @@ import request from 'supertest';
 import jwt from 'jsonwebtoken';
 import { createApp } from '../app';
 import redis from '../lib/redis';
+import stripe from '../lib/stripe';
 
 jest.mock('../lib/prisma', () => ({
   $transaction: jest.fn((callback: (tx: { $queryRaw: jest.Mock }) => unknown) => callback({ $queryRaw: jest.fn() })),
@@ -10,7 +11,7 @@ jest.mock('../lib/prisma', () => ({
 
 jest.mock('../lib/redis', () => ({
   get: jest.fn(),
-  set: jest.fn(),
+  set: jest.fn(() => ({ catch: jest.fn() })),
   del: jest.fn(),
   zadd: jest.fn(),
   zrem: jest.fn(),
@@ -96,6 +97,160 @@ describe('Checkout routes', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.status).toBe('reserved');
+  });
+
+  it('POST /api/checkout/reserve returns 409 on insufficient stock', async () => {
+    (redis.get as jest.Mock).mockResolvedValue(null);
+
+    const redisMultiMock = {
+      set: jest.fn().mockReturnThis(),
+      zadd: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValue('OK')
+    };
+    (redis.multi as jest.Mock).mockReturnValue(redisMultiMock);
+
+    const response = await request(app)
+      .post('/api/checkout/reserve')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        items: [{ product_variant_id: 1, quantity: 20 }]
+      });
+
+    expect(response.status).toBe(409);
+    expect(response.body.error).toBe('INSUFFICIENT_STOCK');
+  });
+
+  it('POST /api/checkout/confirm returns 402 when payment fails', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440001';
+    const reservationPayload = {
+      reservation_id: reservationId,
+      user_id: 'user-123',
+      items: [{ product_variant_id: 1, quantity: 1, unit_price_cents: 1000, total_price_cents: 1000 }],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 600000).toISOString()
+    };
+
+    (redis.get as jest.Mock)
+      .mockResolvedValueOnce(JSON.stringify(reservationPayload))
+      .mockResolvedValueOnce(JSON.stringify(reservationPayload));
+
+    (stripe.paymentIntents.retrieve as jest.Mock).mockResolvedValue({ status: 'requires_payment_method' });
+
+    const response = await request(app)
+      .post('/api/checkout/confirm')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        reservation_id: reservationId,
+        payment_intent_id: 'pi_test_failed'
+      });
+
+    expect(response.status).toBe(402);
+    expect(response.body.error).toBe('PAYMENT_FAILED');
+  });
+
+  it('POST /api/checkout/cancel returns 200 on success', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440002';
+    const reservationPayload = {
+      reservation_id: reservationId,
+      user_id: 'user-123',
+      items: [{ product_variant_id: 1, quantity: 1 }],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 600000).toISOString()
+    };
+
+    (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
+
+    const response = await request(app)
+      .post('/api/checkout/cancel')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ reservation_id: reservationId });
+
+    expect(response.status).toBe(200);
+    expect(response.body.status).toBe('cancelled');
+    expect(response.body.stock_released).toBe(true);
+  });
+
+  it('POST /api/checkout/cancel returns 403 when user does not own reservation', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440003';
+    const reservationPayload = {
+      reservation_id: reservationId,
+      user_id: 'another-user',
+      items: [{ product_variant_id: 1, quantity: 1 }],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 600000).toISOString()
+    };
+
+    (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
+
+    const response = await request(app)
+      .post('/api/checkout/cancel')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ reservation_id: reservationId });
+
+    expect(response.status).toBe(403);
+    expect(response.body.error).toBe('RESERVATION_USER_MISMATCH');
+  });
+
+  it('POST /api/checkout/cancel returns 404 when reservation not found', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440004';
+
+    (redis.get as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app)
+      .post('/api/checkout/cancel')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ reservation_id: reservationId });
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe('RESERVATION_NOT_FOUND');
+  });
+
+  it('respects Idempotency-Key and returns same response for repeated calls', async () => {
+    const idempotencyKey = 'idem-123';
+
+    (redis.get as jest.Mock)
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce(null);
+
+    const redisMultiMock = {
+      set: jest.fn().mockReturnThis(),
+      zadd: jest.fn().mockReturnThis(),
+      exec: jest.fn().mockResolvedValue('OK')
+    };
+    (redis.multi as jest.Mock).mockReturnValue(redisMultiMock);
+
+    const firstResponse = await request(app)
+      .post('/api/checkout/reserve')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Idempotency-Key', idempotencyKey)
+      .send({
+        items: [{ product_variant_id: 1, quantity: 1 }]
+      });
+
+    expect(firstResponse.status).toBe(201);
+
+    const cachedPayload = JSON.stringify({
+      statusCode: firstResponse.status,
+      body: firstResponse.body,
+      headers: {}
+    });
+
+    (redis.get as jest.Mock).mockResolvedValueOnce(cachedPayload);
+
+    const secondResponse = await request(app)
+      .post('/api/checkout/reserve')
+      .set('Authorization', `Bearer ${token}`)
+      .set('Idempotency-Key', idempotencyKey)
+      .send({
+        items: [{ product_variant_id: 1, quantity: 1 }]
+      });
+
+    expect(secondResponse.status).toBe(firstResponse.status);
+    expect(secondResponse.body).toEqual(firstResponse.body);
+    expect((redis.multi as jest.Mock)).toHaveBeenCalledTimes(1);
   });
 });
 

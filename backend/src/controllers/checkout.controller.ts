@@ -102,6 +102,7 @@ export class CheckoutController {
 
     if (error instanceof CheckoutError) {
       const statusMap: Record<string, number> = {
+        'INVALID_REQUEST': 400,
         'ACTIVE_RESERVATION_EXISTS': 409,
         'INSUFFICIENT_STOCK': 409,
         'MAX_PER_CUSTOMER_EXCEEDED': 409,

@@ -1,11 +1,12 @@
 import { createApp } from './app';
 import logger from './lib/logger';
-import './scheduler/reservationExpiry';
+import { startExpirationScheduler } from './scheduler/expiration.scheduler';
 
 const port = process.env.PORT || 4000;
 
 const startServer = async () => {
   const app = createApp();
+  startExpirationScheduler();
   
   app.listen(port, () => {
     logger.info(`Server running on port ${port}`);

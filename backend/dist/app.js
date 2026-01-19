@@ -9,6 +9,8 @@ const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const checkout_routes_1 = __importDefault(require("./routes/checkout.routes"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const swagger_1 = require("./config/swagger");
 const prisma_1 = __importDefault(require("./lib/prisma"));
 const redis_1 = __importDefault(require("./lib/redis"));
 const stripe_1 = __importDefault(require("./lib/stripe"));
@@ -57,6 +59,7 @@ const createApp = () => {
     });
     app.use(express_1.default.json());
     app.use((0, morgan_1.default)('dev'));
+    app.use('/api/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     app.get('/health', async (req, res) => {
         try {
             await prisma_1.default.$queryRaw `SELECT 1`;

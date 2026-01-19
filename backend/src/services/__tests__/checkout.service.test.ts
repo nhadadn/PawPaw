@@ -1,5 +1,6 @@
 import { CheckoutService } from '../checkout.service';
 import redis from '../../lib/redis';
+import stripe from '../../lib/stripe';
 
 // Define mock repository instance
 const mockRepoInstance = {
@@ -100,6 +101,54 @@ describe('CheckoutService', () => {
       mockRepoInstance.findVariantWithLock.mockResolvedValue(mockVariant);
       
       await expect(service.reserve(userId, items)).rejects.toThrow('Insufficient stock');
+    });
+
+    it('should reject when items array is empty', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(null);
+
+      await expect(service.reserve(userId, [])).rejects.toThrow('Items must be a non-empty array');
+    });
+
+    it('should reject when quantity is not positive', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(null);
+
+      const invalidItems = [{ product_variant_id: 1, quantity: 0 }];
+
+      await expect(service.reserve(userId, invalidItems)).rejects.toThrow('quantity must be a positive integer');
+    });
+
+    it('should reject when product_variant_id is not positive', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(null);
+
+      const invalidItems = [{ product_variant_id: 0, quantity: 1 }];
+
+      await expect(service.reserve(userId, invalidItems)).rejects.toThrow('product_variant_id must be a positive integer');
+    });
+
+    it('should throw error when variant is not found', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(null);
+
+      mockRepoInstance.findVariantWithLock.mockResolvedValue(null);
+
+      await expect(service.reserve(userId, items)).rejects.toThrow('Variant 1 not found');
+    });
+
+    it('should enforce MAX_PER_CUSTOMER limit', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(null);
+
+      const mockVariant = {
+        id: BigInt(1),
+        initial_stock: 10,
+        reserved_stock: 0,
+        price_cents: 1000,
+        currency: 'MXN',
+        max_per_customer: 3
+      };
+
+      mockRepoInstance.findVariantWithLock.mockResolvedValue(mockVariant);
+      mockRepoInstance.countUserPastPurchases.mockResolvedValue(2);
+
+      await expect(service.reserve(userId, items)).rejects.toThrow('Limit of 3 exceeded for product');
     });
   });
 
