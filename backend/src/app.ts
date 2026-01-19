@@ -9,12 +9,27 @@ import prisma from './lib/prisma';
 import redis from './lib/redis';
 import stripe from './lib/stripe';
 import logger from './lib/logger';
+const promBundle = require('express-prom-bundle');
 
 export const createApp = () => {
   const app = express();
 
   app.use(helmet());
   app.use(cors());
+
+  // Prometheus metrics middleware
+  const metricsMiddleware = promBundle({
+    includeMethod: true,
+    includePath: true,
+    includeStatusCode: true,
+    includeUp: true,
+    customLabels: { project_name: 'pawpaw-backend' },
+    promClient: {
+      collectDefaultMetrics: {
+      }
+    }
+  });
+  app.use(metricsMiddleware);
 
   app.post('/api/webhooks/stripe', express.raw({ type: 'application/json' }), async (req: Request, res: Response) => {
     const signature = req.headers['stripe-signature'];
