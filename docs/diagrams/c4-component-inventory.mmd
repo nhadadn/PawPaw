@@ -1,0 +1,12 @@
+```mermaid
+graph TD
+  Admin((Admin))
+  Directus[Directus CMS]
+  Postgres[(PostgreSQL)]
+  InventoryLogs[INVENTORY_LOGS]
+
+  Admin -->|Actualiza stock producto| Directus
+  Directus -->|UPDATE PRODUCT_VARIANTS| Postgres
+  Postgres -->|Trigger trg_inventory_update| InventoryLogs
+```
+

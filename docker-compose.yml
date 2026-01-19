@@ -1,0 +1,168 @@
+services:
+  # --- DATA LAYER ---
+  postgres:
+    image: postgres:15-alpine
+    container_name: pawpaw_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-pawpaw}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pawpaw_secret}
+      POSTGRES_DB: ${DB_NAME:-pawpaw_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pawpaw_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-pawpaw}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: pawpaw_redis
+    restart: always
+    command: ["redis-server", "--maxmemory-policy", "allkeys-lru"]
+    networks:
+      - pawpaw_net
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- CONTENT & ADMIN LAYER ---
+  directus:
+    image: directus/directus:10.10
+    container_name: pawpaw_cms
+    restart: always
+    ports:
+      - "8055:8055"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      KEY: ${DIRECTUS_KEY:-pawpaw_urban_show_secure_key_2026}
+      SECRET: ${DIRECTUS_SECRET:-pawpaw_urban_show_secret_value_2026}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@pawpaw.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      DB_CLIENT: 'pg'
+      DB_HOST: 'postgres'
+      DB_PORT: '5432'
+      DB_DATABASE: ${DB_NAME:-pawpaw_db}
+      DB_USER: ${DB_USER:-pawpaw}
+      DB_PASSWORD: ${DB_PASSWORD:-pawpaw_secret}
+      CACHE_ENABLED: 'true'
+      CACHE_STORE: 'redis'
+      CACHE_REDIS: 'redis://redis:6379'
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: 'true'
+    networks:
+      - pawpaw_net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8055/server/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  # --- API LAYER ---
+  # PostgREST will be configured to serve the public API directly from DB
+  postgrest:
+    image: postgrest/postgrest
+    container_name: pawpaw_api_layer
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://${DB_USER:-pawpaw}:${DB_PASSWORD:-pawpaw_secret}@postgres:5432/${DB_NAME:-pawpaw_db}
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: web_anon
+      PGRST_JWT_SECRET: ${DIRECTUS_SECRET:-pawpaw_urban_show_secret_value_2026} # Sharing secret with Directus for unified Auth
+    networks:
+      - pawpaw_net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: pawpaw_backend
+    restart: always
+    environment:
+      DATABASE_URL: postgres://${DB_USER:-pawpaw}:${DB_PASSWORD:-pawpaw_secret}@postgres:5432/${DB_NAME:-pawpaw_db}
+      REDIS_URL: redis://redis:6379
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-sk_test}
+      STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY:-pk_test}
+      JWT_SECRET: ${JWT_SECRET:-jwt_secret}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - pawpaw_net
+
+  pg_backup:
+    image: prodrigestivill/postgres-backup-local
+    container_name: pawpaw_pg_backup
+    restart: always
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: ${DB_NAME:-pawpaw_db}
+      POSTGRES_USER: ${DB_USER:-pawpaw}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pawpaw_secret}
+      SCHEDULE: "0 0 1 * *"
+      BACKUP_KEEP_DAYS: 365
+      BACKUP_DIR: /backups
+    volumes:
+      - postgres_backups:/backups
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pawpaw_net
+
+  # --- BUSINESS LOGIC LAYER ---
+  # Placeholder for the Node.js Express service
+  # backend:
+  #   build: ./backend
+  #   container_name: pawpaw_backend
+  #   ports: 
+  #     - "4000:4000"
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - pawpaw_net
+
+  # --- FRONTEND LAYER ---
+  # Placeholder for the React Frontend
+  # frontend:
+  #   build: ./frontend
+  #   container_name: pawpaw_frontend
+  #   ports:
+  #     - "5173:5173"
+  #   networks:
+  #     - pawpaw_net
+
+volumes:
+  postgres_data:
+  redis_data:
+  postgres_backups:
+
+networks:
+  pawpaw_net:
+    driver: bridge

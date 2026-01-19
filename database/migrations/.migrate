@@ -1,0 +1,9 @@
+{
+  "databaseUrl": {
+    "env": "DATABASE_URL"
+  },
+  "dir": "database/migrations",
+  "migrationFileExtension": "sql",
+  "schema": "public"
+}
+

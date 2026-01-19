@@ -1,0 +1,90 @@
+```mermaid
+sequenceDiagram
+  participant U as Usuario
+  participant F as Frontend React
+  participant B as Backend Checkout
+  participant DB as PostgreSQL
+  participant R as Redis
+  participant S as Stripe
+  participant W as Stripe Webhook
+  participant C as Cronjob Expiración
+
+  %% Paso 1: Reserva de stock
+  U->>F: Confirma carrito y va a checkout
+  F->>B: POST /api/checkout/reserve (items)
+  B->>DB: BEGIN
+  B->>DB: SELECT ... FROM PRODUCT_VARIANTS FOR UPDATE
+  DB-->>B: Stocks actuales
+  B->>DB: UPDATE PRODUCT_VARIANTS SET reserved_stock = reserved_stock + qty
+  B->>DB: INSERT INVENTORY_LOGS (change_type = "reserve")
+  B->>DB: COMMIT
+  B->>R: SET reservation:{id} (TTL 600s)
+  B->>R: SET reservation:user:{user_id} (TTL 600s)
+  B->>R: ZADD reservations:by_expiry (expires_at_ms, reservation_id)
+  B-->>F: 201 { reservation_id, expires_at, total }
+  F-->>U: Muestra resumen con tiempo restante
+
+  %% Paso 2: Pago en Stripe (cliente)
+  U->>S: Introduce tarjeta y confirma pago
+  S-->>U: Resultado UI (exitoso o fallo)
+
+  %% Paso 3: Confirmación de checkout en backend
+  U->>F: Confirma pedido (después de pago exitoso)
+  F->>B: POST /api/checkout/confirm (reservation_id, payment_intent_id)
+  B->>R: GET reservation:{id}
+  alt Reserva expirada o no existe
+    B-->>F: 404 RESERVATION_EXPIRED/RESERVATION_NOT_FOUND
+  else Reserva válida
+    B->>S: Retrieve PaymentIntent(payment_intent_id)
+    alt PaymentIntent no sugiere éxito
+      B->>DB: BEGIN
+      B->>DB: UPDATE PRODUCT_VARIANTS SET reserved_stock = reserved_stock - qty
+      B->>DB: INSERT INVENTORY_LOGS (change_type = "release_expired", quantity_diff = qty)
+      B->>DB: COMMIT
+      B->>R: DEL reservation:{id}, reservation:user:{user_id}
+      B->>R: ZREM reservations:by_expiry reservation_id
+      B-->>F: 402 PAYMENT_FAILED (stock_released = true)
+    else PaymentIntent exitoso
+      B->>DB: BEGIN
+      B->>DB: INSERT INTO ORDERS ...
+      B->>DB: INSERT INTO ORDER_ITEMS ...
+      B->>DB: UPDATE PRODUCT_VARIANTS SET reserved_stock = reserved_stock - qty
+      B->>DB: INSERT INVENTORY_LOGS (change_type = "checkout_confirmed", quantity_diff = qty)
+      B->>DB: COMMIT
+      B->>R: DEL reservation:{id}, reservation:user:{user_id}
+      B->>R: ZREM reservations:by_expiry reservation_id
+      B-->>F: 200 { order_id, order_number, status="paid" }
+    end
+  end
+
+  %% Paso 4: Webhook Stripe (confirmación asíncrona)
+  S-->>W: POST /stripe/webhook (payment_intent.succeeded/failed)
+  W->>B: Procesa evento Stripe
+  alt Evento success duplica una confirmación ya hecha
+    B-->>W: 200 OK (idempotente)
+  else Evento success primero
+    B->>DB: Actualiza estado de ORDER si es necesario
+    B-->>W: 200 OK
+  end
+
+  %% Paso 5: Cronjob de expiración
+  loop Cada 60 segundos
+    C->>R: ZRANGEBYSCORE reservations:by_expiry (0, now)
+    alt Hay reservas expiradas
+      C->>R: GET reservation:{id}
+      alt Key existe
+        C->>DB: BEGIN
+        C->>DB: UPDATE PRODUCT_VARIANTS SET reserved_stock = reserved_stock - qty
+        C->>DB: INSERT INVENTORY_LOGS (change_type = "release_expired", quantity_diff = qty)
+        C->>DB: COMMIT
+        C->>R: DEL reservation:{id}, reservation:user:{user_id}
+        C->>R: ZREM reservations:by_expiry reservation_id
+      else Key no existe
+        C->>R: ZREM reservations:by_expiry reservation_id
+      end
+    else No hay reservas expiradas
+      C-->>C: No-op
+    end
+  end
+```
+

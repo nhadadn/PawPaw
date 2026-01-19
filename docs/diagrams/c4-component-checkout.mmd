@@ -1,0 +1,19 @@
+```mermaid
+graph TD
+  User((Cliente))
+  ReactApp[React Checkout Page]
+  NodeService[Node.js Checkout Service]
+  Postgres[(PostgreSQL)]
+  Redis[(Redis)]
+  Stripe[Stripe API]
+
+  User --> ReactApp
+  ReactApp -->|Inicia checkout, envía carrito| NodeService
+  NodeService -->|Verifica stock en PRODUCT_VARIANTS| Postgres
+  NodeService -->|Reserva stock con TTL| Redis
+  NodeService -->|Crea Payment Intent| Stripe
+  Stripe -->|Resultado pago| NodeService
+  NodeService -->|Confirma pedido, ajusta stock| Postgres
+  NodeService -->|Limpia reserva en Redis| Redis
+```
+

@@ -1,0 +1,24 @@
+```mermaid
+sequenceDiagram
+  participant U as Usuario
+  participant F as Frontend React
+  participant B as Node Checkout
+  participant R as Redis
+  participant DB as PostgreSQL
+  participant S as Stripe
+
+  U->>F: Confirma checkout
+  F->>B: POST /checkout (carrito)
+  B->>DB: Verifica stock PRODUCT_VARIANTS
+  B->>R: Reserva stock con TTL 10 min
+  B->>S: Crea Payment Intent
+  S-->>B: Payment Intent client_secret
+  B-->>F: client_secret
+  F->>S: Confirma pago
+  S-->>F: Pago exitoso
+  F->>B: Notifica confirmación
+  B->>DB: Crea ORDER y ORDER_ITEMS
+  B->>DB: Ajusta stock definitivo
+  B->>R: Libera reserva
+```
+
