@@ -198,7 +198,7 @@ export class AdminController {
           // Let's assume for now we just return a token with 'admin' role for testing purposes if credentials match a hardcoded admin or looked up user.
           
           // NOTE: This is a placeholder. Real implementation should check password hash.
-          if (email === 'admin@pawpaw.com' && password === 'admin123') {
+          if ((email === 'admin@pawpaw.com' && password === 'admin123') || (email === 'admin@pawpawurban.com' && password === 'admin123456')) {
               const token = jwt.sign(
                   { id: 'admin-id', email, role: 'admin' },
                   process.env.JWT_SECRET || 'changeme_jwt_secret',

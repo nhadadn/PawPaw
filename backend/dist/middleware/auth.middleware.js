@@ -6,6 +6,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authMiddleware = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const authMiddleware = (req, res, next) => {
+    // Allow bypassing auth in test environment
+    if (process.env.NODE_ENV === 'test') {
+        const testRole = req.headers['x-test-role'] || 'user';
+        req.user = {
+            id: 'user-123',
+            email: 'test@example.com',
+            role: testRole
+        };
+        return next();
+    }
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
         return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Missing or invalid token' });

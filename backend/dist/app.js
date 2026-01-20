@@ -7,18 +7,36 @@ exports.createApp = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
+// Handle BigInt serialization
+BigInt.prototype.toJSON = function () {
+    return this.toString();
+};
 const morgan_1 = __importDefault(require("morgan"));
 const checkout_routes_1 = __importDefault(require("./routes/checkout.routes"));
+const admin_routes_1 = require("./routes/admin.routes");
+const health_1 = __importDefault(require("./routes/health"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("./config/swagger");
 const prisma_1 = __importDefault(require("./lib/prisma"));
 const redis_1 = __importDefault(require("./lib/redis"));
 const stripe_1 = __importDefault(require("./lib/stripe"));
 const logger_1 = __importDefault(require("./lib/logger"));
+const express_prom_bundle_1 = __importDefault(require("express-prom-bundle"));
 const createApp = () => {
     const app = (0, express_1.default)();
     app.use((0, helmet_1.default)());
     app.use((0, cors_1.default)());
+    // Prometheus metrics middleware
+    const metricsMiddleware = (0, express_prom_bundle_1.default)({
+        includeMethod: true,
+        includePath: true,
+        includeStatusCode: true,
+        includeUp: true,
+        customLabels: { project_name: 'pawpaw', project_version: '1.0.0' },
+        metricsPath: '/metrics',
+        autoregister: false,
+    });
+    app.use(metricsMiddleware);
     app.post('/api/webhooks/stripe', express_1.default.raw({ type: 'application/json' }), async (req, res) => {
         const signature = req.headers['stripe-signature'];
         const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -71,6 +89,8 @@ const createApp = () => {
         }
     });
     app.use('/api/checkout', checkout_routes_1.default);
+    app.use('/api/admin', admin_routes_1.adminRoutes);
+    app.use('/api', health_1.default);
     return app;
 };
 exports.createApp = createApp;
