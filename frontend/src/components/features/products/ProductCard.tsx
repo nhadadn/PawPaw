@@ -22,7 +22,7 @@ export function ProductCard({ product }: ProductCardProps) {
         />
         {/* Quick Add Button - Mobile/Desktop hover */}
         <div className="absolute bottom-4 right-4 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-           <Button size="icon" className="rounded-full shadow-md">
+           <Button size="icon" className="rounded-full shadow-md" aria-label={`Añadir ${product.name} al carrito`}>
              <ShoppingBag className="w-4 h-4" />
            </Button>
         </div>
@@ -36,15 +36,15 @@ export function ProductCard({ product }: ProductCardProps) {
               {product.category}
             </Badge>
             <Link to={`/products/${product.id}`}>
-              <h3 className="font-bold text-neutral-800 line-clamp-1 hover:text-primary transition-colors">
-                {product.name}
-              </h3>
+              <h3 className="font-bold text-neutral-900 line-clamp-1 hover:text-primary transition-colors">
+          {product.name}
+        </h3>
             </Link>
           </div>
         </div>
         
         <div className="flex justify-between items-end">
-          <p className="font-bold text-lg text-primary">
+          <p className="font-bold text-lg text-orange-700">
             {formatCurrency(product.price)}
           </p>
         </div>

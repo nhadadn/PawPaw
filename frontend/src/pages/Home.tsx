@@ -42,30 +42,30 @@ export function Home() {
       <section className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex items-center gap-4 p-6 bg-neutral-50 rounded-xl border border-neutral-100">
-            <div className="p-3 bg-primary/10 rounded-full text-primary">
+            <div className="p-3 bg-primary/10 rounded-full text-orange-700">
               <Truck className="w-6 h-6" />
             </div>
             <div>
               <h3 className="font-bold text-lg">Envío Rápido</h3>
-              <p className="text-neutral-500 text-sm">Envíos a todo el país en 24/48h.</p>
+              <p className="text-neutral-600 text-sm">Envíos a todo el país en 24/48h.</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-6 bg-neutral-50 rounded-xl border border-neutral-100">
-            <div className="p-3 bg-primary/10 rounded-full text-primary">
+            <div className="p-3 bg-primary/10 rounded-full text-orange-700">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
               <h3 className="font-bold text-lg">Pago Seguro</h3>
-              <p className="text-neutral-500 text-sm">Transacciones encriptadas y protegidas.</p>
+              <p className="text-neutral-600 text-sm">Transacciones encriptadas y protegidas.</p>
             </div>
           </div>
           <div className="flex items-center gap-4 p-6 bg-neutral-50 rounded-xl border border-neutral-100">
-            <div className="p-3 bg-primary/10 rounded-full text-primary">
+            <div className="p-3 bg-primary/10 rounded-full text-orange-700">
               <Clock className="w-6 h-6" />
             </div>
             <div>
               <h3 className="font-bold text-lg">Reserva Real</h3>
-              <p className="text-neutral-500 text-sm">Tu stock asegurado por 10 minutos.</p>
+              <p className="text-neutral-600 text-sm">Tu stock asegurado por 10 minutos.</p>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ export function Home() {
         <div className="flex justify-between items-end">
           <div className="space-y-2">
             <h2 className="text-3xl font-display font-bold">Destacados</h2>
-            <p className="text-neutral-500">Lo más vendido de la semana.</p>
+            <p className="text-neutral-600">Lo más vendido de la semana.</p>
           </div>
           <Link to="/products">
             <Button variant="ghost" rightIcon={<ArrowRight className="w-4 h-4" />}>
@@ -93,7 +93,7 @@ export function Home() {
         <div className="container mx-auto px-4 space-y-12">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-display font-bold">Categorías</h2>
-            <p className="text-neutral-400">Explora por tipo de producto.</p>
+            <p className="text-neutral-300">Explora por tipo de producto.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -130,13 +130,14 @@ export function Home() {
       {/* Newsletter */}
       <section className="container mx-auto px-4">
         <div className="bg-primary/5 rounded-3xl p-8 md:p-16 text-center space-y-6">
-          <ShoppingBag className="w-12 h-12 mx-auto text-primary" />
+          <ShoppingBag className="w-12 h-12 mx-auto text-orange-700" />
           <h2 className="text-3xl font-display font-bold">Únete al Club Paw Paw</h2>
-          <p className="text-neutral-600 max-w-lg mx-auto">
+          <p className="text-neutral-700 max-w-lg mx-auto">
             Recibe notificaciones sobre nuevos lanzamientos, ofertas exclusivas y eventos.
           </p>
           <div className="max-w-md mx-auto flex gap-2">
             <input 
+              aria-label="Correo electrónico"
               type="email" 
               placeholder="Ingresa tu correo" 
               className="flex-1 px-4 py-3 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-primary/20"

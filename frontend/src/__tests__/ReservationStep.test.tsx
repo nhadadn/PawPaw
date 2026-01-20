@@ -42,10 +42,11 @@ describe('ReservationStep', () => {
     (useCartStore as unknown as Mock).mockReturnValue({
       items: [
         {
-          productVariantId: '123',
+          id: '123',
+          name: 'Test Product',
+          price: 1000,
+          image: 'img.jpg',
           quantity: 2,
-          product: { name: 'Test Product', price: 1000, imageUrl: 'img.jpg' },
-          variant: { color: 'Red', size: 'M' },
         },
       ],
       totalPrice: () => 2000,

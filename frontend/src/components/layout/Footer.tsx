@@ -15,9 +15,9 @@ export function Footer() {
               Estilo urbano para la nueva generación. Ropa, accesorios y cultura en un solo lugar.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Twitter className="w-5 h-5" /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Facebook className="w-5 h-5" /></a>
+              <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
+              <a href="#" aria-label="Twitter" className="hover:text-primary transition-colors"><Twitter className="w-5 h-5" /></a>
+              <a href="#" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook className="w-5 h-5" /></a>
             </div>
           </div>
 
@@ -51,17 +51,18 @@ export function Footer() {
             </p>
             <form className="flex gap-2">
               <Input 
+                aria-label="Correo electrónico"
                 placeholder="tu@email.com" 
                 className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500"
               />
-              <Button size="icon" variant="primary">
+              <Button size="icon" variant="primary" aria-label="Suscribirse">
                 <Mail className="w-4 h-4" />
               </Button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-neutral-800 pt-8 text-center text-sm text-neutral-500">
+        <div className="border-t border-neutral-800 pt-8 text-center text-sm text-neutral-400">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

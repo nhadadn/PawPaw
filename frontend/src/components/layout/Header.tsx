@@ -28,7 +28,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link to="/" className="text-2xl font-display font-bold text-primary shrink-0">
+        <Link to="/" className="text-2xl font-display font-bold text-orange-700 shrink-0">
           PAW PAW
         </Link>
 
@@ -49,7 +49,7 @@ export function Header() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary">
+            <button type="submit" aria-label="Buscar" className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-primary">
               <Search className="w-4 h-4" />
             </button>
           </form>
@@ -58,7 +58,7 @@ export function Header() {
         {/* Actions */}
         <div className="flex items-center gap-2 md:gap-4">
           {/* Cart */}
-          <Link to="/cart" className="relative p-2 hover:bg-neutral-100 rounded-full transition-colors">
+          <Link to="/cart" aria-label="Carrito de compras" className="relative p-2 hover:bg-neutral-100 rounded-full transition-colors">
             <ShoppingCart className="w-6 h-6 text-neutral-700" />
             {totalItems() > 0 && (
               <span className="absolute -top-1 -right-1 bg-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
@@ -86,7 +86,7 @@ export function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden p-2 text-neutral-700" onClick={toggleMenu}>
+          <button className="md:hidden p-2 text-neutral-700" onClick={toggleMenu} aria-label="Menú principal">
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>

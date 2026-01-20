@@ -15,10 +15,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", isLoading, leftIcon, rightIcon, children, disabled, ...props }, ref) => {
     
     const variants = {
-      primary: "bg-primary text-white hover:bg-primary-hover shadow-md hover:shadow-lg",
+      primary: "bg-primary text-neutral-900 hover:bg-primary-hover shadow-md hover:shadow-lg",
       secondary: "bg-secondary text-white hover:bg-secondary-hover shadow-md hover:shadow-lg",
       accent: "bg-accent text-white hover:bg-accent-hover shadow-md",
-      outline: "border-2 border-primary text-primary hover:bg-primary/10",
+      outline: "border-2 border-orange-700 text-orange-700 hover:bg-primary/10",
       ghost: "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900",
       danger: "bg-error text-white hover:bg-error-light/90",
       success: "bg-success text-white hover:bg-success/90",
