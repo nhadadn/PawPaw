@@ -3,7 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     baseUrl: "http://localhost:5175",
-    setupNodeEvents(on, _config) {
+    setupNodeEvents(on, config) {
       on('task', {
         log(message: string) {
           console.log(message);
@@ -14,6 +14,7 @@ export default defineConfig({
           return null;
         },
       });
+      return config;
     },
     viewportWidth: 1280,
     viewportHeight: 720,

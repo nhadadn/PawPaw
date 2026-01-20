@@ -1,0 +1,86 @@
+import { useState } from 'react';
+import type { AdminCategory } from '../../types/admin';
+import { Input } from '../ui/Input';
+import { Button } from '../ui/Button';
+
+interface CategoryFormProps {
+  initialData?: AdminCategory;
+  onSubmit: (data: FormData) => Promise<void>;
+  onCancel: () => void;
+  isLoading?: boolean;
+}
+
+export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: CategoryFormProps) {
+  const [formData, setFormData] = useState({
+    name: initialData?.name || '',
+    description: initialData?.description || '',
+  });
+  const [file, setFile] = useState<File | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('description', formData.description);
+    if (file) {
+      data.append('image', file);
+    }
+    await onSubmit(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <Input
+        label="Nombre"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+      
+      <div className="w-full space-y-2">
+        <label className="text-sm font-bold text-neutral-700 block">
+            Descripción
+        </label>
+        <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="flex min-h-[80px] w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base ring-offset-white placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary"
+        />
+      </div>
+
+      <div className="w-full space-y-2">
+        <label className="text-sm font-bold text-neutral-700 block">
+            Imagen
+        </label>
+        <input
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*"
+            className="flex w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base"
+        />
+      </div>
+
+      <div className="flex justify-end space-x-2 pt-4">
+        <Button type="button" variant="outline" onClick={onCancel} disabled={isLoading}>
+          Cancelar
+        </Button>
+        <Button type="submit" disabled={isLoading}>
+          {isLoading ? 'Guardando...' : (initialData ? 'Actualizar' : 'Crear')}
+        </Button>
+      </div>
+    </form>
+  );
+}
