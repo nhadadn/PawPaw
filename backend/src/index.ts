@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { createApp } from './app';
 import logger from './lib/logger';
 import { startExpirationScheduler } from './scheduler/expiration.scheduler';
