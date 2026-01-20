@@ -1,8 +1,15 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+
+// Handle BigInt serialization
+(BigInt.prototype as any).toJSON = function () {
+  return this.toString();
+};
+
 import morgan from 'morgan';
 import checkoutRoutes from './routes/checkout.routes';
+import { adminRoutes } from './routes/admin.routes';
 import healthRoutes from './routes/health';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
@@ -90,6 +97,7 @@ export const createApp = () => {
   });
 
   app.use('/api/checkout', checkoutRoutes);
+  app.use('/api/admin', adminRoutes);
   app.use('/api', healthRoutes);
 
   return app;

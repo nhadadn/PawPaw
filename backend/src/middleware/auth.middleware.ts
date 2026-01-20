@@ -4,10 +4,11 @@ import jwt from 'jsonwebtoken';
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   // Allow bypassing auth in test environment
   if (process.env.NODE_ENV === 'test') {
+    const testRole = req.headers['x-test-role'] as string || 'user';
     req.user = {
       id: 'user-123',
       email: 'test@example.com',
-      role: 'user'
+      role: testRole
     };
     return next();
   }
