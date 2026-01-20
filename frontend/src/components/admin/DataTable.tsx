@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Edit, Trash2 } from 'lucide-react';
 import { Spinner } from '../ui/Spinner';
 
@@ -76,7 +76,7 @@ export function DataTable<T>({
                     {col.cell
                       ? col.cell(item)
                       : col.accessorKey
-                      ? item[col.accessorKey]
+                      ? (item[col.accessorKey] as any)
                       : null}
                   </td>
                 ))}

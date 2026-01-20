@@ -180,7 +180,7 @@ export function AdminUsers() {
                         </Button>
                         <Button 
                             size="sm" 
-                            variant={selectedUser.status === 'inactive' ? 'destructive' : 'outline'}
+                            variant={selectedUser.status === 'inactive' ? 'danger' : 'outline'}
                             onClick={() => handleStatusChange('inactive')}
                             disabled={isLoading}
                         >
