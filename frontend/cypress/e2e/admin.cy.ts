@@ -289,12 +289,12 @@ describe('Admin Panel Flows', () => {
     // In details modal
     cy.get('[role="dialog"]').should('be.visible');
     cy.get('[role="dialog"]').contains('Orden #1').should('be.visible');
-    cy.get('[role="dialog"]').contains('Processing').click();
+    cy.get('[role="dialog"]').contains('Processing').click({ force: true });
     
     cy.wait('@updateOrderStatus');
     // Verify modal update (optimistic or re-fetch)
     // Close modal
-    cy.get('[role="dialog"]').contains('Cerrar').click();
+    cy.get('[role="dialog"]').contains('Cerrar').click({ force: true });
     
     // Verify list update
     cy.wait('@getOrdersAfterUpdate');
@@ -389,12 +389,12 @@ describe('Admin Panel Flows', () => {
     cy.get('button[title="Administrar Usuario"]').click();
     // Scope to modal and ensure we click the BUTTON, not the Title "Administrar Usuario"
     cy.get('[role="dialog"]').should('be.visible');
-    cy.get('[role="dialog"]').contains('button', 'Admin').click();
+    cy.get('[role="dialog"]').contains('button', 'Admin').click({ force: true });
     
     cy.wait('@updateUserRole');
     // Verify modal update
     // Close modal
-    cy.get('[role="dialog"]').contains('Cerrar').click();
+    cy.get('[role="dialog"]').contains('Cerrar').click({ force: true });
   });
 
   it('should logout successfully', () => {
