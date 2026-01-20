@@ -9,9 +9,13 @@ export function useAdminAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const login = useAdminStore((state) => state.login);
+  const logout = useAdminStore((state) => state.logout);
   const navigate = useNavigate();
 
   const signIn = async (email: string, password: string) => {
+    // Clear any previous session
+    logout();
+    
     setIsLoading(true);
     setError(null);
 

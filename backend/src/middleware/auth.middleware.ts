@@ -15,6 +15,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
+    console.log('[AuthMiddleware] Missing or invalid auth header:', authHeader);
     return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Missing or invalid token' });
   }
 
@@ -35,6 +36,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     };
     next();
   } catch (err) {
+    console.log('[AuthMiddleware] Token verification failed:', err);
     return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Invalid token' });
   }
 };

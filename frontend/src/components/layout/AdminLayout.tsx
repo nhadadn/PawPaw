@@ -1,10 +1,25 @@
-import { Outlet, Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Outlet, Navigate, useNavigate } from 'react-router-dom';
 import { AdminSidebar } from '../admin/AdminSidebar';
 import { AdminHeader } from '../admin/AdminHeader';
 import { useAdminStore } from '../../stores/adminStore';
 
 export function AdminLayout() {
   const isAuthenticated = useAdminStore((state) => state.isAuthenticated);
+  const logout = useAdminStore((state) => state.logout);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      logout();
+      navigate('/admin/login');
+    };
+
+    window.addEventListener('admin:unauthorized', handleUnauthorized);
+    return () => {
+      window.removeEventListener('admin:unauthorized', handleUnauthorized);
+    };
+  }, [logout, navigate]);
 
   if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;

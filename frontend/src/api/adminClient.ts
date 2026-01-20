@@ -14,7 +14,10 @@ adminClient.interceptors.request.use(
     const token = useAdminStore.getState().token;
 
     if (token) {
+      console.log('[AdminClient] Adding token to header:', token.substring(0, 10) + '...');
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      console.warn('[AdminClient] No token found in store');
     }
 
     return config;
