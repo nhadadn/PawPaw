@@ -6,7 +6,7 @@ import 'cypress-axe'
 // require('./commands')
 
 // Ignorar errores de Stripe en E2E tests
-Cypress.on('uncaught:exception', (err, runnable) => {
+Cypress.on('uncaught:exception', (err) => {
   // Ignorar errores de inicialización de Stripe
   if (
     err.message.includes('Cannot read properties of undefined') ||
