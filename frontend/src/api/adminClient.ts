@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAdminStore } from '../stores/adminStore';
 
 const adminClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000',
@@ -10,16 +11,7 @@ const adminClient = axios.create({
 // Request interceptor
 adminClient.interceptors.request.use(
   (config) => {
-    let token = null;
-    try {
-      const storage = localStorage.getItem('admin-storage');
-      if (storage) {
-        const parsed = JSON.parse(storage);
-        token = parsed.state?.token;
-      }
-    } catch {
-      // Ignore error
-    }
+    const token = useAdminStore.getState().token;
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

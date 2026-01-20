@@ -21,7 +21,18 @@ export function useAdminAuth() {
         { email, password }
       );
 
-      const { token, user } = response.data;
+      const { token, user: responseUser } = response.data;
+      
+      // Handle case where user is not returned by backend (mocked backend behavior)
+      const user: AdminUser = responseUser || {
+        id: 'admin-id',
+        name: 'Admin User',
+        email: email,
+        role: 'admin',
+        status: 'active',
+        createdAt: new Date().toISOString()
+      };
+
       login(token, user);
       navigate('/admin/dashboard');
     } catch (err: unknown) {
