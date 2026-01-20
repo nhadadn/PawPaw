@@ -76,7 +76,7 @@ export function DataTable<T>({
                     {col.cell
                       ? col.cell(item)
                       : col.accessorKey
-                      ? (item[col.accessorKey] as any)
+                      ? (item[col.accessorKey] as unknown as ReactNode)
                       : null}
                   </td>
                 ))}
