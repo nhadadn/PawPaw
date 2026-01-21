@@ -49,6 +49,7 @@ class MockRedis {
     return item ? item.value : null;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async set(key: string, value: string, ...args: any[]) {
     let expiresAt: number | undefined;
 
