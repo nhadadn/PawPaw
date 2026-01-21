@@ -44,7 +44,6 @@ export class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError && this.state.error) {
       // Si el fallback es un elemento válido de React, le inyectamos las props
       if (React.isValidElement(this.props.fallback)) {
-        // @ts-expect-error - Inyectamos props adicionales dinámicamente
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return React.cloneElement(this.props.fallback as React.ReactElement<any>, {
           error: this.state.error,

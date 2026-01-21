@@ -167,7 +167,24 @@ export class CheckoutService {
 
     // Validate ownership
     if (userId && reservation.user_id !== userId) {
-      throw new CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+      // Allow claiming if it's a guest reservation
+      if (reservation.user_id.startsWith('guest:')) {
+        logger.info(`User ${userId} claiming guest reservation ${reservation.user_id}`);
+        reservation.user_id = userId;
+
+        // If PI already exists, we need to persist the claim NOW because we might return early
+        if (reservation.payment_intent_id && reservation.client_secret) {
+          const ttl = Math.max(
+            0,
+            Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000)
+          );
+          if (ttl > 0) {
+            await redis.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
+          }
+        }
+      } else {
+        throw new CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+      }
     }
 
     if (!userId && !reservation.user_id.startsWith('guest:')) {

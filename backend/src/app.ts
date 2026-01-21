@@ -1,11 +1,11 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import path from 'path';
 import Stripe from 'stripe';
 import { WebhookService } from './services/webhook.service';
 import { errorHandler } from './middleware/errorHandler.middleware';
-import { NotFoundError } from './utils/errors';
+import { notFoundHandler } from './middleware/notFound.middleware';
 
 // Handle BigInt serialization
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -137,9 +137,7 @@ export const createApp = () => {
   app.use('/api', healthRoutes);
 
   // 404 Handler
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    next(new NotFoundError(`Route ${req.method} ${req.originalUrl} not found`));
-  });
+  app.use(notFoundHandler);
 
   // Global Error Handler
   app.use(errorHandler);

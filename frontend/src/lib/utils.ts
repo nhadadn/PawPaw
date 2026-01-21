@@ -23,9 +23,7 @@ export function formatDate(dateString: string) {
 export const getEnvVar = (key: string) => {
   // Try import.meta.env (Vite)
   try {
-    // @ts-expect-error: import.meta might be undefined in Jest/Node
     if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
-      // @ts-expect-error: import.meta might be undefined in Jest/Node
       return import.meta.env[key];
     }
   } catch {
@@ -33,9 +31,7 @@ export const getEnvVar = (key: string) => {
   }
 
   // Fallback to process.env (Node/Jest)
-  // @ts-expect-error: process might be undefined in Vite
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    // @ts-expect-error: process might be undefined in Vite
     return process.env[key];
   }
 
