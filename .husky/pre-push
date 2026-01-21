@@ -1,8 +1,11 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
 echo "Running type checks..."
 # Backend Type Check
 echo "Checking Backend..."
-npm exec --prefix backend -- tsc --noEmit
+(cd backend && npx tsc --noEmit)
 
 # Frontend Type Check
 echo "Checking Frontend..."
-npm exec --prefix frontend -- tsc --noEmit
+(cd frontend && npx tsc --noEmit)
