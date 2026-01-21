@@ -11,14 +11,8 @@ import { formatCurrency, getImageUrl } from '../../lib/utils';
 import { Alert } from '../../components/ui/Alert';
 
 export function AdminProducts() {
-  const {
-    products,
-    isLoading,
-    error,
-    createProduct,
-    updateProduct,
-    deleteProduct,
-  } = useAdminProducts();
+  const { products, isLoading, error, createProduct, updateProduct, deleteProduct } =
+    useAdminProducts();
 
   const { categories } = useAdminCategories();
 
@@ -54,6 +48,7 @@ export function AdminProducts() {
     {
       header: 'Categoría',
       cell: (product) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const cat = product.category as any;
         return typeof cat === 'object' ? cat?.name : cat;
       },
@@ -71,8 +66,8 @@ export function AdminProducts() {
             product.stock > 10
               ? 'bg-green-100 text-green-800'
               : product.stock > 0
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-red-100 text-red-800'
+                ? 'bg-yellow-100 text-yellow-800'
+                : 'bg-red-100 text-red-800'
           }`}
         >
           {product.stock}

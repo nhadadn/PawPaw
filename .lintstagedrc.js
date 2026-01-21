@@ -3,19 +3,26 @@ const path = require('path');
 module.exports = {
   // Backend Configuration
   'backend/**/*.ts': (filenames) => {
-    // We need to run eslint relative to the backend directory or using prefix
-    // Using --prefix allows running the script in the sub-project context
-    // We pass absolute paths, which ESLint should handle
+    // Resolve absolute path to backend's local eslint binary
+    // This ensures we use ESLint 8.x with legacy config support
+    const cwd = process.cwd();
+    const eslintCmd = path.join(cwd, 'backend', 'node_modules', '.bin', 'eslint.cmd');
+    
     return [
-      `npm exec --prefix backend -- eslint --fix ${filenames.map(f => `"${f}"`).join(' ')}`,
+      `"${eslintCmd}" --fix ${filenames.map(f => `"${f}"`).join(' ')}`,
       `prettier --write ${filenames.map(f => `"${f}"`).join(' ')}`
     ];
   },
 
   // Frontend Configuration
   'frontend/**/*.{ts,tsx}': (filenames) => {
+    // Resolve absolute path to frontend's local eslint binary
+    // This ensures we use ESLint 9.x with flat config support
+    const cwd = process.cwd();
+    const eslintCmd = path.join(cwd, 'frontend', 'node_modules', '.bin', 'eslint.cmd');
+    
     return [
-      `npm exec --prefix frontend -- eslint --fix ${filenames.map(f => `"${f}"`).join(' ')}`,
+      `"${eslintCmd}" --fix ${filenames.map(f => `"${f}"`).join(' ')}`,
       `prettier --write ${filenames.map(f => `"${f}"`).join(' ')}`
     ];
   }

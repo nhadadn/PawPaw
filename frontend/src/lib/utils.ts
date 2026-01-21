@@ -1,8 +1,8 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export function formatCurrency(amount: number) {
@@ -23,19 +23,19 @@ export function formatDate(dateString: string) {
 export const getEnvVar = (key: string) => {
   // Try import.meta.env (Vite)
   try {
-    // @ts-ignore
+    // @ts-expect-error: import.meta might be undefined in Jest/Node
     if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[key]) {
-      // @ts-ignore
+      // @ts-expect-error: import.meta might be undefined in Jest/Node
       return import.meta.env[key];
     }
-  } catch (e) {
+  } catch {
     // Ignore error if import.meta is not available
   }
 
   // Fallback to process.env (Node/Jest)
-  // @ts-ignore
+  // @ts-expect-error: process might be undefined in Vite
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    // @ts-ignore
+    // @ts-expect-error: process might be undefined in Vite
     return process.env[key];
   }
 
@@ -45,12 +45,12 @@ export const getEnvVar = (key: string) => {
 export function getImageUrl(path: string | undefined | null) {
   if (!path) return '';
   if (path.startsWith('http') || path.startsWith('data:') || path.startsWith('blob:')) return path;
-  
+
   // Use environment variable for backend URL or fallback
   // If VITE_API_URL includes /api, we strip it to get the base URL
   const apiUrl = getEnvVar('VITE_API_URL') || 'http://localhost:4000';
   const baseUrl = apiUrl.replace(/\/api\/?$/, '');
-  
+
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
   return `${baseUrl}${cleanPath}`;
 }
