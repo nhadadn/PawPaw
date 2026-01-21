@@ -270,5 +270,5 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           working-directory: ./frontend
-          vercel-version: '32.3.0'
+          vercel-version: '50.4.8'
 
