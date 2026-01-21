@@ -58,6 +58,54 @@ router.post('/reserve', optionalAuthMiddleware, idempotencyMiddleware, controlle
 
 /**
  * @swagger
+ * /checkout/create-payment-intent:
+ *   post:
+ *     summary: Create Payment Intent for reservation
+ *     tags: [Checkout]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - reservation_id
+ *             properties:
+ *               reservation_id:
+ *                 type: string
+ *                 format: uuid
+ *     responses:
+ *       200:
+ *         description: Payment Intent created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 client_secret:
+ *                   type: string
+ *                 payment_intent_id:
+ *                   type: string
+ *                 amount:
+ *                   type: number
+ *                 currency:
+ *                   type: string
+ *       400:
+ *         description: Invalid request or mismatch
+ *       404:
+ *         description: Reservation not found
+ */
+router.post(
+  '/create-payment-intent',
+  optionalAuthMiddleware,
+  idempotencyMiddleware,
+  controller.createPaymentIntent
+);
+
+/**
+ * @swagger
  * /checkout/confirm:
  *   post:
  *     summary: Confirm a reservation with payment
@@ -105,4 +153,3 @@ router.post('/cancel', optionalAuthMiddleware, controller.cancel);
 router.get('/status/:reservation_id', optionalAuthMiddleware, controller.status);
 
 export default router;
-

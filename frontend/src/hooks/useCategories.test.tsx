@@ -36,7 +36,8 @@ describe('useCategories', () => {
       { id: '1', name: 'Perros', slug: 'perros' },
       { id: '2', name: 'Gatos', slug: 'gatos' },
     ];
-    // @ts-expect-error
+    // @ts-expect-error: Mocking apiClient.get for test purposes
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (apiClient.get as any).mockResolvedValue({ data: mockCategories });
 
     const { result } = renderHook(() => useCategories(), {
@@ -54,7 +55,8 @@ describe('useCategories', () => {
   });
 
   it('should handle errors', async () => {
-    // @ts-expect-error
+    // @ts-expect-error: Mocking apiClient.get for test purposes
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (apiClient.get as any).mockRejectedValue(new Error('Failed to fetch'));
 
     const { result } = renderHook(() => useCategories(), {
@@ -64,7 +66,7 @@ describe('useCategories', () => {
     await waitFor(() => {
       expect(result.current.isError).toBe(true);
     });
-    
+
     expect(result.current.error).toBeDefined();
   });
 });

@@ -4,11 +4,11 @@ import jwt from 'jsonwebtoken';
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   // Allow bypassing auth in test environment
   if (process.env.NODE_ENV === 'test') {
-    const testRole = req.headers['x-test-role'] as string || 'user';
+    const testRole = (req.headers['x-test-role'] as string) || 'user';
     req.user = {
       id: 'user-123',
       email: 'test@example.com',
-      role: testRole
+      role: testRole,
     };
     return next();
   }
@@ -32,11 +32,11 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     req.user = {
       id: decoded.id || decoded.user_id || decoded.sub || '',
       email: decoded.email || '',
-      role: decoded.role || ''
+      role: decoded.role || '',
     };
     next();
   } catch (err) {
-    console.log('[AuthMiddleware] Token verification failed:', err);
+    logger.warn('[AuthMiddleware] Token verification failed:', err);
     return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Invalid token' });
   }
 };
@@ -60,14 +60,14 @@ export const optionalAuthMiddleware = (req: Request, res: Response, next: NextFu
     req.user = {
       id: decoded.id || decoded.user_id || decoded.sub || '',
       email: decoded.email || '',
-      role: decoded.role || ''
+      role: decoded.role || '',
     };
     next();
   } catch (err) {
-    // If token is invalid, just proceed as anonymous? 
+    // If token is invalid, just proceed as anonymous?
     // Or return 401? Usually better to ignore bad token for optional auth, or return 401.
     // Let's just ignore and treat as anonymous to avoid blocking checkout if token expired.
-    console.log('[OptionalAuthMiddleware] Token verification failed, proceeding as guest:', err);
+    logger.warn('[OptionalAuthMiddleware] Token verification failed, proceeding as guest:', err);
     next();
   }
 };

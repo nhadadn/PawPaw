@@ -12,27 +12,53 @@ class MockPrisma {
           isActive: true,
           category: { name: 'Mock Category' },
           variants: [{ initialStock: 10, reservedStock: 0, id: BigInt(1), productId: BigInt(1) }],
-          images: []
-        }
+          images: [],
+        },
       ];
     },
     findFirst: async () => null,
     findUnique: async () => null,
     count: async () => 1,
     create: async () => ({ id: BigInt(1) }),
-    update: async () => ({ id: BigInt(1) })
+    update: async () => ({ id: BigInt(1) }),
   };
   category = {
     findMany: async () => [],
-    findUnique: async () => null
+    findUnique: async () => null,
+  };
+  webhookEvent = {
+    findUnique: async () => null,
+    create: async () => ({}),
+    update: async () => ({}),
+  };
+  order = {
+    findFirst: async () => null,
+    create: async () => ({ id: BigInt(1), status: 'paid', totalCents: 100 }),
+    update: async () => ({ id: BigInt(1) }),
+  };
+  orderItem = {
+    findMany: async () => [],
+  };
+  productVariant = {
+    update: async () => ({}),
+    findUnique: async () => ({
+      id: BigInt(1),
+      initialStock: 10,
+      reservedStock: 0,
+      priceCents: 1000,
+    }),
+  };
+  inventoryLog = {
+    create: async () => ({}),
   };
   $connect = async () => {};
   $disconnect = async () => {};
   $queryRaw = async () => [1];
+  $transaction = async (callback: any) => callback(this);
 }
 
-const useMock = process.env.NODE_ENV !== 'production'; 
-// In a real scenario we might check for DB connection, but here we force mock if no DB 
+const useMock = process.env.NODE_ENV !== 'production';
+// In a real scenario we might check for DB connection, but here we force mock if no DB
 // or just use mock for this environment.
 // For now, I'll default to MockPrisma to allow the server to run without DB.
 

@@ -6,15 +6,23 @@ import { register } from 'prom-client';
 // Mock dependencies
 jest.mock('../lib/stripe', () => ({
   webhooks: {
-    constructEvent: jest.fn()
-  }
+    constructEvent: jest.fn(),
+  },
 }));
 
 jest.mock('../lib/logger', () => ({
   info: jest.fn(),
   error: jest.fn(),
-  warn: jest.fn()
+  warn: jest.fn(),
 }));
+
+jest.mock('../services/webhook.service', () => {
+  return {
+    WebhookService: jest.fn().mockImplementation(() => ({
+      handleEvent: jest.fn().mockResolvedValue(undefined),
+    })),
+  };
+});
 
 // Mock process.env.STRIPE_WEBHOOK_SECRET
 const originalEnv = process.env;
@@ -35,9 +43,7 @@ describe('Stripe Webhook', () => {
   });
 
   it('POST /api/webhooks/stripe returns 400 if signature is missing', async () => {
-    const response = await request(app)
-      .post('/api/webhooks/stripe')
-      .send({ some: 'data' });
+    const response = await request(app).post('/api/webhooks/stripe').send({ some: 'data' });
 
     expect(response.status).toBe(400);
     expect(response.text).toContain('Missing stripe-signature header');
@@ -60,7 +66,7 @@ describe('Stripe Webhook', () => {
   it('POST /api/webhooks/stripe returns 200 for unhandled event type', async () => {
     const mockEvent = {
       type: 'some.other.event',
-      data: { object: { id: 'evt_123' } }
+      data: { object: { id: 'evt_123' } },
     };
 
     (stripe.webhooks.constructEvent as jest.Mock).mockReturnValue(mockEvent);
@@ -77,7 +83,7 @@ describe('Stripe Webhook', () => {
   it('POST /api/webhooks/stripe returns 200 for payment_intent.succeeded', async () => {
     const mockEvent = {
       type: 'payment_intent.succeeded',
-      data: { object: { id: 'pi_123' } }
+      data: { object: { id: 'pi_123' } },
     };
 
     (stripe.webhooks.constructEvent as jest.Mock).mockReturnValue(mockEvent);

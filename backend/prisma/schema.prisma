@@ -10,11 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  CANCELLED
+}
+
+enum InventoryChangeType {
+  RESERVE
+  RELEASE
+  CHECKOUT_CONFIRMED
+  UPDATE
+  RELEASE_EXPIRED
+}
+
 model User {
   id            String    @id @default(uuid()) @db.Uuid
   email         String    @unique
   passwordHash  String    @map("password_hash")
-  role          String    // 'admin' | 'customer'
+  role          UserRole  @default(CUSTOMER)
   createdAt     DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt     DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
@@ -109,7 +129,7 @@ model Order {
   userId                String?   @map("user_id") @db.Uuid
   guestEmail            String?   @map("guest_email")
   guestName             String?   @map("guest_name")
-  status                String    // 'pending', 'paid', 'shipped', 'cancelled'
+  status                OrderStatus @default(PENDING)
   totalCents            Int       @map("total_cents")
   currency              String    @default("MXN")
   stripePaymentIntentId String?   @map("stripe_payment_intent_id")
@@ -187,7 +207,7 @@ model InventoryLog {
   id               BigInt         @id @default(autoincrement())
   productVariantId BigInt         @map("product_variant_id")
   orderId          BigInt?        @map("order_id")
-  changeType       String         @map("change_type") // 'reserve', 'release', 'checkout_confirmed', 'update', 'release_expired'
+  changeType       InventoryChangeType @map("change_type")
   quantityDiff     Int            @map("quantity_diff")
   createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz
 
@@ -196,4 +216,14 @@ model InventoryLog {
   order            Order?         @relation(fields: [orderId], references: [id])
 
   @@map("inventory_logs")
+}
+
+model WebhookEvent {
+  id          String   @id
+  type        String
+  processedAt DateTime @default(now()) @map("processed_at")
+  status      String   // 'processing', 'processed', 'failed'
+  error       String?
+
+  @@map("webhook_events")
 }

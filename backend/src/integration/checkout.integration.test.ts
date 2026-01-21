@@ -5,8 +5,10 @@ import redis from '../lib/redis';
 import stripe from '../lib/stripe';
 
 jest.mock('../lib/prisma', () => ({
-  $transaction: jest.fn((callback: (tx: { $queryRaw: jest.Mock }) => unknown) => callback({ $queryRaw: jest.fn() })),
-  $queryRaw: jest.fn()
+  $transaction: jest.fn((callback: (tx: { $queryRaw: jest.Mock }) => unknown) =>
+    callback({ $queryRaw: jest.fn() })
+  ),
+  $queryRaw: jest.fn(),
 }));
 
 jest.mock('../lib/redis', () => ({
@@ -15,7 +17,7 @@ jest.mock('../lib/redis', () => ({
   del: jest.fn(),
   zadd: jest.fn(),
   zrem: jest.fn(),
-  multi: jest.fn()
+  multi: jest.fn(),
 }));
 
 jest.mock('../lib/stripe', () => ({
@@ -23,12 +25,12 @@ jest.mock('../lib/stripe', () => ({
     retrieve: jest.fn(),
     create: jest.fn().mockResolvedValue({
       id: 'pi_test_123',
-      client_secret: 'secret_test_123'
-    })
+      client_secret: 'secret_test_123',
+    }),
   },
   webhooks: {
-    constructEvent: jest.fn()
-  }
+    constructEvent: jest.fn(),
+  },
 }));
 
 jest.mock('../repositories/checkout.repository', () => ({
@@ -41,7 +43,7 @@ jest.mock('../repositories/checkout.repository', () => ({
       reserved_stock: 0,
       price_cents: 1000,
       currency: 'MXN',
-      max_per_customer: null
+      max_per_customer: null,
     }),
     updateReservedStock: jest.fn().mockResolvedValue(undefined),
     createInventoryLog: jest.fn().mockResolvedValue(undefined),
@@ -49,8 +51,8 @@ jest.mock('../repositories/checkout.repository', () => ({
     createOrder: jest.fn().mockResolvedValue({ id: BigInt(1), totalCents: 1000 }),
     confirmStockDeduction: jest.fn().mockResolvedValue(undefined),
     releaseStock: jest.fn().mockResolvedValue(undefined),
-    releaseReservedStock: jest.fn().mockResolvedValue(undefined)
-  }))
+    releaseReservedStock: jest.fn().mockResolvedValue(undefined),
+  })),
 }));
 
 describe('Checkout routes', () => {
@@ -67,7 +69,7 @@ describe('Checkout routes', () => {
     const redisMultiMock = {
       set: jest.fn().mockReturnThis(),
       zadd: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValue('OK')
+      exec: jest.fn().mockResolvedValue('OK'),
     };
     (redis.multi as jest.Mock).mockReturnValue(redisMultiMock);
 
@@ -75,7 +77,7 @@ describe('Checkout routes', () => {
       .post('/api/checkout/reserve')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        items: [{ product_variant_id: 1, quantity: 1 }]
+        items: [{ product_variant_id: 1, quantity: 1 }],
       });
 
     expect(response.status).toBe(201);
@@ -91,7 +93,7 @@ describe('Checkout routes', () => {
       items: [],
       total_cents: 1000,
       currency: 'MXN',
-      expires_at: new Date(Date.now() + 600000).toISOString()
+      expires_at: new Date(Date.now() + 600000).toISOString(),
     };
 
     (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
@@ -110,7 +112,7 @@ describe('Checkout routes', () => {
     const redisMultiMock = {
       set: jest.fn().mockReturnThis(),
       zadd: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValue('OK')
+      exec: jest.fn().mockResolvedValue('OK'),
     };
     (redis.multi as jest.Mock).mockReturnValue(redisMultiMock);
 
@@ -118,7 +120,7 @@ describe('Checkout routes', () => {
       .post('/api/checkout/reserve')
       .set('Authorization', `Bearer ${token}`)
       .send({
-        items: [{ product_variant_id: 1, quantity: 20 }]
+        items: [{ product_variant_id: 1, quantity: 20 }],
       });
 
     expect(response.status).toBe(409);
@@ -130,24 +132,28 @@ describe('Checkout routes', () => {
     const reservationPayload = {
       reservation_id: reservationId,
       user_id: 'user-123',
-      items: [{ product_variant_id: 1, quantity: 1, unit_price_cents: 1000, total_price_cents: 1000 }],
+      items: [
+        { product_variant_id: 1, quantity: 1, unit_price_cents: 1000, total_price_cents: 1000 },
+      ],
       total_cents: 1000,
       currency: 'MXN',
-      expires_at: new Date(Date.now() + 600000).toISOString()
+      expires_at: new Date(Date.now() + 600000).toISOString(),
     };
 
     (redis.get as jest.Mock)
       .mockResolvedValueOnce(JSON.stringify(reservationPayload))
       .mockResolvedValueOnce(JSON.stringify(reservationPayload));
 
-    (stripe.paymentIntents.retrieve as jest.Mock).mockResolvedValue({ status: 'requires_payment_method' });
+    (stripe.paymentIntents.retrieve as jest.Mock).mockResolvedValue({
+      status: 'requires_payment_method',
+    });
 
     const response = await request(app)
       .post('/api/checkout/confirm')
       .set('Authorization', `Bearer ${token}`)
       .send({
         reservation_id: reservationId,
-        payment_intent_id: 'pi_test_failed'
+        payment_intent_id: 'pi_test_failed',
       });
 
     expect(response.status).toBe(402);
@@ -162,7 +168,7 @@ describe('Checkout routes', () => {
       items: [{ product_variant_id: 1, quantity: 1 }],
       total_cents: 1000,
       currency: 'MXN',
-      expires_at: new Date(Date.now() + 600000).toISOString()
+      expires_at: new Date(Date.now() + 600000).toISOString(),
     };
 
     (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
@@ -184,7 +190,7 @@ describe('Checkout routes', () => {
       items: [{ product_variant_id: 1, quantity: 1 }],
       total_cents: 1000,
       currency: 'MXN',
-      expires_at: new Date(Date.now() + 600000).toISOString()
+      expires_at: new Date(Date.now() + 600000).toISOString(),
     };
 
     (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
@@ -200,7 +206,7 @@ describe('Checkout routes', () => {
 
   it('POST /api/checkout/cancel returns 200 when reservation not found', async () => {
     const reservationId = '550e8400-e29b-41d4-a716-446655440000';
-    
+
     (redis.get as jest.Mock).mockResolvedValue(null);
 
     const response = await request(app)
@@ -215,14 +221,12 @@ describe('Checkout routes', () => {
   it('respects Idempotency-Key and returns same response for repeated calls', async () => {
     const idempotencyKey = 'idem-123';
 
-    (redis.get as jest.Mock)
-      .mockResolvedValueOnce(null)
-      .mockResolvedValueOnce(null);
+    (redis.get as jest.Mock).mockResolvedValueOnce(null).mockResolvedValueOnce(null);
 
     const redisMultiMock = {
       set: jest.fn().mockReturnThis(),
       zadd: jest.fn().mockReturnThis(),
-      exec: jest.fn().mockResolvedValue('OK')
+      exec: jest.fn().mockResolvedValue('OK'),
     };
     (redis.multi as jest.Mock).mockReturnValue(redisMultiMock);
 
@@ -231,7 +235,7 @@ describe('Checkout routes', () => {
       .set('Authorization', `Bearer ${token}`)
       .set('Idempotency-Key', idempotencyKey)
       .send({
-        items: [{ product_variant_id: 1, quantity: 1 }]
+        items: [{ product_variant_id: 1, quantity: 1 }],
       });
 
     expect(firstResponse.status).toBe(201);
@@ -239,7 +243,7 @@ describe('Checkout routes', () => {
     const cachedPayload = JSON.stringify({
       statusCode: firstResponse.status,
       body: firstResponse.body,
-      headers: {}
+      headers: {},
     });
 
     (redis.get as jest.Mock).mockResolvedValueOnce(cachedPayload);
@@ -249,12 +253,35 @@ describe('Checkout routes', () => {
       .set('Authorization', `Bearer ${token}`)
       .set('Idempotency-Key', idempotencyKey)
       .send({
-        items: [{ product_variant_id: 1, quantity: 1 }]
+        items: [{ product_variant_id: 1, quantity: 1 }],
       });
 
     expect(secondResponse.status).toBe(firstResponse.status);
     expect(secondResponse.body).toEqual(firstResponse.body);
-    expect((redis.multi as jest.Mock)).toHaveBeenCalledTimes(1);
+    expect(redis.multi as jest.Mock).toHaveBeenCalledTimes(1);
+  });
+
+  it('POST /api/checkout/create-payment-intent returns 200 with client_secret', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440005';
+    const reservationPayload = {
+      reservation_id: reservationId,
+      user_id: 'user-123',
+      items: [],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 600000).toISOString(),
+    };
+
+    (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(reservationPayload));
+
+    const response = await request(app)
+      .post('/api/checkout/create-payment-intent')
+      .set('Authorization', `Bearer ${token}`)
+      .send({ reservation_id: reservationId });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('client_secret');
+    expect(response.body).toHaveProperty('payment_intent_id');
+    expect(response.body.amount).toBe(1000);
   });
 });
-

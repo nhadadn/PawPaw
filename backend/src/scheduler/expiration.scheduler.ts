@@ -2,6 +2,7 @@ import cron from 'node-cron';
 import redis from '../lib/redis';
 import prisma from '../lib/prisma';
 import logger from '../lib/logger';
+import { InventoryChangeType } from '@prisma/client';
 
 export async function processExpiredReservationsOnce(): Promise<void> {
   const now = Date.now();
@@ -34,16 +35,16 @@ export async function processExpiredReservationsOnce(): Promise<void> {
             await tx.productVariant.update({
               where: { id: BigInt(item.product_variant_id) },
               data: {
-                reservedStock: { decrement: item.quantity }
-              }
+                reservedStock: { decrement: item.quantity },
+              },
             });
 
             await tx.inventoryLog.create({
               data: {
                 productVariantId: BigInt(item.product_variant_id),
-                changeType: 'release_expired',
-                quantityDiff: item.quantity
-              }
+                changeType: InventoryChangeType.RELEASE_EXPIRED,
+                quantityDiff: item.quantity,
+              },
             });
           }
         });
@@ -69,4 +70,3 @@ export function startExpirationScheduler(): void {
     void processExpiredReservationsOnce();
   });
 }
-

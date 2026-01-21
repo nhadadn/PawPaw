@@ -25,6 +25,7 @@ export function useAdminProducts() {
     }
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createProduct = async (productData: FormData | any) => {
     setIsLoading(true);
     try {
@@ -46,8 +47,8 @@ export function useAdminProducts() {
   const updateProduct = async (id: string, productData: FormData | Partial<AdminProduct>) => {
     setIsLoading(true);
     try {
-       // Axios automatically sets Content-Type to multipart/form-data with boundary for FormData
-       const config = {};
+      // Axios automatically sets Content-Type to multipart/form-data with boundary for FormData
+      const config = {};
 
       await adminClient.put(`/api/admin/products/${id}`, productData, config);
       await fetchProducts();
@@ -68,7 +69,7 @@ export function useAdminProducts() {
       await fetchProducts();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-         throw new Error(err.response?.data?.message || 'Error al eliminar producto');
+        throw new Error(err.response?.data?.message || 'Error al eliminar producto');
       }
       throw new Error('Error al eliminar producto');
     } finally {

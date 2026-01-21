@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -9,7 +9,7 @@ async function main() {
   // 1. Limpiar base de datos (orden inverso de dependencias)
   // No borramos todo para respetar integridad si hubiera algo, pero como está vacía según chequeo,
   // vamos a asegurar idempotencia creando o actualizando (upsert).
-  
+
   // 2. Crear Categorías
   const categories = [
     { name: 'Ropa', slug: 'ropa', description: 'Prendas urbanas de alta calidad' },
@@ -48,7 +48,7 @@ async function main() {
         { sku: 'TSHIRT-BLK-S', size: 'S', color: 'Negro', initialStock: 50 },
         { sku: 'TSHIRT-BLK-M', size: 'M', color: 'Negro', initialStock: 50 },
         { sku: 'TSHIRT-BLK-L', size: 'L', color: 'Negro', initialStock: 50 },
-      ]
+      ],
     },
     {
       name: 'Hoodie Essential',
@@ -59,7 +59,7 @@ async function main() {
       variants: [
         { sku: 'HOODIE-GRY-M', size: 'M', color: 'Gris', initialStock: 30 },
         { sku: 'HOODIE-GRY-L', size: 'L', color: 'Gris', initialStock: 30 },
-      ]
+      ],
     },
     {
       name: 'Gorra Trucker',
@@ -67,15 +67,13 @@ async function main() {
       description: 'Estilo clásico con malla trasera.',
       priceCents: 35000, // $350.00
       categoryId: accCat.id,
-      variants: [
-        { sku: 'CAP-TRUCK-01', size: 'Única', color: 'Negro/Blanco', initialStock: 100 },
-      ]
-    }
+      variants: [{ sku: 'CAP-TRUCK-01', size: 'Única', color: 'Negro/Blanco', initialStock: 100 }],
+    },
   ];
 
   for (const prod of products) {
     const { variants, ...productData } = prod;
-    
+
     const createdProduct = await prisma.product.upsert({
       where: { slug: productData.slug },
       update: {},

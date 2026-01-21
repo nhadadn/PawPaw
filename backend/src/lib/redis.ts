@@ -156,4 +156,3 @@ const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
 const redis = useRealRedis ? new Redis(redisUrl) : (new MockRedis() as unknown as Redis);
 
 export default redis;
-export default redis;

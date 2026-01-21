@@ -30,6 +30,7 @@ class MockPrisma {
         };
         this.$connect = async () => { };
         this.$disconnect = async () => { };
+        this.$queryRaw = async () => [1];
     }
 }
 const useMock = process.env.NODE_ENV !== 'production';

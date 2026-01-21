@@ -36,6 +36,9 @@ class MockRedis {
     async disconnect() {
         // No-op
     }
+    async ping() {
+        return 'PONG';
+    }
 }
 // Check if we should use real Redis or Mock
 const useRealRedis = process.env.USE_REAL_REDIS === 'true';

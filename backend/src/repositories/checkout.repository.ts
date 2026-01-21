@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, InventoryChangeType, OrderStatus } from '@prisma/client';
 
 // Helper type for Transaction
 export type PrismaTransaction = Omit<
@@ -13,16 +13,18 @@ export class CheckoutRepository {
    */
   async findVariantWithLock(tx: PrismaTransaction, variantId: number) {
     // Using $queryRaw for SELECT ... FOR UPDATE to ensure consistency
-    const variants = await tx.$queryRaw<Array<{
-      id: bigint;
-      product_id: bigint;
-      sku: string;
-      initial_stock: number;
-      reserved_stock: number;
-      price_cents: number;
-      currency: string;
-      max_per_customer: number | null;
-    }>>`
+    const variants = await tx.$queryRaw<
+      Array<{
+        id: bigint;
+        product_id: bigint;
+        sku: string;
+        initial_stock: number;
+        reserved_stock: number;
+        price_cents: number;
+        currency: string;
+        max_per_customer: number | null;
+      }>
+    >`
       SELECT 
         pv.id, 
         pv.product_id, 
@@ -37,7 +39,7 @@ export class CheckoutRepository {
       WHERE pv.id = ${variantId}
       FOR UPDATE
     `;
-    
+
     return variants[0] || null;
   }
 
@@ -50,12 +52,15 @@ export class CheckoutRepository {
     });
   }
 
-  async createInventoryLog(tx: PrismaTransaction, data: {
-    productVariantId: number | bigint;
-    changeType: string;
-    quantityDiff: number;
-    orderId?: number | bigint;
-  }) {
+  async createInventoryLog(
+    tx: PrismaTransaction,
+    data: {
+      productVariantId: number | bigint;
+      changeType: InventoryChangeType;
+      quantityDiff: number;
+      orderId?: number | bigint;
+    }
+  ) {
     await tx.inventoryLog.create({
       data: {
         productVariantId: data.productVariantId,
@@ -66,29 +71,32 @@ export class CheckoutRepository {
     });
   }
 
-  async createOrder(tx: PrismaTransaction, data: {
-    userId: string | undefined;
-    guestEmail?: string;
-    totalCents: number;
-    currency: string;
-    stripePaymentIntentId: string;
-    items: Array<{
-      productVariantId: number | bigint;
-      quantity: number;
-      unitPriceCents: number;
-      totalPriceCents: number;
-    }>;
-  }) {
+  async createOrder(
+    tx: PrismaTransaction,
+    data: {
+      userId: string | undefined;
+      guestEmail?: string;
+      totalCents: number;
+      currency: string;
+      stripePaymentIntentId: string;
+      items: Array<{
+        productVariantId: number | bigint;
+        quantity: number;
+        unitPriceCents: number;
+        totalPriceCents: number;
+      }>;
+    }
+  ) {
     return tx.order.create({
       data: {
         userId: data.userId,
         guestEmail: data.guestEmail,
-        status: 'paid',
+        status: OrderStatus.PAID,
         totalCents: data.totalCents,
         currency: data.currency,
         stripePaymentIntentId: data.stripePaymentIntentId,
         items: {
-          create: data.items.map(item => ({
+          create: data.items.map((item) => ({
             productVariantId: item.productVariantId,
             quantity: item.quantity,
             unitPriceCents: item.unitPriceCents,
@@ -98,7 +106,7 @@ export class CheckoutRepository {
       },
     });
   }
-  
+
   async releaseReservedStock(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
     await tx.productVariant.update({
       where: { id: BigInt(variantId) },
@@ -120,12 +128,12 @@ export class CheckoutRepository {
   }
 
   async releaseStock(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
-      await tx.productVariant.update({
-          where: { id: variantId },
-          data: {
-              reservedStock: { decrement: quantity }
-          }
-      });
+    await tx.productVariant.update({
+      where: { id: variantId },
+      data: {
+        reservedStock: { decrement: quantity },
+      },
+    });
   }
 
   async countUserPastPurchases(tx: PrismaTransaction, userId: string, productId: bigint) {
@@ -136,7 +144,7 @@ export class CheckoutRepository {
       where: {
         order: {
           userId: userId,
-          status: { not: 'cancelled' },
+          status: { not: OrderStatus.CANCELLED },
         },
         productVariant: {
           productId: productId,

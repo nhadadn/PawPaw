@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { UserRole, OrderStatus } from '@prisma/client';
 
 export const ProductSchema = z.object({
   name: z.string().min(1),
@@ -23,7 +24,7 @@ export const CategorySchema = z.object({
 });
 
 export const UpdateOrderStatusSchema = z.object({
-  status: z.enum(['pending', 'paid', 'shipped', 'cancelled']),
+  status: z.nativeEnum(OrderStatus),
 });
 
 export const UpdateInventorySchema = z.object({
@@ -32,7 +33,7 @@ export const UpdateInventorySchema = z.object({
 });
 
 export const UpdateUserStatusSchema = z.object({
-  role: z.enum(['admin', 'customer']),
+  role: z.nativeEnum(UserRole),
 });
 
 export const LoginSchema = z.object({

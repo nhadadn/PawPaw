@@ -1,5 +1,4 @@
-
-import http from 'http';
+/* eslint-disable no-console */
 
 const API_URL = 'http://localhost:4000/api/products';
 const TOTAL_REQUESTS = 100;
@@ -19,7 +18,7 @@ async function makeRequest(id: number) {
 
 async function runLoadTest() {
   console.log(`Starting load test: ${TOTAL_REQUESTS} requests, ${CONCURRENCY} concurrent...`);
-  
+
   const results = [];
   const batches = Math.ceil(TOTAL_REQUESTS / CONCURRENCY);
 
@@ -35,19 +34,19 @@ async function runLoadTest() {
     results.push(...batchResults);
     process.stdout.write('.');
   }
-  
+
   console.log('\n\nTest Completed.');
-  
-  const successful = results.filter(r => r.success);
-  const failed = results.filter(r => !r.success);
-  const durations = successful.map(r => r.duration);
+
+  const successful = results.filter((r) => r.success);
+  const failed = results.filter((r) => !r.success);
+  const durations = successful.map((r) => r.duration);
   const avg = durations.reduce((a, b) => a + b, 0) / durations.length;
   const max = Math.max(...durations);
   const min = Math.min(...durations);
 
   console.log('--- Results ---');
   if (failed.length > 0) {
-      console.log('Last Error:', failed[failed.length - 1].error);
+    console.log('Last Error:', failed[failed.length - 1].error);
   }
   console.log(`Total Requests: ${TOTAL_REQUESTS}`);
   console.log(`Successful: ${successful.length}`);
