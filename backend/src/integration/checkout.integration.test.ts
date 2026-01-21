@@ -57,7 +57,10 @@ jest.mock('../repositories/checkout.repository', () => ({
 
 describe('Checkout routes', () => {
   const app = createApp();
-  const token = jwt.sign({ id: 'user-123', email: 'test@example.com' }, 'changeme_jwt_secret');
+  const token = jwt.sign(
+    { id: 'user-123', email: 'test@example.com' },
+    process.env.JWT_SECRET || 'changeme_jwt_secret'
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
