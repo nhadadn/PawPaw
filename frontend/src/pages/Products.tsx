@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Filter } from 'lucide-react';
-import { useProducts } from '../hooks/useProducts';
+import { useProducts, useCategories } from '../hooks/useProducts';
 import { ProductGrid } from '../components/features/products/ProductGrid';
 import { ProductFilters } from '../components/features/products/ProductFilters';
 import { Button } from '../components/ui/Button';
@@ -11,9 +11,14 @@ type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'newest';
 
 export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const { data: products, isLoading, error } = useProducts();
-  
   const categoryParam = searchParams.get('category');
+  
+  const { data: products, isLoading, error } = useProducts({ 
+    category: categoryParam || undefined 
+  });
+  
+  const { data: categories } = useCategories();
+
   const searchParam = searchParams.get('search');
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
@@ -23,16 +28,31 @@ export function Products() {
 
   // Sync state with URL params if they change
   useEffect(() => {
+    console.log('[Products Page] URL category param changed:', categoryParam);
     setSelectedCategory(categoryParam);
   }, [categoryParam]);
+
+  useEffect(() => {
+    if (categories) {
+      console.log('[Products Page] Loaded categories:', categories);
+    }
+  }, [categories]);
 
   const filteredProducts = useMemo(() => {
     if (!products) return [];
 
+    console.log('[Products Page] Filtering products:', {
+       total: products.length,
+       categoryParam,
+       selectedCategory,
+       priceRange,
+       searchParam
+    });
+
     return products
       .filter((p) => {
-        // Category Filter
-        if (selectedCategory && p.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
+        // Category Filter - Handled by Backend
+        // if (selectedCategory && p.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
         
         // Price Filter
         if (p.price < priceRange.min * 100 || (priceRange.max > 0 && p.price > priceRange.max * 100)) return false;
@@ -54,7 +74,7 @@ export function Products() {
             return 0;
         }
       });
-  }, [products, selectedCategory, priceRange, searchParam, sortBy]);
+  }, [products, selectedCategory, priceRange, searchParam, sortBy, categoryParam]);
 
   const handleCategoryChange = (cat: string | null) => {
     setSelectedCategory(cat);
@@ -99,6 +119,7 @@ export function Products() {
               priceRange={priceRange}
               onPriceChange={(min, max) => setPriceRange({ min, max })}
               onClear={clearFilters}
+              categories={categories}
             />
           </div>
         </aside>

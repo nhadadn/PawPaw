@@ -67,7 +67,8 @@ export class CheckoutRepository {
   }
 
   async createOrder(tx: PrismaTransaction, data: {
-    userId: string;
+    userId: string | undefined;
+    guestEmail?: string;
     totalCents: number;
     currency: string;
     stripePaymentIntentId: string;
@@ -81,6 +82,7 @@ export class CheckoutRepository {
     return tx.order.create({
       data: {
         userId: data.userId,
+        guestEmail: data.guestEmail,
         status: 'paid',
         totalCents: data.totalCents,
         currency: data.currency,
@@ -97,6 +99,15 @@ export class CheckoutRepository {
     });
   }
   
+  async releaseReservedStock(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
+    await tx.productVariant.update({
+      where: { id: BigInt(variantId) },
+      data: {
+        reservedStock: { decrement: quantity },
+      },
+    });
+  }
+
   async confirmStockDeduction(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
     // When confirmed, we reduce reserved_stock AND initial_stock
     await tx.productVariant.update({

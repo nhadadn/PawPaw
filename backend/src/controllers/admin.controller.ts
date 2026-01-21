@@ -33,10 +33,40 @@ export class AdminController {
 
   static async createProduct(req: Request, res: Response) {
     try {
+      console.log('CreateProduct Payload:', req.body); // Log incoming payload
+      console.log('CreateProduct Files:', req.files);
+
+      const files = req.files as Express.Multer.File[];
+      // Updated to point to /uploads/products/
+      const imageUrls = files?.map(f => `/uploads/products/${f.filename}`) || [];
+      console.log('CreateProduct ImageUrls:', imageUrls);
+
+      if (imageUrls.length > 0) {
+          req.body.imageUrl = imageUrls[0]; // Set main image for backward compatibility
+          req.body.images = imageUrls;
+      }
+
+      // Convert FormData strings to correct types
+      if (req.body.priceCents) req.body.priceCents = parseInt(req.body.priceCents);
+      if (req.body.categoryId) req.body.categoryId = parseInt(req.body.categoryId);
+      if (req.body.initialStock) req.body.initialStock = parseInt(req.body.initialStock);
+      if (req.body.isActive) req.body.isActive = req.body.isActive === 'true';
+      if (req.body.isDrop) req.body.isDrop = req.body.isDrop === 'true';
+
+      // Auto-generate slug if not present
+      if (req.body.name && !req.body.slug) {
+          req.body.slug = req.body.name
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)+/g, '');
+      }
+
       const data = ProductSchema.parse(req.body);
-      const product = await service.createProduct(data);
+      // @ts-ignore - images is not in schema yet but we pass it
+      const product = await service.createProduct({ ...data, images: imageUrls });
       res.status(201).json(product);
     } catch (error: any) {
+      console.error('CreateProduct Error:', error); // Log error
       if (error.name === 'ZodError') {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
@@ -47,10 +77,60 @@ export class AdminController {
   static async updateProduct(req: Request, res: Response) {
       try {
           const id = parseInt(req.params.id);
+          console.log('UpdateProduct ID:', id);
+          console.log('UpdateProduct Payload:', req.body);
+          console.log('UpdateProduct Files:', req.files);
+
+          const files = req.files as Express.Multer.File[];
+          // Updated to point to /uploads/products/
+          const imageUrls = files?.map(f => `/uploads/products/${f.filename}`) || [];
+
+          if (imageUrls.length > 0) {
+              req.body.imageUrl = imageUrls[0]; // Update main image if new ones provided
+          }
+
+          // Convert FormData strings to correct types
+          if (req.body.priceCents) req.body.priceCents = parseInt(req.body.priceCents);
+          if (req.body.categoryId) req.body.categoryId = parseInt(req.body.categoryId);
+          if (req.body.initialStock) req.body.initialStock = parseInt(req.body.initialStock);
+          if (req.body.isActive !== undefined) req.body.isActive = req.body.isActive === 'true';
+          if (req.body.isDrop !== undefined) req.body.isDrop = req.body.isDrop === 'true';
+
+          // Parse imageOrder if present
+          let imageOrder = [];
+          if (req.body.imageOrder) {
+              try {
+                  imageOrder = JSON.parse(req.body.imageOrder);
+              } catch (e) {
+                  console.error('Error parsing imageOrder:', e);
+              }
+          }
+
           const data = ProductSchema.partial().parse(req.body); // Allow partial updates
-          const product = await service.updateProduct(id, data);
+        
+          // Transform for Prisma
+          const updateData: any = { ...data };
+          
+          if (imageUrls.length > 0) {
+               updateData.newImages = imageUrls;
+          }
+          if (imageOrder.length > 0) {
+              updateData.imageOrder = imageOrder;
+          }
+
+          // Capture stock before deleting, if present
+          const stock = req.body.initialStock; 
+          delete updateData.initialStock; // Product model doesn't have initialStock
+          
+          if (data.categoryId) {
+              // ... category handling
+          }
+
+          // Pass stock to service
+          const product = await service.updateProduct(id, updateData, stock);
           res.json(product);
       } catch (error: any) {
+          console.error('UpdateProduct Error:', error);
           if (error.name === 'ZodError') {
               return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
           }
@@ -80,14 +160,67 @@ export class AdminController {
   
   static async createCategory(req: Request, res: Response) {
       try {
+          if (req.file) {
+              req.body.imageUrl = `/uploads/${req.file.filename}`;
+          }
+
+          if (!req.body.slug && req.body.name) {
+              req.body.slug = req.body.name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+          }
+
           const data = CategorySchema.parse(req.body);
           const category = await service.createCategory(data);
           res.status(201).json(category);
       } catch (error: any) {
+          console.error('CreateCategory Error:', error);
           if (error.name === 'ZodError') {
               return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
           }
+          if (error.code === 'P2002') {
+              return res.status(409).json({ error: 'CONFLICT', message: 'Category name or slug already exists' });
+          }
           res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to create category' });
+      }
+  }
+
+  static async updateCategory(req: Request, res: Response) {
+      try {
+          const id = parseInt(req.params.id);
+
+          if (req.file) {
+              req.body.imageUrl = `/uploads/${req.file.filename}`;
+          }
+          
+          // If name is updated but slug is not provided, update slug too? 
+          // Usually we don't want to change slug on update unless explicitly requested, 
+          // but for now let's leave slug as is if not provided, or update it if name changes?
+          // Let's keep it simple: if slug is provided, use it. If not, keep existing.
+          // But if name changes, user might expect slug to change. 
+          // Let's NOT auto-update slug on update to preserve SEO URLs unless explicitly asked.
+          
+          const data = CategorySchema.partial().parse(req.body);
+          const category = await service.updateCategory(id, data);
+          res.json(category);
+      } catch (error: any) {
+          console.error('UpdateCategory Error:', error);
+          if (error.name === 'ZodError') {
+              return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
+          }
+          if (error.code === 'P2002') {
+              return res.status(409).json({ error: 'CONFLICT', message: 'Category name or slug already exists' });
+          }
+          res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to update category' });
+      }
+  }
+
+  static async deleteCategory(req: Request, res: Response) {
+      try {
+          const id = parseInt(req.params.id);
+          await service.deleteCategory(id);
+          res.status(204).send();
+      } catch (error) {
+          console.error('DeleteCategory Error:', error);
+          res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to delete category' });
       }
   }
 

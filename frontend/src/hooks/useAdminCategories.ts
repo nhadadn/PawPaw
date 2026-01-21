@@ -28,11 +28,8 @@ export function useAdminCategories() {
   const createCategory = async (categoryData: FormData | Partial<AdminCategory>) => {
     setIsLoading(true);
     try {
-      const config = categoryData instanceof FormData 
-        ? { headers: { 'Content-Type': 'multipart/form-data' } }
-        : {};
-      
-      await adminClient.post('/api/admin/categories', categoryData, config);
+      // Axios automatically sets Content-Type to multipart/form-data when data is FormData
+      await adminClient.post('/api/admin/categories', categoryData);
       await fetchCategories();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -47,11 +44,8 @@ export function useAdminCategories() {
   const updateCategory = async (id: string, categoryData: FormData | Partial<AdminCategory>) => {
     setIsLoading(true);
     try {
-      const config = categoryData instanceof FormData 
-        ? { headers: { 'Content-Type': 'multipart/form-data' } }
-        : {};
-
-      await adminClient.put(`/api/admin/categories/${id}`, categoryData, config);
+      // Axios automatically sets Content-Type to multipart/form-data when data is FormData
+      await adminClient.put(`/api/admin/categories/${id}`, categoryData);
       await fetchCategories();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

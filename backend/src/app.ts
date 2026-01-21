@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
 
 // Handle BigInt serialization
 (BigInt.prototype as any).toJSON = function () {
@@ -8,6 +9,7 @@ import helmet from 'helmet';
 };
 
 import morgan from 'morgan';
+import shopRoutes from './routes/shop.routes';
 import checkoutRoutes from './routes/checkout.routes';
 import { adminRoutes } from './routes/admin.routes';
 import healthRoutes from './routes/health';
@@ -22,7 +24,9 @@ import promBundle from 'express-prom-bundle';
 export const createApp = () => {
   const app = express();
 
-  app.use(helmet());
+  app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+  }));
   app.use(cors());
 
   // Prometheus metrics middleware
@@ -82,6 +86,7 @@ export const createApp = () => {
   });
 
   app.use(express.json());
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
   app.use(morgan('dev'));
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
@@ -98,6 +103,7 @@ export const createApp = () => {
 
   app.use('/api/checkout', checkoutRoutes);
   app.use('/api/admin', adminRoutes);
+  app.use('/api', shopRoutes);
   app.use('/api', healthRoutes);
 
   return app;

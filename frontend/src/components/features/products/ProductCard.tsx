@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import type { Product } from '../../../types/product';
-import { formatCurrency } from '../../../lib/utils';
+import { formatCurrency, getImageUrl } from '../../../lib/utils';
 import { Button } from '../../ui/Button';
 import { Badge } from '../../ui/Badge';
 
@@ -15,7 +15,7 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* Image */}
       <Link to={`/products/${product.id}`} className="block aspect-[4/5] overflow-hidden bg-neutral-100">
         <img
-          src={product.imageUrl}
+          src={getImageUrl(product.imageUrl)}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"

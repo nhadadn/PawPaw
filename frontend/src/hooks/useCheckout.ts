@@ -10,6 +10,7 @@ interface ReservePayload {
 interface ConfirmPayload {
   reservation_id: string;
   payment_intent_id: string;
+  email?: string;
 }
 
 export const useCheckoutReserve = () => {

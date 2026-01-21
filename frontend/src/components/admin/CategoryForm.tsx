@@ -16,6 +16,7 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
     description: initialData?.description || '',
   });
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -23,13 +24,26 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+    const selectedFile = e.target.files?.[0];
+    setError(null);
+
+    if (selectedFile) {
+      if (!selectedFile.type.startsWith('image/')) {
+        setError('Solo se permiten archivos de imagen (JPG, PNG, WEBP)');
+        return;
+      }
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        setError('La imagen no debe superar los 5MB');
+        return;
+      }
+      setFile(selectedFile);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (error) return;
+    
     const data = new FormData();
     data.append('name', formData.name);
     data.append('description', formData.description);
@@ -41,6 +55,11 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm font-medium">
+          {error}
+        </div>
+      )}
       <Input
         label="Nombre"
         name="name"
@@ -50,10 +69,11 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
       />
       
       <div className="w-full space-y-2">
-        <label className="text-sm font-bold text-neutral-700 block">
+        <label htmlFor="description" className="text-sm font-bold text-neutral-700 block">
             Descripción
         </label>
         <textarea
+            id="description"
             name="description"
             value={formData.description}
             onChange={handleChange}
@@ -62,10 +82,11 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
       </div>
 
       <div className="w-full space-y-2">
-        <label className="text-sm font-bold text-neutral-700 block">
+        <label htmlFor="image" className="text-sm font-bold text-neutral-700 block">
             Imagen
         </label>
         <input
+            id="image"
             type="file"
             onChange={handleFileChange}
             accept="image/*"

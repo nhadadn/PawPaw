@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CheckoutController } from '../controllers/checkout.controller';
-import { authMiddleware } from '../middleware/auth.middleware';
+import { optionalAuthMiddleware } from '../middleware/auth.middleware';
 import { idempotencyMiddleware } from '../middleware/idempotency.middleware';
 
 const router = Router();
@@ -54,7 +54,7 @@ const controller = new CheckoutController();
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/reserve', authMiddleware, idempotencyMiddleware, controller.reserve);
+router.post('/reserve', optionalAuthMiddleware, idempotencyMiddleware, controller.reserve);
 
 /**
  * @swagger
@@ -99,70 +99,10 @@ router.post('/reserve', authMiddleware, idempotencyMiddleware, controller.reserv
  *       404:
  *         description: Reservation not found
  */
-router.post('/confirm', authMiddleware, idempotencyMiddleware, controller.confirm);
+router.post('/confirm', optionalAuthMiddleware, idempotencyMiddleware, controller.confirm);
 
-/**
- * @swagger
- * /checkout/cancel:
- *   post:
- *     summary: Cancel a reservation manually
- *     tags: [Checkout]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - reservation_id
- *             properties:
- *               reservation_id:
- *                 type: string
- *                 format: uuid
- *     responses:
- *       200:
- *         description: Reservation cancelled
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: 'Reservation cancelled'
- *       404:
- *         description: Reservation not found
- */
-router.post('/cancel', authMiddleware, controller.cancel);
-
-/**
- * @swagger
- * /checkout/status/{reservation_id}:
- *   get:
- *     summary: Get reservation status
- *     tags: [Checkout]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: reservation_id
- *         schema:
- *           type: string
- *           format: uuid
- *         required: true
- *         description: ID of the reservation
- *     responses:
- *       200:
- *         description: Reservation details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ReservationResponse'
- *       404:
- *         description: Reservation not found
- */
-router.get('/status/:reservation_id', authMiddleware, controller.status);
+router.post('/cancel', optionalAuthMiddleware, controller.cancel);
+router.get('/status/:reservation_id', optionalAuthMiddleware, controller.status);
 
 export default router;
+

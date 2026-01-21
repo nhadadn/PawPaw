@@ -86,6 +86,6 @@ export interface AdminInventoryItem {
   sku?: string;
   price: number;
   stock: number;
-  category: string;
+  category: string | { name: string };
   imageUrl: string;
 }

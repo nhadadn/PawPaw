@@ -30,6 +30,8 @@ model Category {
   id        BigInt    @id @default(autoincrement())
   name      String    @unique
   slug      String    @unique
+  description String?
+  imageUrl  String?   @map("image_url")
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
@@ -44,6 +46,7 @@ model Product {
   name           String
   slug           String    @unique
   description    String?
+  imageUrl       String?   @map("image_url")
   categoryId     BigInt?   @map("category_id")
   priceCents     Int       @map("price_cents")
   currency       String    @default("MXN")
@@ -57,10 +60,23 @@ model Product {
   // Relations
   category       Category? @relation(fields: [categoryId], references: [id])
   variants       ProductVariant[]
+  images         ProductImage[]
   waitlist       Waitlist[]
 
   @@index([dropDate, isDrop])
   @@map("products")
+}
+
+model ProductImage {
+  id        BigInt   @id @default(autoincrement())
+  productId BigInt   @map("product_id")
+  url       String
+  order     Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_images")
 }
 
 model ProductVariant {
@@ -74,7 +90,7 @@ model ProductVariant {
   // available_stock is a generated column in DB: (initial_stock - reserved_stock)
   // We can map it but it's read-only. Prisma doesn't fully support generated columns in types seamlessly yet for writes.
   // We will treat it as managed by DB.
-  availableStock Int?      @map("available_stock") // Nullable because it's DB generated and we might not always fetch it
+  // availableStock Int?      @map("available_stock") // Nullable because it's DB generated and we might not always fetch it
 
   createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt      DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
@@ -90,7 +106,9 @@ model ProductVariant {
 
 model Order {
   id                    BigInt    @id @default(autoincrement())
-  userId                String    @map("user_id") @db.Uuid
+  userId                String?   @map("user_id") @db.Uuid
+  guestEmail            String?   @map("guest_email")
+  guestName             String?   @map("guest_name")
   status                String    // 'pending', 'paid', 'shipped', 'cancelled'
   totalCents            Int       @map("total_cents")
   currency              String    @default("MXN")
@@ -99,7 +117,7 @@ model Order {
   updatedAt             DateTime  @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
 
   // Relations
-  user          User      @relation(fields: [userId], references: [id])
+  user          User?     @relation(fields: [userId], references: [id])
   items         OrderItem[]
   inventoryLogs InventoryLog[]
 

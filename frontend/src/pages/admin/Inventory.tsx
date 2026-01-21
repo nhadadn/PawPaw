@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { Alert } from '../../components/ui/Alert';
 import type { AdminInventoryItem } from '../../types/admin';
 import { Edit } from 'lucide-react';
+import { getImageUrl } from '../../lib/utils';
 
 export function AdminInventory() {
   const {
@@ -29,8 +30,11 @@ export function AdminInventory() {
           <div className="h-10 w-10 flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full object-cover"
-              src={item.imageUrl || 'https://via.placeholder.com/40'}
+              src={item.imageUrl ? getImageUrl(item.imageUrl) : '/placeholder-product.png'}
               alt={item.name}
+              onError={(e) => {
+                e.currentTarget.src = '/placeholder-product.png';
+              }}
             />
           </div>
           <div className="ml-4">
@@ -43,6 +47,7 @@ export function AdminInventory() {
     {
       header: 'Categoría',
       accessorKey: 'category',
+      cell: (item) => (typeof item.category === 'object' ? item.category?.name : item.category) || 'Sin Categoría',
     },
     {
       header: 'Stock Actual',

@@ -90,7 +90,7 @@ export function AdminDashboard() {
           <h3 className="text-lg font-medium text-gray-900 mb-4">Productos Más Vendidos</h3>
           <div className="flow-root">
             <ul className="-my-5 divide-y divide-gray-200">
-              {stats.topProducts.map((product) => (
+              {stats.topProducts?.map((product) => (
                 <li key={product.id} className="py-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex-1 min-w-0">

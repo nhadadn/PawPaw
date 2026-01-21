@@ -47,6 +47,7 @@ class CheckoutRepository {
         return tx.order.create({
             data: {
                 userId: data.userId,
+                guestEmail: data.guestEmail,
                 status: 'paid',
                 totalCents: data.totalCents,
                 currency: data.currency,
@@ -59,6 +60,14 @@ class CheckoutRepository {
                         totalPriceCents: item.totalPriceCents,
                     })),
                 },
+            },
+        });
+    }
+    async releaseReservedStock(tx, variantId, quantity) {
+        await tx.productVariant.update({
+            where: { id: BigInt(variantId) },
+            data: {
+                reservedStock: { decrement: quantity },
             },
         });
     }

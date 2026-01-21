@@ -7,7 +7,7 @@ export interface CartItem {
 }
 
 export interface ReservationItem {
-  product_variant_id: string;
+  product_variant_id: number;
   quantity: number;
 }
 

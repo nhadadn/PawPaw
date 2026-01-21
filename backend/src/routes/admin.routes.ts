@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { AdminController } from '../controllers/admin.controller';
 import { adminAuthMiddleware } from '../middleware/admin.middleware';
+import { upload } from '../middleware/upload.middleware';
 
 const router = Router();
 
@@ -108,8 +109,8 @@ router.get('/products/:id', AdminController.getProduct);
  *       201:
  *         description: Product created
  */
-router.post('/products', AdminController.createProduct);
-router.put('/products/:id', AdminController.updateProduct);
+router.post('/products', upload.array('images', 10), AdminController.createProduct);
+router.put('/products/:id', upload.array('images', 10), AdminController.updateProduct);
 router.delete('/products/:id', AdminController.deleteProduct);
 
 /**
@@ -125,7 +126,9 @@ router.delete('/products/:id', AdminController.deleteProduct);
  *         description: List of categories
  */
 router.get('/categories', AdminController.getCategories);
-router.post('/categories', AdminController.createCategory);
+router.post('/categories', upload.single('image'), AdminController.createCategory);
+router.put('/categories/:id', upload.single('image'), AdminController.updateCategory);
+router.delete('/categories/:id', AdminController.deleteCategory);
 
 /**
  * @swagger

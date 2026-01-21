@@ -3,9 +3,12 @@ import { ArrowRight, ShoppingBag, Truck, ShieldCheck, Clock } from 'lucide-react
 import { Button } from '../components/ui/Button';
 import { ProductGrid } from '../components/features/products/ProductGrid';
 import { useProducts } from '../hooks/useProducts';
+import { useCategories } from '../hooks/useCategories';
+import { getImageUrl } from '../lib/utils';
 
 export function Home() {
   const { data: products, isLoading, error } = useProducts();
+  const { data: categories, isLoading: isLoadingCategories } = useCategories();
   const featuredProducts = products?.slice(0, 4) || [];
 
   return (
@@ -97,21 +100,25 @@ export function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { name: 'Ropa', img: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800', slug: 'ropas' },
-              { name: 'Gorras', img: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800', slug: 'gorras' },
-              { name: 'Jerseys', img: 'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?q=80&w=800', slug: 'jerseys' },
-              { name: 'Tech', img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?q=80&w=800', slug: 'dispositivos' },
-            ].map((cat) => (
+            {isLoadingCategories ? (
+               <div className="col-span-full text-center text-white">Cargando categorías...</div>
+            ) : categories?.length === 0 ? (
+               <div className="col-span-full text-center text-white">No hay categorías disponibles</div>
+            ) : (
+              categories?.map((cat) => (
               <Link 
                 key={cat.slug} 
                 to={`/products?category=${cat.slug}`}
                 className="group relative h-80 rounded-xl overflow-hidden"
               >
                 <img 
-                  src={cat.img} 
+                  src={cat.imageUrl ? getImageUrl(cat.imageUrl) : 'https://placehold.co/600x400'} 
                   alt={cat.name} 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-40"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://placehold.co/600x400';
+                  }}
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
                   <h3 className="text-2xl font-bold mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -122,7 +129,7 @@ export function Home() {
                   </span>
                 </div>
               </Link>
-            ))}
+            )))}
           </div>
         </div>
       </section>

@@ -15,12 +15,36 @@ export class AdminService {
         ...p,
         id: p.id.toString(),
         categoryId: p.categoryId?.toString(),
+        price: p.priceCents / 100, // Convert to unit
+        stock: p.variants.reduce((acc, v) => acc + (v.initialStock - v.reservedStock), 0), // Calculate total stock
+        images: (p as any).images?.map((img: any) => ({
+            id: img.id.toString(),
+            url: img.url,
+            order: img.order
+        })) || []
     }));
   }
 
   async createProduct(data: any) {
-    const product = await this.repository.createProduct(data);
-    return { ...product, id: product.id.toString() };
+    const { initialStock, ...productData } = data;
+    
+    // Create product and default variant if stock provided
+    const product = await this.repository.createProductWithVariant(productData, initialStock || 0);
+    
+    if (!product) {
+        throw new Error('Failed to create product');
+    }
+
+    return { 
+        ...product, 
+        id: product.id.toString(),
+        stock: initialStock || 0,
+        images: (product as any).images?.map((img: any) => ({
+            id: img.id.toString(),
+            url: img.url,
+            order: img.order
+        })) || []
+    };
   }
   
   async getProduct(id: number) {
@@ -34,13 +58,32 @@ export class AdminService {
               ...v,
               id: v.id.toString(),
               productId: v.productId.toString()
-          }))
+          })),
+          images: (product as any).images?.map((img: any) => ({
+              id: img.id.toString(),
+              url: img.url,
+              order: img.order
+          })) || []
       };
   }
 
-  async updateProduct(id: number, data: any) {
-      const product = await this.repository.updateProduct(id, data);
-      return { ...product, id: product.id.toString() };
+  async updateProduct(id: number, data: any, stock?: number) {
+      const { imageOrder, newImages, ...updateData } = data;
+      const product = await this.repository.updateProduct(id, updateData, imageOrder, newImages, stock);
+      
+      if (!product) {
+          throw new Error('Failed to update product');
+      }
+
+      return { 
+          ...product, 
+          id: product.id.toString(),
+          images: (product as any).images?.map((img: any) => ({
+              id: img.id.toString(),
+              url: img.url,
+              order: img.order
+          })) || []
+      };
   }
 
   async deleteProduct(id: number) {
@@ -56,6 +99,16 @@ export class AdminService {
   
   async createCategory(data: any) {
       const category = await this.repository.createCategory(data);
+      return { ...category, id: category.id.toString() };
+  }
+
+  async updateCategory(id: number, data: any) {
+      const category = await this.repository.updateCategory(id, data);
+      return { ...category, id: category.id.toString() };
+  }
+
+  async deleteCategory(id: number) {
+      const category = await this.repository.deleteCategory(id);
       return { ...category, id: category.id.toString() };
   }
 

@@ -1,6 +1,8 @@
 import request from 'supertest';
 import { createApp } from '../app';
 import { register } from 'prom-client';
+import path from 'path';
+import fs from 'fs';
 
 // Mock AdminRepository
 jest.mock('../repositories/admin.repository', () => ({
@@ -12,9 +14,14 @@ jest.mock('../repositories/admin.repository', () => ({
       if (id === 1) return Promise.resolve({ id: BigInt(1), name: 'Product 1', categoryId: BigInt(1), variants: [] });
       return Promise.resolve(null);
     }),
-    createProduct: jest.fn().mockResolvedValue({
-      id: BigInt(2), name: 'Test Product', categoryId: BigInt(1), variants: []
-    }),
+    createProductWithVariant: jest.fn().mockImplementation((data) => Promise.resolve({
+      id: BigInt(2), 
+      name: data.name, 
+      categoryId: BigInt(1), 
+      variants: [],
+      imageUrl: data.images && data.images.length > 0 ? data.images[0] : null,
+      images: data.images ? data.images.map((url: string, index: number) => ({ id: BigInt(index + 1), url, order: index })) : []
+    })),
     updateProduct: jest.fn().mockResolvedValue({
       id: BigInt(1), name: 'Updated Product', categoryId: BigInt(1), variants: []
     }),
@@ -102,7 +109,41 @@ describe('Admin API Integration', () => {
           expect(res.body.name).toBe(productData.name);
       });
       
-      it('should fail with invalid data', async () => {
+      it('should create a product with images', async () => {
+          const testImagePath = path.join(__dirname, 'test-image.jpg');
+          // Create dummy image
+          fs.writeFileSync(testImagePath, 'dummy image content');
+
+          const res = await request(app)
+              .post('/api/admin/products')
+              .set('x-test-role', 'admin')
+              .set('Authorization', 'Bearer mock-token')
+              .field('name', 'Product with Image')
+              .field('priceCents', '1000')
+              .field('categoryId', '1')
+              .field('initialStock', '10')
+              .field('currency', 'MXN')
+              .field('isActive', 'true')
+              .field('isDrop', 'false')
+              .attach('images', testImagePath);
+              
+          // Cleanup
+          if (fs.existsSync(testImagePath)) {
+              fs.unlinkSync(testImagePath);
+          }
+
+          if (res.status !== 201) {
+            console.error('Create Product with Images Failed:', JSON.stringify(res.body, null, 2));
+          }
+
+          expect(res.status).toBe(201);
+          expect(res.body.name).toBe('Product with Image');
+          expect(res.body.images).toBeDefined();
+          expect(res.body.images.length).toBeGreaterThan(0);
+          expect(res.body.images[0].url).toMatch(/\/uploads\/.*\.jpg/);
+        });
+
+    it('should fail with invalid data', async () => {
           const res = await request(app)
               .post('/api/admin/products')
               .set('x-test-role', 'admin')

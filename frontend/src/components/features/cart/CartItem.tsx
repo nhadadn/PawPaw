@@ -1,7 +1,7 @@
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import type { CartItem as CartItemType } from '../../../types/checkout';
-import { formatCurrency } from '../../../lib/utils';
+import { formatCurrency, getImageUrl } from '../../../lib/utils';
 
 interface CartItemProps {
   item: CartItemType;
@@ -14,7 +14,7 @@ export function CartItem({ item, onUpdateQuantity, onRemove }: CartItemProps) {
     <div className="flex gap-4 py-6 border-b border-neutral-100 last:border-0">
       {/* Image */}
       <Link to={`/products/${item.id}`} className="shrink-0 w-24 h-24 bg-neutral-100 rounded-lg overflow-hidden">
-        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+        <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover" />
       </Link>
 
       {/* Content */}

@@ -7,7 +7,7 @@ import { Button } from '../components/ui/Button';
 import { Spinner } from '../components/ui/Spinner';
 import { Alert } from '../components/ui/Alert';
 import { Badge } from '../components/ui/Badge';
-import { formatCurrency } from '../lib/utils';
+import { formatCurrency, getImageUrl } from '../lib/utils';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -17,27 +17,51 @@ export function ProductDetail() {
   
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Mock sizes for clothing/shoes categories
-  const sizes = ['S', 'M', 'L', 'XL'];
-  const showSizes = product?.category === 'Ropas' || product?.category === 'Jerseys';
+  // Derive available sizes from variants
+  const variants = product?.variants || [];
+  const sizes = Array.from(new Set(variants.map(v => v.size).filter(Boolean))) as string[];
+  const showSizes = sizes.length > 0;
+
+  // Prepare images
+  const images = product?.images && product.images.length > 0 
+      ? [...product.images].sort((a, b) => a.order - b.order).map(img => ({ ...img, url: getImageUrl(img.url) }))
+      : (product?.imageUrl ? [{ id: 'main', url: getImageUrl(product.imageUrl), order: 0 }] : []);
+
+  const currentImage = selectedImage || (images.length > 0 ? images[0].url : '');
 
   if (isLoading) return <div className="flex justify-center py-20"><Spinner size="lg" /></div>;
   if (error || !product) return <div className="container py-20"><Alert variant="error" title="Error">Producto no encontrado</Alert></div>;
 
   const handleAddToCart = () => {
-    if (showSizes && !selectedSize) {
-      alert('Por favor selecciona una talla');
-      return;
+    // Find selected variant
+    let selectedVariant;
+    
+    if (showSizes) {
+      if (!selectedSize) {
+        alert('Por favor selecciona una talla');
+        return;
+      }
+      // Simple logic: find first variant with this size. 
+      // Ideally we would also handle colors, but for now assuming size uniqueness per product or just picking first.
+      selectedVariant = variants.find(v => v.size === selectedSize);
+    } else {
+      // If no sizes/variants logic (shouldn't happen with current seed), fallback to first variant if exists
+      selectedVariant = variants[0];
+    }
+
+    if (!selectedVariant) {
+       alert('Lo sentimos, esta variante no está disponible.');
+       return;
     }
 
     addItem({
-      id: product.id,
-      name: product.name,
+      id: selectedVariant.id, // Use Variant ID!
+      name: `${product.name} (${selectedVariant.size})`, // Append size to name for clarity in cart
       price: product.price,
-      image: product.imageUrl,
+      image: currentImage, // Use currently selected image
       quantity: quantity,
-      // size: selectedSize // Add to CartItem type if needed
     });
 
     // Optional: Show toast or feedback
@@ -60,19 +84,25 @@ export function ProductDetail() {
         <div className="space-y-4">
           <div className="aspect-square bg-neutral-100 rounded-2xl overflow-hidden">
             <img 
-              src={product.imageUrl} 
+              src={currentImage} 
               alt={product.name} 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-all duration-300"
             />
           </div>
-          {/* Mock thumbnails */}
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="aspect-square bg-neutral-100 rounded-lg overflow-hidden cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
-                 <img src={product.imageUrl} alt="" className="w-full h-full object-cover" />
+          {/* Thumbnails */}
+          {images.length > 1 && (
+              <div className="grid grid-cols-4 gap-4">
+                {images.map((img) => (
+                  <button 
+                      key={img.id} 
+                      onClick={() => setSelectedImage(img.url)}
+                      className={`aspect-square bg-neutral-100 rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${currentImage === img.url ? 'border-primary opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}
+                  >
+                     <img src={img.url} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
+          )}
         </div>
 
         {/* Info */}

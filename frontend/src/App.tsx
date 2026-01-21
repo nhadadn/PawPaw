@@ -47,11 +47,7 @@ function App() {
       </Route>
 
       {/* Checkout Layout (Standalone or with minimal header) */}
-      <Route path="/checkout" element={
-        <ProtectedRoute>
-          <CheckoutPage />
-        </ProtectedRoute>
-      } />
+      <Route path="/checkout" element={<CheckoutPage />} />
 
       {/* Admin Routes */}
       <Route path="/admin/login" element={<AdminLogin />} />

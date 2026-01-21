@@ -2,8 +2,9 @@ import { z } from 'zod';
 
 export const ProductSchema = z.object({
   name: z.string().min(1),
-  slug: z.string().min(1),
+  slug: z.string().min(1).optional(), // Optional because it can be auto-generated
   description: z.string().optional(),
+  imageUrl: z.string().optional(),
   categoryId: z.number().int().positive().optional(),
   priceCents: z.number().int().nonnegative(),
   currency: z.string().default('MXN'),
@@ -11,11 +12,14 @@ export const ProductSchema = z.object({
   isDrop: z.boolean().default(false),
   dropDate: z.string().datetime().optional().nullable(),
   maxPerCustomer: z.number().int().positive().optional().nullable(),
+  initialStock: z.number().int().nonnegative().optional(), // Virtual field for creation
 });
 
 export const CategorySchema = z.object({
   name: z.string().min(1),
-  slug: z.string().min(1),
+  slug: z.string().min(1).optional(),
+  description: z.string().optional(),
+  imageUrl: z.string().optional(),
 });
 
 export const UpdateOrderStatusSchema = z.object({

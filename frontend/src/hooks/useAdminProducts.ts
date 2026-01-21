@@ -25,14 +25,12 @@ export function useAdminProducts() {
     }
   }, []);
 
-  const createProduct = async (productData: FormData | Partial<AdminProduct>) => {
+  const createProduct = async (productData: FormData | any) => {
     setIsLoading(true);
     try {
-      // Check if it's FormData (for file uploads) or JSON
-      const config = productData instanceof FormData 
-        ? { headers: { 'Content-Type': 'multipart/form-data' } }
-        : {};
-      
+      // Axios automatically sets Content-Type to multipart/form-data with boundary for FormData
+      const config = {};
+
       await adminClient.post('/api/admin/products', productData, config);
       await fetchProducts();
     } catch (err: unknown) {
@@ -48,9 +46,8 @@ export function useAdminProducts() {
   const updateProduct = async (id: string, productData: FormData | Partial<AdminProduct>) => {
     setIsLoading(true);
     try {
-       const config = productData instanceof FormData 
-        ? { headers: { 'Content-Type': 'multipart/form-data' } }
-        : {};
+       // Axios automatically sets Content-Type to multipart/form-data with boundary for FormData
+       const config = {};
 
       await adminClient.put(`/api/admin/products/${id}`, productData, config);
       await fetchProducts();

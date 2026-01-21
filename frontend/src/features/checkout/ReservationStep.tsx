@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useCartStore } from "../../stores/cartStore"
 import { useCheckoutReserve } from "../../hooks/useCheckout"
 import { Alert } from "../../components/ui/Alert"
-import { formatCurrency } from "../../lib/utils"
+import { formatCurrency, getImageUrl } from "../../lib/utils"
 import { AxiosError } from "axios"
 import type { ApiError } from "../../types/api"
 
@@ -19,7 +19,7 @@ export function ReservationStep({ onSuccess }: ReservationStepProps) {
     reserve(
       {
         items: items.map(item => ({
-          product_variant_id: item.id, // Using item.id as variant ID for simplicity
+          product_variant_id: Number(item.id), // Using item.id as variant ID for simplicity
           quantity: item.quantity
         }))
       },
@@ -51,7 +51,7 @@ export function ReservationStep({ onSuccess }: ReservationStepProps) {
             <div key={item.id} className="flex justify-between items-center border-b pb-4 last:border-0">
               <div className="flex gap-4">
                 <img 
-                  src={item.image} 
+                  src={getImageUrl(item.image)} 
                   alt={item.name} 
                   className="w-16 h-16 object-cover rounded-md bg-neutral-200"
                 />

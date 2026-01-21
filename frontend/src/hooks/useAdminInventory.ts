@@ -30,7 +30,9 @@ export function useAdminInventory() {
   const updateStock = async (id: string, stock: number) => {
     setIsLoading(true);
     try {
-      await adminClient.patch(`/api/admin/products/${id}/stock`, { stock });
+      // Changed to match backend route: PUT /api/admin/inventory/:id
+      // And payload matches UpdateInventorySchema: { initialStock }
+      await adminClient.put(`/api/admin/inventory/${id}`, { initialStock: stock });
       await fetchInventory();
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {

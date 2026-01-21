@@ -10,7 +10,8 @@ const mockRepoInstance = {
   countUserPastPurchases: jest.fn(),
   createOrder: jest.fn(),
   confirmStockDeduction: jest.fn(),
-  releaseStock: jest.fn()
+  releaseStock: jest.fn(),
+  createReservation: jest.fn()
 };
 
 // Mock dependencies
@@ -26,11 +27,16 @@ jest.mock('../../lib/redis', () => ({
   zrem: jest.fn(),
   multi: jest.fn()
 }));
-jest.mock('../../lib/stripe', () => ({
-  paymentIntents: {
-    retrieve: jest.fn()
-  }
-}));
+    jest.mock('../../lib/stripe', () => ({
+      __esModule: true,
+      default: {
+        paymentIntents: {
+          retrieve: jest.fn(),
+          create: jest.fn(),
+          cancel: jest.fn()
+        }
+      }
+    }));
 jest.mock('../../repositories/checkout.repository', () => ({
   CheckoutRepository: jest.fn().mockImplementation(() => mockRepoInstance)
 }));
@@ -64,7 +70,14 @@ describe('CheckoutService', () => {
       mockRepoInstance.findVariantWithLock.mockResolvedValue(mockVariant);
       mockRepoInstance.updateReservedStock.mockResolvedValue(undefined);
       mockRepoInstance.createInventoryLog.mockResolvedValue(undefined);
-      
+      mockRepoInstance.createReservation.mockResolvedValue({ id: 'res-123' });
+
+      // Mock Stripe create
+      (stripe.paymentIntents.create as jest.Mock).mockResolvedValue({
+        id: 'pi_123',
+        client_secret: 'secret_123'
+      });
+
       const redisMultiMock = {
         set: jest.fn().mockReturnThis(),
         zadd: jest.fn().mockReturnThis(),

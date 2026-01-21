@@ -7,11 +7,13 @@ exports.createApp = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
+const path_1 = __importDefault(require("path"));
 // Handle BigInt serialization
 BigInt.prototype.toJSON = function () {
     return this.toString();
 };
 const morgan_1 = __importDefault(require("morgan"));
+const shop_routes_1 = __importDefault(require("./routes/shop.routes"));
 const checkout_routes_1 = __importDefault(require("./routes/checkout.routes"));
 const admin_routes_1 = require("./routes/admin.routes");
 const health_1 = __importDefault(require("./routes/health"));
@@ -24,7 +26,9 @@ const logger_1 = __importDefault(require("./lib/logger"));
 const express_prom_bundle_1 = __importDefault(require("express-prom-bundle"));
 const createApp = () => {
     const app = (0, express_1.default)();
-    app.use((0, helmet_1.default)());
+    app.use((0, helmet_1.default)({
+        crossOriginResourcePolicy: { policy: "cross-origin" }
+    }));
     app.use((0, cors_1.default)());
     // Prometheus metrics middleware
     const metricsMiddleware = (0, express_prom_bundle_1.default)({
@@ -76,6 +80,7 @@ const createApp = () => {
         }
     });
     app.use(express_1.default.json());
+    app.use('/uploads', express_1.default.static(path_1.default.join(process.cwd(), 'uploads')));
     app.use((0, morgan_1.default)('dev'));
     app.use('/api/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     app.get('/health', async (req, res) => {
@@ -90,6 +95,7 @@ const createApp = () => {
     });
     app.use('/api/checkout', checkout_routes_1.default);
     app.use('/api/admin', admin_routes_1.adminRoutes);
+    app.use('/api', shop_routes_1.default);
     app.use('/api', health_1.default);
     return app;
 };

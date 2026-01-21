@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
+import { useAdminCategories } from '../../hooks/useAdminCategories';
 import { DataTable, type Column } from '../../components/admin/DataTable';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { ProductForm } from '../../components/admin/ProductForm';
 import type { AdminProduct } from '../../types/admin';
-import { formatCurrency } from '../../lib/utils';
+import { formatCurrency, getImageUrl } from '../../lib/utils';
 import { Alert } from '../../components/ui/Alert';
 
 export function AdminProducts() {
@@ -18,6 +19,8 @@ export function AdminProducts() {
     updateProduct,
     deleteProduct,
   } = useAdminProducts();
+
+  const { categories } = useAdminCategories();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | undefined>(undefined);
@@ -31,8 +34,12 @@ export function AdminProducts() {
           <div className="h-10 w-10 flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full object-cover"
-              src={product.imageUrl || 'https://via.placeholder.com/40'}
+              src={getImageUrl(product.imageUrl) || 'https://placehold.co/40'}
               alt={product.name}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://placehold.co/40';
+              }}
             />
           </div>
           <div className="ml-4">
@@ -46,7 +53,10 @@ export function AdminProducts() {
     },
     {
       header: 'Categoría',
-      accessorKey: 'category',
+      cell: (product) => {
+        const cat = product.category as any;
+        return typeof cat === 'object' ? cat?.name : cat;
+      },
     },
     {
       header: 'Precio',
@@ -147,6 +157,7 @@ export function AdminProducts() {
         <ProductForm
           key={editingProduct?.id || 'new'}
           initialData={editingProduct}
+          categories={categories}
           onSubmit={handleSubmit}
           onCancel={() => setIsModalOpen(false)}
           isLoading={isLoading}

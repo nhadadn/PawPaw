@@ -7,14 +7,8 @@ interface ProductFiltersProps {
   priceRange: { min: number; max: number };
   onPriceChange: (min: number, max: number) => void;
   onClear: () => void;
+  categories?: { id: string; name: string; slug: string }[];
 }
-
-const CATEGORIES = [
-  { id: 'ropas', label: 'Ropa' },
-  { id: 'gorras', label: 'Gorras' },
-  { id: 'jerseys', label: 'Jerseys' },
-  { id: 'dispositivos', label: 'Dispositivos' },
-];
 
 export function ProductFilters({
   selectedCategory,
@@ -22,6 +16,7 @@ export function ProductFilters({
   priceRange,
   onPriceChange,
   onClear,
+  categories = []
 }: ProductFiltersProps) {
   return (
     <div className="space-y-8">
@@ -37,15 +32,15 @@ export function ProductFilters({
           >
             Todas
           </button>
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat.id}
-              onClick={() => onCategoryChange(cat.id)}
+              onClick={() => onCategoryChange(cat.slug)}
               className={`block w-full text-left text-sm ${
-                selectedCategory === cat.id ? 'font-bold text-primary' : 'text-neutral-600'
+                selectedCategory === cat.slug ? 'font-bold text-primary' : 'text-neutral-600'
               }`}
             >
-              {cat.label}
+              {cat.name}
             </button>
           ))}
         </div>

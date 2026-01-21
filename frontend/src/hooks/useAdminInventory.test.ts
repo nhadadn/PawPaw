@@ -7,7 +7,7 @@ import adminClient from '../api/adminClient';
 vi.mock('../api/adminClient', () => ({
   default: {
     get: vi.fn(),
-    patch: vi.fn(),
+    put: vi.fn(), // Changed from patch to put
   },
 }));
 
@@ -37,7 +37,7 @@ describe('useAdminInventory', () => {
   it('should update stock', async () => {
     const mockInventory = [{ id: '1', stock: 10 }];
     (adminClient.get as Mock).mockResolvedValue({ data: mockInventory });
-    (adminClient.patch as Mock).mockResolvedValue({});
+    (adminClient.put as Mock).mockResolvedValue({}); // Changed from patch to put
 
     const { result } = renderHook(() => useAdminInventory());
 
@@ -47,7 +47,8 @@ describe('useAdminInventory', () => {
       await result.current.updateStock('1', 20);
     });
 
-    expect(adminClient.patch).toHaveBeenCalledWith('/api/admin/products/1/stock', { stock: 20 });
+    // Updated expectation to match new implementation
+    expect(adminClient.put).toHaveBeenCalledWith('/api/admin/inventory/1', { initialStock: 20 });
     // Should re-fetch
     expect(adminClient.get).toHaveBeenCalledTimes(2);
   });

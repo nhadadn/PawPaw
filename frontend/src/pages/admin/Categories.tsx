@@ -7,6 +7,7 @@ import { Modal } from '../../components/ui/Modal';
 import { CategoryForm } from '../../components/admin/CategoryForm';
 import type { AdminCategory } from '../../types/admin';
 import { Alert } from '../../components/ui/Alert';
+import { getImageUrl } from '../../lib/utils';
 
 export function AdminCategories() {
   const {
@@ -30,8 +31,12 @@ export function AdminCategories() {
           <div className="h-10 w-10 flex-shrink-0">
             <img
               className="h-10 w-10 rounded-full object-cover"
-              src={category.image || 'https://via.placeholder.com/40'}
+              src={getImageUrl(category.image) || 'https://placehold.co/40'}
               alt={category.name}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = 'https://placehold.co/40';
+              }}
             />
           </div>
           <div className="ml-4">

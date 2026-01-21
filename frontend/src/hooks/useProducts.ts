@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import apiClient from '../api/client';
 import type { Product } from '../types/product';
 
-export const useProducts = () => {
+export const useProducts = (params?: { category?: string }) => {
   return useQuery({
-    queryKey: ['products'],
+    queryKey: ['products', params],
     queryFn: async () => {
-      const { data } = await apiClient.get<Product[]>('/api/products');
+      const { data } = await apiClient.get<Product[]>('/api/products', { params });
       return data;
     },
   });
@@ -20,5 +20,15 @@ export const useProductDetail = (id: string) => {
       return data;
     },
     enabled: !!id,
+  });
+};
+
+export const useCategories = () => {
+  return useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const { data } = await apiClient.get<{ id: string; name: string; slug: string }[]>('/api/categories');
+      return data;
+    },
   });
 };
