@@ -263,7 +263,6 @@ jobs:
     needs: [test-frontend]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    working-directory: ./frontend
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -283,4 +282,5 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
+          working-directory: ./frontend
 
