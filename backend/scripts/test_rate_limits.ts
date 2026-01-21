@@ -1,4 +1,5 @@
 import http from 'http';
+import logger from '../src/lib/logger';
 
 const request = (path: string, method: string = 'GET') => {
   return new Promise<{ statusCode?: number; headers: http.IncomingHttpHeaders }>(
@@ -22,33 +23,33 @@ const request = (path: string, method: string = 'GET') => {
 
 async function run() {
   try {
-    console.log('--- TEST 1: Global Limiter Skip (/health) ---');
+    logger.info('--- TEST 1: Global Limiter Skip (/health) ---');
     const healthRes = await request('/health');
-    console.log(`Health Status: ${healthRes.statusCode}`);
-    console.log(`RateLimit-Limit header: ${healthRes.headers['ratelimit-limit']}`);
+    logger.info(`Health Status: ${healthRes.statusCode}`);
+    logger.info(`RateLimit-Limit header: ${healthRes.headers['ratelimit-limit']}`);
     if (!healthRes.headers['ratelimit-limit']) {
-      console.log('PASS: No rate limit headers on /health');
+      logger.info('PASS: No rate limit headers on /health');
     } else {
-      console.log('FAIL: Rate limit headers present on /health');
+      logger.warn('FAIL: Rate limit headers present on /health');
     }
 
-    console.log('\n--- TEST 2: Global Limiter Enforcement (/api/products) ---');
+    logger.info('\n--- TEST 2: Global Limiter Enforcement (/api/products) ---');
     // Make one request to check headers
     const productRes = await request('/api/products');
-    console.log(`Status: ${productRes.statusCode}`);
-    console.log(`RateLimit-Limit: ${productRes.headers['ratelimit-limit']}`);
-    console.log(`RateLimit-Remaining: ${productRes.headers['ratelimit-remaining']}`);
+    logger.info(`Status: ${productRes.statusCode}`);
+    logger.info(`RateLimit-Limit: ${productRes.headers['ratelimit-limit']}`);
+    logger.info(`RateLimit-Remaining: ${productRes.headers['ratelimit-remaining']}`);
 
     if (productRes.headers['ratelimit-limit'] === '100') {
-      console.log('PASS: Global Limit is 100');
+      logger.info('PASS: Global Limit is 100');
     } else {
-      console.log(`FAIL: Global Limit is ${productRes.headers['ratelimit-limit']}`);
+      logger.warn(`FAIL: Global Limit is ${productRes.headers['ratelimit-limit']}`);
     }
 
-    console.log('\n--- TEST 3: Checkout Limiter (/api/checkout/status/123) ---');
+    logger.info('\n--- TEST 3: Checkout Limiter (/api/checkout/status/123) ---');
     const checkoutRes = await request('/api/checkout/status/123');
-    console.log(`Status: ${checkoutRes.statusCode}`);
-    console.log(`RateLimit-Limit: ${checkoutRes.headers['ratelimit-limit']}`);
+    logger.info(`Status: ${checkoutRes.statusCode}`);
+    logger.info(`RateLimit-Limit: ${checkoutRes.headers['ratelimit-limit']}`);
 
     // Note: checkout routes have TWO limiters (Global + Checkout).
     // Express-rate-limit sets headers for the LAST one that executed or the one that blocked?
@@ -59,26 +60,30 @@ async function run() {
     // Let's see what happens.
 
     if (checkoutRes.headers['ratelimit-limit'] === '10') {
-      console.log('PASS: Checkout Limit is 10');
+      logger.info('PASS: Checkout Limit is 10');
     } else {
-      console.log(
+      logger.info(
         `INFO: Checkout Limit Header is ${checkoutRes.headers['ratelimit-limit']} (might be masked by Global if order differs)`
       );
     }
 
-    console.log('\n--- TEST 4: Auth Limiter (/api/auth/login) ---');
+    logger.info('\n--- TEST 4: Auth Limiter (/api/auth/login) ---');
     // Assuming this route hits the limiter we added
     const authRes = await request('/api/auth/login', 'POST');
-    console.log(`Status: ${authRes.statusCode}`);
-    console.log(`RateLimit-Limit: ${authRes.headers['ratelimit-limit']}`);
+    logger.info(`Status: ${authRes.statusCode}`);
+    logger.info(`RateLimit-Limit: ${authRes.headers['ratelimit-limit']}`);
 
     if (authRes.headers['ratelimit-limit'] === '5') {
-      console.log('PASS: Auth Limit is 5');
+      logger.info('PASS: Auth Limit is 5');
     } else {
-      console.log(`FAIL: Auth Limit is ${authRes.headers['ratelimit-limit']}`);
+      logger.warn(`FAIL: Auth Limit is ${authRes.headers['ratelimit-limit']}`);
     }
-  } catch (e) {
-    console.error('Test failed:', e);
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      logger.error(`Test failed: ${e.message}`);
+    } else {
+      logger.error('Test failed: Unknown error');
+    }
   }
 }
 

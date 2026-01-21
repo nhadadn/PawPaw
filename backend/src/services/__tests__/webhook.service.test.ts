@@ -70,7 +70,7 @@ describe('WebhookService', () => {
 
       expect(prisma.order.update).toHaveBeenCalledWith({
         where: { id: 1 },
-        data: { status: 'paid' },
+        data: { status: OrderStatus.PAID },
       });
       expect(mockCheckoutService.confirm).not.toHaveBeenCalled();
     });
@@ -78,7 +78,7 @@ describe('WebhookService', () => {
     it('should do nothing if order exists and is already paid', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue({
         id: 1,
-        status: 'paid',
+        status: OrderStatus.PAID,
         stripePaymentIntentId: 'pi_123',
       });
 

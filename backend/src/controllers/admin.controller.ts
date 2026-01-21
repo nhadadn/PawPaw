@@ -10,6 +10,8 @@ import {
   LoginSchema,
 } from '../schemas/admin.schemas';
 import jwt from 'jsonwebtoken';
+import logger from '../lib/logger';
+import { ZodError } from 'zod';
 
 const service = new AdminService();
 
@@ -23,7 +25,7 @@ export class AdminController {
       const products = await service.getProducts(limit, offset);
       res.json(products);
     } catch (error) {
-      console.error('GetProducts Error:', error);
+      logger.error('GetProducts Error:', error);
       res.status(500).json({
         error: 'INTERNAL_SERVER_ERROR',
         message: 'Failed to fetch products',
@@ -46,13 +48,13 @@ export class AdminController {
 
   static async createProduct(req: Request, res: Response) {
     try {
-      console.log('CreateProduct Payload:', req.body); // Log incoming payload
-      console.log('CreateProduct Files:', req.files);
+      logger.info('CreateProduct Payload:', req.body); // Log incoming payload
+      logger.info('CreateProduct Files:', req.files);
 
       const files = req.files as Express.Multer.File[];
       // Updated to point to /uploads/products/
       const imageUrls = files?.map((f) => `/uploads/products/${f.filename}`) || [];
-      console.log('CreateProduct ImageUrls:', imageUrls);
+      logger.info('CreateProduct ImageUrls:', imageUrls);
 
       if (imageUrls.length > 0) {
         req.body.imageUrl = imageUrls[0]; // Set main image for backward compatibility
@@ -78,9 +80,9 @@ export class AdminController {
       // images is not in schema yet but we pass it
       const product = await service.createProduct({ ...data, images: imageUrls });
       res.status(201).json(product);
-    } catch (error: any) {
-      console.error('CreateProduct Error:', error); // Log error
-      if (error.name === 'ZodError') {
+    } catch (error: unknown) {
+      logger.error('CreateProduct Error:', error); // Log error
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to create product' });
@@ -90,9 +92,9 @@ export class AdminController {
   static async updateProduct(req: Request, res: Response) {
     try {
       const id = parseInt(req.params.id);
-      console.log('UpdateProduct ID:', id);
-      console.log('UpdateProduct Payload:', req.body);
-      console.log('UpdateProduct Files:', req.files);
+      logger.info('UpdateProduct ID:', id);
+      logger.info('UpdateProduct Payload:', req.body);
+      logger.info('UpdateProduct Files:', req.files);
 
       const files = req.files as Express.Multer.File[];
       // Updated to point to /uploads/products/

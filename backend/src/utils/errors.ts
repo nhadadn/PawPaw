@@ -67,7 +67,7 @@ export class InternalError extends AppError {
 export class CheckoutError extends Error {
   public code: string;
 
-  constructor(message: string, code: string) {
+  constructor(code: string, message: string) {
     super(message);
     this.code = code;
   }

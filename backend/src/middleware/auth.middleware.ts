@@ -5,7 +5,11 @@ import logger from '../lib/logger';
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   // Allow bypassing auth in test environment
   if (process.env.NODE_ENV === 'test') {
-    const testRole = (req.headers['x-test-role'] as string) || 'user';
+    const testRoleHeader = req.headers['x-test-role'] as string;
+    // Default to 'customer' (lowercase) or 'CUSTOMER' depending on what's expected.
+    // But since we saw UserRole.ADMIN, let's uppercase the input if it exists.
+    const testRole = testRoleHeader ? testRoleHeader.toUpperCase() : 'CUSTOMER';
+
     req.user = {
       id: 'user-123',
       email: 'test@example.com',

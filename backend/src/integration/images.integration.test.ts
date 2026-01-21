@@ -8,22 +8,26 @@ jest.mock('../repositories/admin.repository');
 jest.mock('../repositories/shop.repository', () => ({
   ShopRepository: jest.fn().mockImplementation(() => ({
     findAllProducts: jest.fn().mockResolvedValue([
-      { 
-        id: BigInt(1), 
-        name: 'Image Test Product', 
+      {
+        id: BigInt(1),
+        name: 'Image Test Product',
         imageUrl: '/uploads/integration-test.jpg',
-        images: [{ id: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 }],
-        variants: [] 
-      }
+        images: [
+          { id: BigInt(1), productId: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 },
+        ],
+        variants: [],
+      },
     ]),
-    findProductById: jest.fn().mockResolvedValue({ 
-      id: BigInt(1), 
-      name: 'Image Test Product', 
+    findProductById: jest.fn().mockResolvedValue({
+      id: BigInt(1),
+      name: 'Image Test Product',
       imageUrl: '/uploads/integration-test.jpg',
-      images: [{ id: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 }],
-      variants: [] 
+      images: [
+        { id: BigInt(1), productId: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 },
+      ],
+      variants: [],
     }),
-  }))
+  })),
 }));
 
 const app = createApp();
@@ -67,10 +71,10 @@ describe('Image Serving & Visibility Integration', () => {
     const res = await request(app).get('/api/products');
     expect(res.status).toBe(200);
     const product = res.body[0];
-    
+
     // 2. Verify URL format
     expect(product.imageUrl).toBe(`/uploads/${testFileName}`);
-    
+
     // 3. Verify the URL returned by the API is actually accessible
     const imageRes = await request(app).get(product.imageUrl);
     expect(imageRes.status).toBe(200);

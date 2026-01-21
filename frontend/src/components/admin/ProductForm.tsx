@@ -31,10 +31,10 @@ export function ProductForm({
     name: initialData?.name || '',
     description: initialData?.description || '',
     price: initialData?.price.toString() || '',
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     category:
       typeof initialData?.category === 'object'
-        ? (initialData.category as any).id.toString()
+        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (initialData.category as any).id.toString()
         : initialData?.category || '',
     stock: initialData?.stock.toString() || '',
   });

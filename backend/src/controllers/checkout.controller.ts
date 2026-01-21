@@ -133,7 +133,7 @@ export class CheckoutController {
         RESERVATION_NOT_FOUND: 404,
         RESERVATION_EXPIRED: 404,
         PAYMENT_FAILED: 402,
-        RESERVATION_USER_MISMATCH: 400, // Explicitly map mismatch to 400
+        RESERVATION_USER_MISMATCH: 403, // Explicitly map mismatch to 403
       };
 
       const status = statusMap[error.code] || 500;
