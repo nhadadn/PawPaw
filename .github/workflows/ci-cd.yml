@@ -260,54 +260,27 @@ jobs:
           fi
 
   deploy-frontend:
-    needs: build-images
+    needs: [test-frontend]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
-    env:
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    working-directory: ./frontend
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Vercel CLI
-        run: npm i -g vercel
-
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+        
       - name: Deploy to Vercel
-        working-directory: ./frontend
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
-
-      - name: Health Check
-        run: |
-          echo "Checking Frontend Health..."
-          RETRIES=3
-          URL="https://pawpaw.com"
-          
-          for i in $(seq 1 $RETRIES); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL || echo "000")
-            if [ "$HTTP_CODE" -eq 200 ]; then
-              echo "Health check passed!"
-              exit 0
-            fi
-            echo "Attempt $i failed (Status: $HTTP_CODE). Retrying in 20s..."
-            sleep 20
-          done
-          
-          echo "Health check failed after $RETRIES attempts."
-          exit 1
-
-      - name: Rollback on Failure
-        if: failure()
-        run: |
-          echo "Deployment failed. Initiating rollback..."
-          vercel rollback --token=${{ secrets.VERCEL_TOKEN }} --yes || echo "Rollback command failed or not supported, check Vercel dashboard."
-
-      - name: Notify Result
-        if: always()
-        run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "Frontend Deployment Successful! 🚀"
-          else
-            echo "Frontend Deployment Failed! ❌"
-          fi
+        uses: amondnet/vercel-action@v25
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
+          VITE_STRIPE_PUBLISHABLE_KEY: ${{ secrets.VITE_STRIPE_PUBLISHABLE_KEY }}
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
 
