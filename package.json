@@ -1,0 +1,16 @@
+{
+  "name": "pawpawchuy",
+  "version": "1.0.0",
+  "description": "> **E-commerce de moda urbana para la nueva generación.**\r > *Estilo, velocidad y cultura.*",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
