@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import logger from '../lib/logger';
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
   // Allow bypassing auth in test environment

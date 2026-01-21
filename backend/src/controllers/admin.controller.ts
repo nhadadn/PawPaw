@@ -24,13 +24,11 @@ export class AdminController {
       res.json(products);
     } catch (error) {
       console.error('GetProducts Error:', error);
-      res
-        .status(500)
-        .json({
-          error: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to fetch products',
-          details: error instanceof Error ? error.message : String(error),
-        });
+      res.status(500).json({
+        error: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to fetch products',
+        details: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 
@@ -77,7 +75,7 @@ export class AdminController {
       }
 
       const data = ProductSchema.parse(req.body);
-      // @ts-expect-error - images is not in schema yet but we pass it
+      // images is not in schema yet but we pass it
       const product = await service.createProduct({ ...data, images: imageUrls });
       res.status(201).json(product);
     } catch (error: any) {
