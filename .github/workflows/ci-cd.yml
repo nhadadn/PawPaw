@@ -213,19 +213,23 @@ jobs:
       - name: Health Check
         run: |
           echo "Checking Backend Health..."
-          RETRIES=3
-          URL="https://api.pawpaw.com/health"
+          RETRIES=30
+          RAILWAY_PUBLIC_DOMAIN=${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
+          HEALTH_CHECK_URL="https://${RAILWAY_PUBLIC_DOMAIN}/health"
+          
+          echo "Waiting for Railway deployment to propagate..."
+          # Initial wait to allow build to start
+          sleep 30
           
           for i in $(seq 1 $RETRIES); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL || echo "000")
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL || echo "000")
             if [ "$HTTP_CODE" -eq 200 ]; then
               echo "Health check passed!"
               exit 0
             fi
-            echo "Attempt $i failed (Status: $HTTP_CODE). Retrying in 20s..."
-            sleep 20
+            echo "Attempt $i failed (Status: $HTTP_CODE). Retrying in 10s..."
+            sleep 10
           done
-          
           echo "Health check failed after $RETRIES attempts."
           exit 1
 
@@ -241,10 +245,7 @@ jobs:
         if: always()
         run: |
           if [ "${{ job.status }}" == "success" ]; then
-            echo "Backend Deployment Successful! 🚀
-
-working-directory: ./frontend
-          "
+            echo "Backend Deployment Successful! 🚀"
           else
             echo "Backend Deployment Failed! ❌"
           fi
