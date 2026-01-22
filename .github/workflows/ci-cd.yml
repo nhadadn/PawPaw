@@ -238,6 +238,3 @@ jobs:
           vercel-args: '--prod'
           working-directory: ./frontend
           vercel-version: '50.4.8'
-
-working-directory: ./frontend
-          
