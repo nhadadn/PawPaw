@@ -150,7 +150,12 @@ class MockRedis {
 }
 
 // Check if we should use real Redis or Mock
-const useRealRedis = process.env.USE_REAL_REDIS === 'true';
+const useRealRedis = !!process.env.REDIS_URL;
+
+if (useRealRedis && !process.env.REDIS_URL) {
+  throw new Error('REDIS_URL is required when Redis is enabled');
+}
+
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
 
 const redis = useRealRedis ? new Redis(redisUrl) : (new MockRedis() as unknown as Redis);

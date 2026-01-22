@@ -57,10 +57,18 @@ class MockPrisma {
   $transaction = async (callback: any) => callback(this);
 }
 
-const useMock = process.env.NODE_ENV !== 'production';
-// In a real scenario we might check for DB connection, but here we force mock if no DB
-// or just use mock for this environment.
-// For now, I'll default to MockPrisma to allow the server to run without DB.
+const isDatabaseConfigured = !!process.env.DATABASE_URL;
+const isProduction = process.env.NODE_ENV === 'production';
+
+if (isProduction && !isDatabaseConfigured) {
+  throw new Error('DATABASE_URL is required in production');
+}
+
+const useMock = !isDatabaseConfigured && !isProduction;
+
+if (useMock) {
+  console.warn('Using in-memory Prisma Mock (development mode)');
+}
 
 const prisma = (useMock ? new MockPrisma() : new PrismaClient()) as unknown as PrismaClient;
 

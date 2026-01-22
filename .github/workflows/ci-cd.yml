@@ -214,7 +214,8 @@ jobs:
         run: |
           echo "Checking Backend Health..."
           RETRIES=3
-          URL="https://api.pawpaw.com/health"
+          RAILWAY_PUBLIC_DOMAIN=${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
+          URL="https://${RAILWAY_PUBLIC_DOMAIN}/health"
           
           for i in $(seq 1 $RETRIES); do
             HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL || echo "000")
@@ -269,5 +270,6 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
+          working-directory: ./frontend
           vercel-version: '50.4.8'
 
