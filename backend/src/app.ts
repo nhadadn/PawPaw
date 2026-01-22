@@ -115,6 +115,14 @@ export const createApp = () => {
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+  app.get('/', (req, res) => {
+    res.json({
+      status: 'ok',
+      message: 'PawPaw Backend is running',
+      timestamp: new Date().toISOString(),
+    });
+  });
+
   app.get('/health', async (req: Request, res: Response) => {
     try {
       await prisma.$queryRaw`SELECT 1`;
