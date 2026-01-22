@@ -51,19 +51,16 @@ export default defineConfig({
             if (id.includes('@tanstack/react-query')) {
               return 'query-vendor';
             }
+            // Group React and UI libs together to avoid initialization issues
             if (
+              id.includes('react') ||
+              id.includes('react-dom') ||
+              id.includes('react-router-dom') ||
               id.includes('lucide-react') ||
               id.includes('clsx') ||
               id.includes('tailwind-merge')
             ) {
-              return 'ui-vendor';
-            }
-            if (
-              id.includes('react') ||
-              id.includes('react-dom') ||
-              id.includes('react-router-dom')
-            ) {
-              return 'react-vendor';
+              return 'vendor-react';
             }
           }
         },
