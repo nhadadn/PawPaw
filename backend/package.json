@@ -4,7 +4,7 @@
   "description": "Backend API for Paw Paw Urban Show",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npx -y typescript@5.3.3 tsc",
+    "build": "node node_modules/typescript/bin/tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "jest",
