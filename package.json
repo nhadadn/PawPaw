@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build": "cd backend && npm install && npm run build",
+    "start": "cd backend && npm start"
   },
   "keywords": [],
   "author": "",
