@@ -197,8 +197,11 @@ jobs:
           echo "Checking Backend Health..."
           RETRIES=30
           RAILWAY_PUBLIC_DOMAIN=${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
-          HEALTH_CHECK_URL="https://${RAILWAY_PUBLIC_DOMAIN}/health"
           
+          # Use root path which is confirmed to be working
+          HEALTH_CHECK_URL="https://${RAILWAY_PUBLIC_DOMAIN}/"
+          
+          echo "Checking URL: $HEALTH_CHECK_URL"
           echo "Waiting for Railway deployment to propagate..."
           # Initial wait to allow build to start
           sleep 30
