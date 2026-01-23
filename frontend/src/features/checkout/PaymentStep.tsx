@@ -1,47 +1,64 @@
-import { loadStripe } from "@stripe/stripe-js"
-import { Elements, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
-import { Button } from "../../components/ui/Button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/Card"
-import { Timer } from "../../components/ui/Timer"
-import { Alert } from "../../components/ui/Alert"
-import type { Order } from "../../types/checkout"
-import { AxiosError } from "axios"
-import type { ApiError } from "../../types/api"
-import { useCheckoutConfirm } from "../../hooks/useCheckout"
-import { useState } from "react"
-import { useAuthStore } from "../../stores/authStore"
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Button } from '../../components/ui/Button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../../components/ui/Card';
+import { Timer } from '../../components/ui/Timer';
+import { Alert } from '../../components/ui/Alert';
+import type { Order } from '../../types/checkout';
+import { AxiosError } from 'axios';
+import type { ApiError } from '../../types/api';
+import { useCheckoutConfirm } from '../../hooks/useCheckout';
+import { useState } from 'react';
+import { useAuthStore } from '../../stores/authStore';
 
 // TODO: Replace with env variable
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 interface PaymentStepProps {
-  reservationId: string
-  expiresAt: Date
-  clientSecret?: string
-  onSuccess: (orderData: Order) => void
-  onExpire: () => void
+  reservationId: string;
+  expiresAt: Date;
+  clientSecret?: string;
+  onSuccess: (orderData: Order) => void;
+  onExpire: () => void;
 }
 
-function MockPaymentForm({ reservationId, onSuccess }: { reservationId: string, onSuccess: (data: Order) => void }) {
-  const { mutate: confirmPayment, isPending: isConfirming, error: confirmError } = useCheckoutConfirm()
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  
-  const { isAuthenticated } = useAuthStore()
-  const [email, setEmail] = useState("")
+function MockPaymentForm({
+  reservationId,
+  onSuccess,
+}: {
+  reservationId: string;
+  onSuccess: (data: Order) => void;
+}) {
+  const {
+    mutate: confirmPayment,
+    isPending: isConfirming,
+    error: confirmError,
+  } = useCheckoutConfirm();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const { isAuthenticated } = useAuthStore();
+  const [email, setEmail] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!isAuthenticated && !email) {
-      setErrorMessage("Por favor ingresa tu email")
-      return
+      setErrorMessage('Por favor ingresa tu email');
+      return;
     }
 
-    setErrorMessage(null)
+    setErrorMessage(null);
 
     // Simulamos un ID de payment intent basado en la reserva
     // Esto debe coincidir con lo que el backend espera o ser manejado por el backend
-    const mockPaymentIntentId = `pi_mock_${reservationId}`
+    const mockPaymentIntentId = `pi_mock_${reservationId}`;
 
     confirmPayment(
       {
@@ -51,21 +68,22 @@ function MockPaymentForm({ reservationId, onSuccess }: { reservationId: string, 
       },
       {
         onSuccess: (data) => {
-          onSuccess(data)
+          onSuccess(data);
         },
         onError: (err) => {
-            const error = err as AxiosError<ApiError>;
-            setErrorMessage(error.response?.data?.message || "Error al confirmar la orden")
-        }
+          const error = err as AxiosError<ApiError>;
+          setErrorMessage(error.response?.data?.message || 'Error al confirmar la orden');
+        },
       }
-    )
-  }
+    );
+  };
 
   return (
     <form onSubmit={handleSubmit}>
       <CardContent className="space-y-4">
         <Alert variant="warning" title="Modo de Prueba">
-          Estás usando un entorno de desarrollo con claves dummy. El pago será simulado automáticamente.
+          Estás usando un entorno de desarrollo con claves dummy. El pago será simulado
+          automáticamente.
         </Alert>
 
         {!isAuthenticated && (
@@ -84,26 +102,27 @@ function MockPaymentForm({ reservationId, onSuccess }: { reservationId: string, 
             />
           </div>
         )}
-        
+
         <div className="p-4 border rounded-lg bg-neutral-50">
-            <p className="text-sm text-neutral-600 mb-2">Tarjeta Simulada:</p>
-            <div className="bg-neutral-200 h-10 rounded animate-pulse flex items-center px-4 text-neutral-500 text-sm">
-                **** **** **** 4242
-            </div>
+          <p className="text-sm text-neutral-600 mb-2">Tarjeta Simulada:</p>
+          <div className="bg-neutral-200 h-10 rounded animate-pulse flex items-center px-4 text-neutral-500 text-sm">
+            **** **** **** 4242
+          </div>
         </div>
 
-        {errorMessage && (
-            <Alert variant="error">{errorMessage}</Alert>
-        )}
-        
+        {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
+
         {confirmError && (
-            <Alert variant="error">{(confirmError as AxiosError<ApiError>).response?.data?.message || "Error en el servidor"}</Alert>
+          <Alert variant="error">
+            {(confirmError as AxiosError<ApiError>).response?.data?.message ||
+              'Error en el servidor'}
+          </Alert>
         )}
       </CardContent>
       <CardFooter>
-        <Button 
-          className="w-full" 
-          size="lg" 
+        <Button
+          className="w-full"
+          size="lg"
           variant="success"
           type="submit"
           disabled={isConfirming}
@@ -113,31 +132,41 @@ function MockPaymentForm({ reservationId, onSuccess }: { reservationId: string, 
         </Button>
       </CardFooter>
     </form>
-  )
+  );
 }
 
-function PaymentForm({ reservationId, onSuccess }: { reservationId: string, onSuccess: (data: Order) => void }) {
-  const stripe = useStripe()
-  const elements = useElements()
-  const { mutate: confirmPayment, isPending: isConfirming, error: confirmError } = useCheckoutConfirm()
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [isProcessing, setIsProcessing] = useState(false)
-  
-  const { isAuthenticated, user } = useAuthStore()
-  const [email, setEmail] = useState("")
+function PaymentForm({
+  reservationId,
+  onSuccess,
+}: {
+  reservationId: string;
+  onSuccess: (data: Order) => void;
+}) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const {
+    mutate: confirmPayment,
+    isPending: isConfirming,
+    error: confirmError,
+  } = useCheckoutConfirm();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const { isAuthenticated, user } = useAuthStore();
+  const [email, setEmail] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!stripe || !elements) return
+    if (!stripe || !elements) return;
 
     if (!isAuthenticated && !email) {
-      setErrorMessage("Por favor ingresa tu email")
-      return
+      setErrorMessage('Por favor ingresa tu email');
+      return;
     }
 
-    setIsProcessing(true)
-    setErrorMessage(null)
+    setIsProcessing(true);
+    setErrorMessage(null);
 
     try {
       // 1. Confirm payment with Stripe
@@ -147,16 +176,16 @@ function PaymentForm({ reservationId, onSuccess }: { reservationId: string, onSu
           return_url: window.location.origin, // Not used for redirect=if_required
           receipt_email: isAuthenticated ? user?.email : email,
         },
-        redirect: "if_required",
-      })
+        redirect: 'if_required',
+      });
 
       if (stripeError) {
-        setErrorMessage(stripeError.message || "Error en el pago")
-        setIsProcessing(false)
-        return
+        setErrorMessage(stripeError.message || 'Error en el pago');
+        setIsProcessing(false);
+        return;
       }
 
-      if (paymentIntent && paymentIntent.status === "succeeded") {
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
         // 2. Confirm order with Backend
         confirmPayment(
           {
@@ -166,28 +195,26 @@ function PaymentForm({ reservationId, onSuccess }: { reservationId: string, onSu
           },
           {
             onSuccess: (data) => {
-              onSuccess(data)
+              onSuccess(data);
             },
             onError: (err) => {
-                const error = err as AxiosError<ApiError>;
-                setErrorMessage(error.response?.data?.message || "Error al confirmar la orden")
-                setIsProcessing(false)
-            }
+              const error = err as AxiosError<ApiError>;
+              setErrorMessage(error.response?.data?.message || 'Error al confirmar la orden');
+              setIsProcessing(false);
+            },
           }
-        )
+        );
       }
     } catch {
-      setErrorMessage("Ocurrió un error inesperado")
-      setIsProcessing(false)
+      setErrorMessage('Ocurrió un error inesperado');
+      setIsProcessing(false);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
       <CardContent className="space-y-4">
-        <Alert variant="info">
-          Tus productos están reservados. No cierres esta ventana.
-        </Alert>
+        <Alert variant="info">Tus productos están reservados. No cierres esta ventana.</Alert>
 
         {!isAuthenticated && (
           <div className="space-y-2">
@@ -205,23 +232,24 @@ function PaymentForm({ reservationId, onSuccess }: { reservationId: string, onSu
             />
           </div>
         )}
-        
+
         <div className="p-4 border rounded-lg bg-white">
-            <PaymentElement />
+          <PaymentElement />
         </div>
 
-        {errorMessage && (
-            <Alert variant="error">{errorMessage}</Alert>
-        )}
-        
+        {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
+
         {confirmError && (
-            <Alert variant="error">{(confirmError as AxiosError<ApiError>).response?.data?.message || "Error en el servidor"}</Alert>
+          <Alert variant="error">
+            {(confirmError as AxiosError<ApiError>).response?.data?.message ||
+              'Error en el servidor'}
+          </Alert>
         )}
       </CardContent>
       <CardFooter>
-        <Button 
-          className="w-full" 
-          size="lg" 
+        <Button
+          className="w-full"
+          size="lg"
           variant="success"
           type="submit"
           disabled={!stripe || isProcessing || isConfirming}
@@ -231,30 +259,22 @@ function PaymentForm({ reservationId, onSuccess }: { reservationId: string, onSu
         </Button>
       </CardFooter>
     </form>
-  )
+  );
 }
 
-export function PaymentStep({ reservationId, expiresAt, clientSecret, onSuccess, onExpire }: PaymentStepProps) {
-  
+export function PaymentStep({
+  reservationId,
+  expiresAt,
+  clientSecret,
+  onSuccess,
+  onExpire,
+}: PaymentStepProps) {
   if (!clientSecret) {
+    // Fallback for development/demo when no real Stripe secret is available
+    // This allows testing the UI even if backend failed to provide a secret
+    // (e.g. missing env vars)
+    if (import.meta.env.DEV) {
       return (
-          <Alert variant="error">
-              Error de configuración: No se pudo iniciar el pago (Falta clientSecret).
-          </Alert>
-      )
-  }
-
-  const options = {
-    clientSecret,
-    appearance: {
-        theme: 'stripe' as const,
-    },
-  };
-
-  const isMock = clientSecret.includes('_mock');
-
-  if (isMock) {
-     return (
         <div className="space-y-6 animate-slide-up">
           <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-neutral-200">
             <span className="font-bold text-neutral-700">Tiempo restante para comprar:</span>
@@ -263,13 +283,51 @@ export function PaymentStep({ reservationId, expiresAt, clientSecret, onSuccess,
 
           <Card>
             <CardHeader>
-              <CardTitle>Pago Seguro (Test)</CardTitle>
-              <CardDescription>Entorno de desarrollo - Pago simulado</CardDescription>
+              <CardTitle>Pago Seguro (Fallback)</CardTitle>
+              <CardDescription>
+                <span className="text-yellow-600 font-bold">Aviso: </span>
+                Falta clientSecret. Usando formulario simulado para desarrollo.
+              </CardDescription>
             </CardHeader>
             <MockPaymentForm reservationId={reservationId} onSuccess={onSuccess} />
           </Card>
         </div>
-     )
+      );
+    }
+
+    return (
+      <Alert variant="error">
+        Error de configuración: No se pudo iniciar el pago (Falta clientSecret).
+      </Alert>
+    );
+  }
+
+  const options = {
+    clientSecret,
+    appearance: {
+      theme: 'stripe' as const,
+    },
+  };
+
+  const isMock = clientSecret.includes('_mock');
+
+  if (isMock) {
+    return (
+      <div className="space-y-6 animate-slide-up">
+        <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-neutral-200">
+          <span className="font-bold text-neutral-700">Tiempo restante para comprar:</span>
+          <Timer expiresAt={expiresAt} onExpire={onExpire} />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Pago Seguro (Test)</CardTitle>
+            <CardDescription>Entorno de desarrollo - Pago simulado</CardDescription>
+          </CardHeader>
+          <MockPaymentForm reservationId={reservationId} onSuccess={onSuccess} />
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -284,11 +342,11 @@ export function PaymentStep({ reservationId, expiresAt, clientSecret, onSuccess,
           <CardTitle>Pago Seguro</CardTitle>
           <CardDescription>Completa tu compra con tarjeta de crédito o débito.</CardDescription>
         </CardHeader>
-        
+
         <Elements stripe={stripePromise} options={options}>
-            <PaymentForm reservationId={reservationId} onSuccess={onSuccess} />
+          <PaymentForm reservationId={reservationId} onSuccess={onSuccess} />
         </Elements>
       </Card>
     </div>
-  )
+  );
 }
