@@ -40,22 +40,33 @@ export const createApp = () => {
     })
   );
 
-  const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim());
+
+  logger.info(`CORS configured with allowed origins: ${allowedOrigins.join(', ')}`);
+
   app.use(
     cors({
       origin: (origin, callback) => {
         // Allow requests with no origin (like mobile apps, curl, or server-to-server webhooks)
         if (!origin) return callback(null, true);
 
-        if (origin === allowedOrigin) {
+        // Check for wildcard '*' to allow any origin (use with caution in production)
+        if (allowedOrigins.includes('*')) {
+          return callback(null, true);
+        }
+
+        if (allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
+          logger.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
           callback(new Error('Not allowed by CORS'));
         }
       },
       credentials: true,
-      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
     })
   );
 
