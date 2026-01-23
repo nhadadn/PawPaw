@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ReservationStep } from '../features/checkout/ReservationStep';
 import { useCartStore } from '../stores/cartStore';
-import { useCheckoutReserve } from '../hooks/useCheckout';
+import { useCheckoutReserve, useCheckoutCreatePaymentIntent } from '../hooks/useCheckout';
 import { vi, describe, it, expect, beforeEach, type Mock } from 'vitest';
 
 // Mock dependencies
@@ -18,11 +18,17 @@ vi.mock('../lib/utils', async (importOriginal) => {
 describe('ReservationStep', () => {
   const mockOnSuccess = vi.fn();
   const mockReserve = vi.fn();
+  const mockCreatePaymentIntent = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
     (useCheckoutReserve as unknown as Mock).mockReturnValue({
       mutate: mockReserve,
+      isPending: false,
+      error: null,
+    });
+    (useCheckoutCreatePaymentIntent as unknown as Mock).mockReturnValue({
+      mutate: mockCreatePaymentIntent,
       isPending: false,
       error: null,
     });
@@ -53,7 +59,7 @@ describe('ReservationStep', () => {
     });
 
     render(<ReservationStep onSuccess={mockOnSuccess} />);
-    
+
     expect(screen.getByText('Test Product')).toBeInTheDocument();
     expect(screen.getByText('$20')).toBeInTheDocument(); // 2000 / 100
 
