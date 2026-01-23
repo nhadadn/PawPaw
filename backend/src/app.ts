@@ -36,16 +36,20 @@ export const createApp = () => {
     })
   );
 
-  const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
+  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim());
+
   app.use(
     cors({
       origin: (origin, callback) => {
         // Allow requests with no origin (like mobile apps, curl, or server-to-server webhooks)
         if (!origin) return callback(null, true);
 
-        if (origin === allowedOrigin) {
+        if (allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
+          logger.warn(`CORS blocked for origin: ${origin}`);
           callback(new Error('Not allowed by CORS'));
         }
       },
