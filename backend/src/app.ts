@@ -136,6 +136,11 @@ export const createApp = () => {
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+  // Root endpoint for health checks
+  app.get('/', (_req: Request, res: Response) => {
+    res.status(200).send('PawPaw Backend API is running');
+  });
+
   app.get('/health', async (req: Request, res: Response) => {
     try {
       await prisma.$queryRaw`SELECT 1`;
