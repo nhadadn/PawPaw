@@ -42,7 +42,7 @@ export const useCheckoutCreatePaymentIntent = () => {
   return useMutation({
     mutationFn: async (payload: PaymentIntentPayload) => {
       const { data } = await apiClient.post<PaymentIntentResponse>(
-        '/api/checkout/payment-intent',
+        '/api/checkout/create-payment-intent',
         payload
       );
       return data;
