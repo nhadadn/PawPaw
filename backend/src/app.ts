@@ -30,26 +30,26 @@ import { globalLimiter, authLimiter, checkoutLimiter } from './middleware/rateLi
 export const createApp = () => {
   const app = express();
 
+  // Trust proxy is required when running behind a load balancer (like Railway/Heroku/AWS ELB)
+  // to correctly identify client IP addresses for rate limiting and logging
+  app.set('trust proxy', 1);
+
   app.use(
     helmet({
       crossOriginResourcePolicy: { policy: 'cross-origin' },
     })
   );
 
-  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
-    .split(',')
-    .map((origin) => origin.trim());
-
+  const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:5173';
   app.use(
     cors({
       origin: (origin, callback) => {
         // Allow requests with no origin (like mobile apps, curl, or server-to-server webhooks)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.includes(origin)) {
+        if (origin === allowedOrigin) {
           callback(null, true);
         } else {
-          logger.warn(`CORS blocked for origin: ${origin}`);
           callback(new Error('Not allowed by CORS'));
         }
       },
@@ -118,14 +118,6 @@ export const createApp = () => {
   app.use(morgan('dev'));
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-  app.get('/', (req, res) => {
-    res.json({
-      status: 'ok',
-      message: 'PawPaw Backend is running',
-      timestamp: new Date().toISOString(),
-    });
-  });
 
   app.get('/health', async (req: Request, res: Response) => {
     try {
