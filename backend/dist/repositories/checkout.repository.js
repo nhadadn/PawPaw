@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CheckoutRepository = void 0;
+const client_1 = require("@prisma/client");
 class CheckoutRepository {
     /**
      * Finds a product variant by ID and locks it for update.
@@ -48,12 +49,12 @@ class CheckoutRepository {
             data: {
                 userId: data.userId,
                 guestEmail: data.guestEmail,
-                status: 'paid',
+                status: client_1.OrderStatus.PAID,
                 totalCents: data.totalCents,
                 currency: data.currency,
                 stripePaymentIntentId: data.stripePaymentIntentId,
                 items: {
-                    create: data.items.map(item => ({
+                    create: data.items.map((item) => ({
                         productVariantId: item.productVariantId,
                         quantity: item.quantity,
                         unitPriceCents: item.unitPriceCents,
@@ -85,8 +86,8 @@ class CheckoutRepository {
         await tx.productVariant.update({
             where: { id: variantId },
             data: {
-                reservedStock: { decrement: quantity }
-            }
+                reservedStock: { decrement: quantity },
+            },
         });
     }
     async countUserPastPurchases(tx, userId, productId) {
@@ -97,7 +98,7 @@ class CheckoutRepository {
             where: {
                 order: {
                     userId: userId,
-                    status: { not: 'cancelled' },
+                    status: { not: client_1.OrderStatus.CANCELLED },
                 },
                 productVariant: {
                     productId: productId,

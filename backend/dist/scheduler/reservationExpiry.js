@@ -7,6 +7,7 @@ const node_cron_1 = __importDefault(require("node-cron"));
 const redis_1 = __importDefault(require("../lib/redis"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const logger_1 = __importDefault(require("../lib/logger"));
+const client_1 = require("@prisma/client");
 // Check every minute
 node_cron_1.default.schedule('*/1 * * * *', async () => {
     logger_1.default.info('Running reservation expiry job');
@@ -33,15 +34,15 @@ node_cron_1.default.schedule('*/1 * * * *', async () => {
                         await tx.productVariant.update({
                             where: { id: BigInt(item.product_variant_id) },
                             data: {
-                                reservedStock: { decrement: item.quantity }
-                            }
+                                reservedStock: { decrement: item.quantity },
+                            },
                         });
                         await tx.inventoryLog.create({
                             data: {
                                 productVariantId: BigInt(item.product_variant_id),
-                                changeType: 'release_expired',
-                                quantityDiff: item.quantity
-                            }
+                                changeType: client_1.InventoryChangeType.RELEASE_EXPIRED,
+                                quantityDiff: item.quantity,
+                            },
                         });
                     }
                 });

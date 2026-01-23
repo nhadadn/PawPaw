@@ -5,14 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.optionalAuthMiddleware = exports.authMiddleware = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const logger_1 = __importDefault(require("../lib/logger"));
 const authMiddleware = (req, res, next) => {
     // Allow bypassing auth in test environment
     if (process.env.NODE_ENV === 'test') {
-        const testRole = req.headers['x-test-role'] || 'user';
+        const testRoleHeader = req.headers['x-test-role'];
+        // Default to 'customer' (lowercase) or 'CUSTOMER' depending on what's expected.
+        // But since we saw UserRole.ADMIN, let's uppercase the input if it exists.
+        const testRole = testRoleHeader ? testRoleHeader.toUpperCase() : 'CUSTOMER';
         req.user = {
             id: 'user-123',
             email: 'test@example.com',
-            role: testRole
+            role: testRole,
         };
         return next();
     }
@@ -28,12 +32,12 @@ const authMiddleware = (req, res, next) => {
         req.user = {
             id: decoded.id || decoded.user_id || decoded.sub || '',
             email: decoded.email || '',
-            role: decoded.role || ''
+            role: decoded.role || '',
         };
         next();
     }
     catch (err) {
-        console.log('[AuthMiddleware] Token verification failed:', err);
+        logger_1.default.warn('[AuthMiddleware] Token verification failed:', err);
         return res.status(401).json({ error: 'UNAUTHORIZED', message: 'Invalid token' });
     }
 };
@@ -50,15 +54,15 @@ const optionalAuthMiddleware = (req, res, next) => {
         req.user = {
             id: decoded.id || decoded.user_id || decoded.sub || '',
             email: decoded.email || '',
-            role: decoded.role || ''
+            role: decoded.role || '',
         };
         next();
     }
     catch (err) {
-        // If token is invalid, just proceed as anonymous? 
+        // If token is invalid, just proceed as anonymous?
         // Or return 401? Usually better to ignore bad token for optional auth, or return 401.
         // Let's just ignore and treat as anonymous to avoid blocking checkout if token expired.
-        console.log('[OptionalAuthMiddleware] Token verification failed, proceeding as guest:', err);
+        logger_1.default.warn('[OptionalAuthMiddleware] Token verification failed, proceeding as guest:', err);
         next();
     }
 };

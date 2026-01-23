@@ -195,7 +195,7 @@ jobs:
       - name: Health Check
         run: |
           echo "Checking Backend Health..."
-          RETRIES=30
+          RETRIES=60
           RAILWAY_PUBLIC_DOMAIN=${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
           
           # Fallback to known domain if secret is missing
@@ -210,10 +210,10 @@ jobs:
           echo "Checking URL: $HEALTH_CHECK_URL"
           echo "Waiting for Railway deployment to propagate..."
           # Initial wait to allow build to start
-          sleep 30
+          sleep 60
           
           for i in $(seq 1 $RETRIES); do
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL || echo "000")
+            HTTP_CODE=$(curl -k -L -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL || echo "000")
             if [ "$HTTP_CODE" -eq 200 ]; then
               echo "Health check passed!"
               exit 0
@@ -222,6 +222,8 @@ jobs:
             sleep 10
           done
           echo "Health check failed after $RETRIES attempts."
+          echo "Last response body for debugging:"
+          curl -k -L -v $HEALTH_CHECK_URL || true
           exit 1
 
       - name: Notify Result

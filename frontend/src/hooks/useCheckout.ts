@@ -7,6 +7,17 @@ interface ReservePayload {
   items: ReservationItem[];
 }
 
+interface PaymentIntentPayload {
+  reservation_id: string;
+}
+
+interface PaymentIntentResponse {
+  client_secret: string;
+  payment_intent_id: string;
+  amount: number;
+  currency: string;
+}
+
 interface ConfirmPayload {
   reservation_id: string;
   payment_intent_id: string;
@@ -23,6 +34,18 @@ export const useCheckoutReserve = () => {
     },
     onSuccess: (data) => {
       setReservation(data);
+    },
+  });
+};
+
+export const useCheckoutCreatePaymentIntent = () => {
+  return useMutation({
+    mutationFn: async (payload: PaymentIntentPayload) => {
+      const { data } = await apiClient.post<PaymentIntentResponse>(
+        '/api/checkout/payment-intent',
+        payload
+      );
+      return data;
     },
   });
 };

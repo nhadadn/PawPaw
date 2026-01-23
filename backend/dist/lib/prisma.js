@@ -14,28 +14,59 @@ class MockPrisma {
                         isActive: true,
                         category: { name: 'Mock Category' },
                         variants: [{ initialStock: 10, reservedStock: 0, id: BigInt(1), productId: BigInt(1) }],
-                        images: []
-                    }
+                        images: [],
+                    },
                 ];
             },
             findFirst: async () => null,
             findUnique: async () => null,
             count: async () => 1,
             create: async () => ({ id: BigInt(1) }),
-            update: async () => ({ id: BigInt(1) })
+            update: async () => ({ id: BigInt(1) }),
         };
         this.category = {
             findMany: async () => [],
-            findUnique: async () => null
+            findUnique: async () => null,
+        };
+        this.webhookEvent = {
+            findUnique: async () => null,
+            create: async () => ({}),
+            update: async () => ({}),
+        };
+        this.order = {
+            findFirst: async () => null,
+            create: async () => ({ id: BigInt(1), status: 'paid', totalCents: 100 }),
+            update: async () => ({ id: BigInt(1) }),
+        };
+        this.orderItem = {
+            findMany: async () => [],
+        };
+        this.productVariant = {
+            update: async () => ({}),
+            findUnique: async () => ({
+                id: BigInt(1),
+                initialStock: 10,
+                reservedStock: 0,
+                priceCents: 1000,
+            }),
+        };
+        this.inventoryLog = {
+            create: async () => ({}),
         };
         this.$connect = async () => { };
         this.$disconnect = async () => { };
         this.$queryRaw = async () => [1];
+        this.$transaction = async (callback) => callback(this);
     }
 }
-const useMock = process.env.NODE_ENV !== 'production';
-// In a real scenario we might check for DB connection, but here we force mock if no DB 
-// or just use mock for this environment.
-// For now, I'll default to MockPrisma to allow the server to run without DB.
+const isDatabaseConfigured = !!process.env.DATABASE_URL;
+const isProduction = process.env.NODE_ENV === 'production';
+if (isProduction && !isDatabaseConfigured) {
+    throw new Error('DATABASE_URL is required in production');
+}
+const useMock = !isDatabaseConfigured && !isProduction;
+if (useMock) {
+    console.warn('Using in-memory Prisma Mock (development mode)');
+}
 const prisma = (useMock ? new MockPrisma() : new client_1.PrismaClient());
 exports.default = prisma;

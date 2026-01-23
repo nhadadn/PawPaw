@@ -12,6 +12,7 @@ const checkout_repository_1 = require("../repositories/checkout.repository");
 const errors_1 = require("../utils/errors");
 const logger_1 = __importDefault(require("../lib/logger"));
 const RESERVATION_TTL = 600; // 10 minutes
+const client_1 = require("@prisma/client");
 class CheckoutService {
     constructor() {
         this.repo = new checkout_repository_1.CheckoutRepository();
@@ -26,10 +27,15 @@ class CheckoutService {
             throw new errors_1.CheckoutError('INVALID_REQUEST', 'Items must be a non-empty array');
         }
         for (const item of items) {
-            if (!item || typeof item.product_variant_id !== 'number' || !Number.isInteger(item.product_variant_id) || item.product_variant_id <= 0) {
+            if (!item ||
+                typeof item.product_variant_id !== 'number' ||
+                !Number.isInteger(item.product_variant_id) ||
+                item.product_variant_id <= 0) {
                 throw new errors_1.CheckoutError('INVALID_REQUEST', 'product_variant_id must be a positive integer');
             }
-            if (typeof item.quantity !== 'number' || !Number.isInteger(item.quantity) || item.quantity <= 0) {
+            if (typeof item.quantity !== 'number' ||
+                !Number.isInteger(item.quantity) ||
+                item.quantity <= 0) {
                 throw new errors_1.CheckoutError('INVALID_REQUEST', 'quantity must be a positive integer');
             }
         }
@@ -62,15 +68,15 @@ class CheckoutService {
                     // Log
                     await this.repo.createInventoryLog(tx, {
                         productVariantId: Number(variant.id),
-                        changeType: 'reserve',
-                        quantityDiff: item.quantity
+                        changeType: client_1.InventoryChangeType.RESERVE,
+                        quantityDiff: item.quantity,
                     });
                     reservationItems.push({
                         product_variant_id: Number(variant.id),
                         quantity: item.quantity,
                         unit_price_cents: variant.price_cents,
                         total_price_cents: variant.price_cents * item.quantity,
-                        currency: variant.currency
+                        currency: variant.currency,
                     });
                     totalCents += variant.price_cents * item.quantity;
                     currency = variant.currency;
@@ -84,12 +90,69 @@ class CheckoutService {
             logger_1.default.error('Reservation transaction failed', {
                 message: error instanceof Error ? error.message : 'Unknown',
                 stack: error instanceof Error ? error.stack : undefined,
-                error
+                error,
             });
             const message = error instanceof Error ? error.message : 'Unknown error';
             throw new Error('Transaction failed: ' + message);
         }
-        // 3. Create Stripe Payment Intent
+        // 3. Save to Redis
+        const payload = {
+            id: reservationId,
+            reservation_id: reservationId,
+            user_id: userId,
+            items: reservationItems,
+            total_cents: totalCents,
+            currency,
+            expires_at: expiresAt.toISOString(),
+            // client_secret will be generated in createPaymentIntent
+        };
+        await redis_1.default
+            .multi()
+            .set(`reservation:${reservationId}`, JSON.stringify(payload), 'EX', RESERVATION_TTL)
+            .set(`reservation:user:${userId}`, reservationId, 'EX', RESERVATION_TTL)
+            .zadd('reservations:by_expiry', expiresAt.getTime(), reservationId)
+            .exec();
+        logger_1.default.info('Reservation created', { reservation_id: reservationId, user_id: userId });
+        return payload;
+    }
+    async createPaymentIntent(userId, reservationId) {
+        // 1. Get Reservation
+        const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
+        if (!rawReservation) {
+            throw new errors_1.CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found or expired');
+        }
+        const reservation = JSON.parse(rawReservation);
+        // Validate ownership
+        if (userId && reservation.user_id !== userId) {
+            // Allow claiming if it's a guest reservation
+            if (reservation.user_id.startsWith('guest:')) {
+                logger_1.default.info(`User ${userId} claiming guest reservation ${reservation.user_id}`);
+                reservation.user_id = userId;
+                // If PI already exists, we need to persist the claim NOW because we might return early
+                if (reservation.payment_intent_id && reservation.client_secret) {
+                    const ttl = Math.max(0, Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000));
+                    if (ttl > 0) {
+                        await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
+                    }
+                }
+            }
+            else {
+                throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+            }
+        }
+        if (!userId && !reservation.user_id.startsWith('guest:')) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation requires authentication');
+        }
+        // Check if PI already exists in reservation data to avoid duplicates (Idempotency)
+        if (reservation.payment_intent_id && reservation.client_secret) {
+            return {
+                client_secret: reservation.client_secret,
+                payment_intent_id: reservation.payment_intent_id,
+                amount: reservation.total_cents,
+                currency: reservation.currency,
+            };
+        }
+        // 2. Create Stripe Payment Intent
         let clientSecret;
         let paymentIntentId;
         if (process.env.STRIPE_SECRET_KEY?.includes('replace_me')) {
@@ -100,13 +163,13 @@ class CheckoutService {
         else {
             try {
                 const paymentIntent = await stripe_1.default.paymentIntents.create({
-                    amount: totalCents,
-                    currency,
+                    amount: reservation.total_cents,
+                    currency: reservation.currency,
                     automatic_payment_methods: { enabled: true },
                     metadata: {
                         reservation_id: reservationId,
-                        user_id: userId
-                    }
+                        user_id: reservation.user_id,
+                    },
                 });
                 if (!paymentIntent.client_secret) {
                     throw new Error('Missing client_secret from Stripe');
@@ -117,33 +180,27 @@ class CheckoutService {
             catch (error) {
                 logger_1.default.error('Stripe payment intent creation failed', {
                     message: error instanceof Error ? error.message : 'Unknown',
-                    error
+                    error,
                 });
-                // We should ideally release the stock here, but for now we rely on TTL expiry
-                // or we could call this.repo.updateReservedStock(tx, ..., -quantity) if we had the tx scope,
-                // but we are outside tx.
                 throw new errors_1.CheckoutError('PAYMENT_FAILED', 'Failed to initialize payment');
             }
         }
-        const payload = {
-            id: reservationId,
-            reservation_id: reservationId,
-            user_id: userId,
-            items: reservationItems,
-            total_cents: totalCents,
-            currency,
-            expires_at: expiresAt.toISOString(),
-            client_secret: clientSecret
+        // 3. Update Redis with PI details
+        reservation.client_secret = clientSecret;
+        reservation.payment_intent_id = paymentIntentId;
+        // Calculate remaining TTL
+        const ttl = Math.max(0, Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000));
+        if (ttl > 0) {
+            await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
+        }
+        return {
+            client_secret: clientSecret,
+            payment_intent_id: paymentIntentId,
+            amount: reservation.total_cents,
+            currency: reservation.currency,
         };
-        await redis_1.default.multi()
-            .set(`reservation:${reservationId}`, JSON.stringify(payload), 'EX', RESERVATION_TTL)
-            .set(`reservation:user:${userId}`, reservationId, 'EX', RESERVATION_TTL)
-            .zadd('reservations:by_expiry', expiresAt.getTime(), reservationId)
-            .exec();
-        logger_1.default.info('Reservation created', { reservation_id: reservationId, user_id: userId });
-        return payload;
     }
-    async confirm(userId, reservationId, paymentIntentId, email) {
+    async confirm(userId, reservationId, paymentIntentId, email, tx) {
         // 1. Get Reservation
         const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
         if (!rawReservation) {
@@ -168,7 +225,7 @@ class CheckoutService {
             paymentIntent = {
                 id: paymentIntentId,
                 status: 'succeeded',
-                receipt_email: email || 'guest@mock.com'
+                receipt_email: email || 'guest@mock.com',
             };
         }
         else {
@@ -185,35 +242,41 @@ class CheckoutService {
             }
         }
         // 3. Create Order & Update Stock
+        const executeTransaction = async (trx) => {
+            // Create Order
+            const newOrder = await this.repo.createOrder(trx, {
+                userId: userId || undefined, // undefined if guest
+                guestEmail: !userId ? email || paymentIntent.receipt_email || undefined : undefined,
+                totalCents: reservation.total_cents,
+                currency: reservation.currency,
+                stripePaymentIntentId: paymentIntentId,
+                items: reservation.items.map((i) => ({
+                    productVariantId: i.product_variant_id,
+                    quantity: i.quantity,
+                    unitPriceCents: i.unit_price_cents,
+                    totalPriceCents: i.total_price_cents,
+                })),
+            });
+            // Update Stock (Permanent deduction)
+            for (const item of reservation.items) {
+                await this.repo.confirmStockDeduction(trx, item.product_variant_id, item.quantity);
+                await this.repo.createInventoryLog(trx, {
+                    productVariantId: item.product_variant_id,
+                    changeType: client_1.InventoryChangeType.CHECKOUT_CONFIRMED,
+                    quantityDiff: -item.quantity,
+                    orderId: Number(newOrder.id),
+                });
+            }
+            return newOrder;
+        };
         let order;
         try {
-            order = await prisma_1.default.$transaction(async (tx) => {
-                // Create Order
-                const newOrder = await this.repo.createOrder(tx, {
-                    userId: userId || undefined, // undefined if guest
-                    guestEmail: !userId ? (email || paymentIntent.receipt_email || undefined) : undefined,
-                    totalCents: reservation.total_cents,
-                    currency: reservation.currency,
-                    stripePaymentIntentId: paymentIntentId,
-                    items: reservation.items.map((i) => ({
-                        productVariantId: i.product_variant_id,
-                        quantity: i.quantity,
-                        unitPriceCents: i.unit_price_cents,
-                        totalPriceCents: i.total_price_cents
-                    }))
-                });
-                // Update Stock (Permanent deduction)
-                for (const item of reservation.items) {
-                    await this.repo.confirmStockDeduction(tx, item.product_variant_id, item.quantity);
-                    await this.repo.createInventoryLog(tx, {
-                        productVariantId: item.product_variant_id,
-                        changeType: 'checkout_confirmed',
-                        quantityDiff: -item.quantity,
-                        orderId: Number(newOrder.id)
-                    });
-                }
-                return newOrder;
-            });
+            if (tx) {
+                order = await executeTransaction(tx);
+            }
+            else {
+                order = await prisma_1.default.$transaction(executeTransaction);
+            }
         }
         catch (e) {
             logger_1.default.error('Order creation failed', { error: e });
@@ -226,11 +289,11 @@ class CheckoutService {
         return {
             order_id: order.id.toString(),
             order_number: order.id.toString(), // Assuming ID is order number for now
-            status: 'paid',
-            total_cents: order.totalCents
+            status: client_1.OrderStatus.PAID,
+            total_cents: order.totalCents,
         };
     }
-    async cancel(userId, reservationId) {
+    async cancel(userId, reservationId, tx) {
         const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
         if (!rawReservation) {
             return { message: 'Reservation already expired or not found' };
@@ -245,16 +308,22 @@ class CheckoutService {
             throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation requires authentication');
         }
         // Release Stock
-        await prisma_1.default.$transaction(async (tx) => {
+        const executeTransaction = async (trx) => {
             for (const item of reservation.items) {
-                await this.repo.releaseReservedStock(tx, item.product_variant_id, item.quantity);
-                await this.repo.createInventoryLog(tx, {
+                await this.repo.releaseReservedStock(trx, item.product_variant_id, item.quantity);
+                await this.repo.createInventoryLog(trx, {
                     productVariantId: item.product_variant_id,
-                    changeType: 'release',
-                    quantityDiff: -item.quantity
+                    changeType: client_1.InventoryChangeType.RELEASE,
+                    quantityDiff: -item.quantity,
                 });
             }
-        });
+        };
+        if (tx) {
+            await executeTransaction(tx);
+        }
+        else {
+            await prisma_1.default.$transaction(executeTransaction);
+        }
         // Cleanup Redis
         await redis_1.default.del(`reservation:${reservationId}`);
         await redis_1.default.del(`reservation:user:${reservation.user_id}`);
@@ -277,7 +346,7 @@ class CheckoutService {
         return {
             status: 'active',
             expires_at: reservation.expires_at,
-            seconds_remaining: Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000)
+            seconds_remaining: Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000),
         };
     }
 }
