@@ -93,8 +93,22 @@ export class AdminController {
     try {
       const id = parseInt(req.params.id);
       logger.info('UpdateProduct ID:', id);
-      logger.info('UpdateProduct Payload:', req.body);
-      logger.info('UpdateProduct Files:', req.files);
+      // Log headers to check Content-Type
+      logger.info('UpdateProduct Headers:', req.headers['content-type']);
+
+      // Explicitly log req.files type and content
+      if (Array.isArray(req.files)) {
+        logger.info(`UpdateProduct Files (Array): ${req.files.length} files`);
+        req.files.forEach((f, i) =>
+          logger.info(`File ${i}: ${f.originalname} (${f.mimetype}) -> ${f.filename}`)
+        );
+      } else if (req.files) {
+        logger.info('UpdateProduct Files (Object):', Object.keys(req.files));
+      } else {
+        logger.info('UpdateProduct Files: No files received (req.files is undefined/null)');
+      }
+
+      logger.info('UpdateProduct Body:', JSON.stringify(req.body));
 
       const files = req.files as Express.Multer.File[];
       // Updated to point to /uploads/products/
