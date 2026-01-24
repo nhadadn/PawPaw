@@ -139,7 +139,11 @@ export const createApp = () => {
   );
 
   app.use(express.json());
-  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+  const uploadDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
+  app.use('/uploads', express.static(uploadDir));
+  logger.info(`Serving static files from: ${uploadDir}`);
+
   app.use(morgan('dev'));
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

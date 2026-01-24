@@ -4,8 +4,14 @@ import fs from 'fs';
 import { Request } from 'express';
 
 // Ensure uploads directory exists
-const uploadDir = path.join(process.cwd(), 'uploads');
+// Allow overriding via env var for Railway volumes (e.g., /app/backend/uploads)
+const uploadDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
 const productsDir = path.join(uploadDir, 'products');
+
+console.log(`Upload configuration:
+  Root: ${uploadDir}
+  Products: ${productsDir}
+`);
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
