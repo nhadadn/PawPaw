@@ -14,46 +14,63 @@ export function ProductDetail() {
   const navigate = useNavigate();
   const { data: product, isLoading, error } = useProductDetail(id || '');
   const { addItem } = useCartStore();
-  
+
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Derive available sizes from variants
   const variants = product?.variants || [];
-  const sizes = Array.from(new Set(variants.map(v => v.size).filter(Boolean))) as string[];
+  const sizes = Array.from(new Set(variants.map((v) => v.size).filter(Boolean))) as string[];
   const showSizes = sizes.length > 0;
 
   // Prepare images
-  const images = product?.images && product.images.length > 0 
-      ? [...product.images].sort((a, b) => a.order - b.order).map(img => ({ ...img, url: getImageUrl(img.url) }))
-      : (product?.imageUrl ? [{ id: 'main', url: getImageUrl(product.imageUrl), order: 0 }] : []);
+  const images =
+    product?.images && product.images.length > 0
+      ? [...product.images]
+          .sort((a, b) => a.order - b.order)
+          .map((img) => ({ ...img, url: getImageUrl(img.url) }))
+      : product?.imageUrl
+        ? [{ id: 'main', url: getImageUrl(product.imageUrl), order: 0 }]
+        : [];
 
   const currentImage = selectedImage || (images.length > 0 ? images[0].url : '');
 
-  if (isLoading) return <div className="flex justify-center py-20"><Spinner size="lg" /></div>;
-  if (error || !product) return <div className="container py-20"><Alert variant="error" title="Error">Producto no encontrado</Alert></div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center py-20">
+        <Spinner size="lg" />
+      </div>
+    );
+  if (error || !product)
+    return (
+      <div className="container py-20">
+        <Alert variant="error" title="Error">
+          Producto no encontrado
+        </Alert>
+      </div>
+    );
 
   const handleAddToCart = () => {
     // Find selected variant
     let selectedVariant;
-    
+
     if (showSizes) {
       if (!selectedSize) {
         alert('Por favor selecciona una talla');
         return;
       }
-      // Simple logic: find first variant with this size. 
+      // Simple logic: find first variant with this size.
       // Ideally we would also handle colors, but for now assuming size uniqueness per product or just picking first.
-      selectedVariant = variants.find(v => v.size === selectedSize);
+      selectedVariant = variants.find((v) => v.size === selectedSize);
     } else {
       // If no sizes/variants logic (shouldn't happen with current seed), fallback to first variant if exists
       selectedVariant = variants[0];
     }
 
     if (!selectedVariant) {
-       alert('Lo sentimos, esta variante no está disponible.');
-       return;
+      alert('Lo sentimos, esta variante no está disponible.');
+      return;
     }
 
     addItem({
@@ -71,74 +88,93 @@ export function ProductDetail() {
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 mb-8">
-        <Link to="/" className="hover:text-primary">Inicio</Link>
+      <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mb-8">
+        <Link to="/" className="hover:text-primary">
+          Inicio
+        </Link>
         <span className="mx-2">/</span>
-        <Link to="/products" className="hover:text-primary">Productos</Link>
+        <Link to="/products" className="hover:text-primary">
+          Productos
+        </Link>
         <span className="mx-2">/</span>
-        <span className="font-bold text-neutral-800 line-clamp-1">{product.name}</span>
+        <span className="font-bold text-neutral-800 dark:text-white line-clamp-1">
+          {product.name}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Gallery */}
         <div className="space-y-4">
-          <div className="aspect-square bg-neutral-100 rounded-2xl overflow-hidden">
-            <img 
-              src={currentImage} 
-              alt={product.name} 
-              className="w-full h-full object-cover transition-all duration-300"
+          <div className="aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-2xl overflow-hidden">
+            <img
+              src={currentImage}
+              alt={product.name}
+              className="w-full h-full object-cover transition-all duration-300 dark:brightness-90"
             />
           </div>
           {/* Thumbnails */}
           {images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4">
-                {images.map((img) => (
-                  <button 
-                      key={img.id} 
-                      onClick={() => setSelectedImage(img.url)}
-                      className={`aspect-square bg-neutral-100 rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${currentImage === img.url ? 'border-primary opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}
-                  >
-                     <img src={img.url} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
+            <div className="grid grid-cols-4 gap-4">
+              {images.map((img) => (
+                <button
+                  key={img.id}
+                  onClick={() => setSelectedImage(img.url)}
+                  className={`aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${currentImage === img.url ? 'border-primary opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}
+                >
+                  <img
+                    src={img.url}
+                    alt=""
+                    className="w-full h-full object-cover dark:brightness-90"
+                  />
+                </button>
+              ))}
+            </div>
           )}
         </div>
 
         {/* Info */}
         <div className="space-y-8">
           <div>
-            <Badge variant="secondary" className="mb-2">{product.category}</Badge>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-neutral-900 mb-2">
+            <Badge variant="secondary" className="mb-2 dark:bg-neutral-800 dark:text-neutral-200">
+              {product.category}
+            </Badge>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-2">
               {product.name}
             </h1>
             <div className="flex items-center gap-4">
-              <span className="text-2xl font-bold text-primary">{formatCurrency(product.price)}</span>
+              <span className="text-2xl font-bold text-primary">
+                {formatCurrency(product.price)}
+              </span>
               <div className="flex items-center gap-1 text-yellow-500">
                 <Star className="w-4 h-4 fill-current" />
-                <span className="text-sm font-medium text-neutral-600">4.8 (120 reviews)</span>
+                <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+                  4.8 (120 reviews)
+                </span>
               </div>
             </div>
           </div>
 
-          <p className="text-neutral-600 leading-relaxed">
-            {product.description || 'Este es un producto exclusivo de la colección Paw Paw Urban. Diseñado para ofrecer estilo y comodidad sin compromisos. Fabricado con materiales de alta calidad para asegurar durabilidad y un look impecable.'}
+          <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+            {product.description ||
+              'Este es un producto exclusivo de la colección Paw Paw Urban. Diseñado para ofrecer estilo y comodidad sin compromisos. Fabricado con materiales de alta calidad para asegurar durabilidad y un look impecable.'}
           </p>
 
           {/* Selectors */}
           <div className="space-y-6">
             {showSizes && (
               <div className="space-y-3">
-                <label className="text-sm font-bold text-neutral-900">Selecciona Talla</label>
+                <label className="text-sm font-bold text-neutral-900 dark:text-white">
+                  Selecciona Talla
+                </label>
                 <div className="flex flex-wrap gap-3">
                   {sizes.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
                       className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold border-2 transition-all ${
-                        selectedSize === size 
-                          ? 'border-primary bg-primary text-white' 
-                          : 'border-neutral-200 text-neutral-600 hover:border-primary/50'
+                        selectedSize === size
+                          ? 'border-primary bg-primary text-white'
+                          : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-primary/50'
                       }`}
                     >
                       {size}
@@ -150,41 +186,47 @@ export function ProductDetail() {
 
             {/* Quantity */}
             <div className="space-y-3">
-              <label className="text-sm font-bold text-neutral-900">Cantidad</label>
+              <label className="text-sm font-bold text-neutral-900 dark:text-white">Cantidad</label>
               <div className="flex items-center gap-4">
-                <div className="flex items-center border border-neutral-300 rounded-lg">
-                  <button 
+                <div className="flex items-center border border-neutral-300 dark:border-neutral-700 rounded-lg">
+                  <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-3 hover:bg-neutral-100 text-neutral-600"
+                    className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-bold">{quantity}</span>
-                  <button 
+                  <span className="w-12 text-center font-bold dark:text-white">{quantity}</span>
+                  <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-3 hover:bg-neutral-100 text-neutral-600"
+                    className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <span className="text-sm text-neutral-500">{product.stock} disponibles</span>
+                <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                  {product.stock} disponibles
+                </span>
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-4 pt-4 border-t border-neutral-100">
+          <div className="flex gap-4 pt-4 border-t border-neutral-100 dark:border-neutral-800">
             <Button size="xl" className="flex-1" onClick={handleAddToCart}>
               <ShoppingBag className="w-5 h-5 mr-2" />
               Agregar al Carrito
             </Button>
-            <Button size="xl" variant="outline" className="px-6">
+            <Button
+              size="xl"
+              variant="outline"
+              className="px-6 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+            >
               <Star className="w-5 h-5" />
             </Button>
           </div>
 
           {/* Benefits */}
-          <div className="grid grid-cols-2 gap-4 text-sm text-neutral-600">
+          <div className="grid grid-cols-2 gap-4 text-sm text-neutral-600 dark:text-neutral-400">
             <div className="flex items-center gap-2">
               <Truck className="w-5 h-5 text-primary" />
               <span>Envío gratis &gt; $999</span>

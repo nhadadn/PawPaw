@@ -5,55 +5,119 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-900 text-neutral-300 pt-16 pb-8">
+    <footer className="bg-neutral-100 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 pt-16 pb-8 border-t border-neutral-200 dark:border-neutral-800 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-display font-bold text-white">PAW PAW</h3>
-            <p className="text-sm text-neutral-400">
+            <h3 className="text-2xl font-display font-bold text-neutral-900 dark:text-white">
+              PAW PAW
+            </h3>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">
               Estilo urbano para la nueva generación. Ropa, accesorios y cultura en un solo lugar.
             </p>
             <div className="flex gap-4">
-              <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors"><Instagram className="w-5 h-5" /></a>
-              <a href="#" aria-label="Twitter" className="hover:text-primary transition-colors"><Twitter className="w-5 h-5" /></a>
-              <a href="#" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook className="w-5 h-5" /></a>
+              <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors">
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a href="#" aria-label="Twitter" className="hover:text-primary transition-colors">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" aria-label="Facebook" className="hover:text-primary transition-colors">
+                <Facebook className="w-5 h-5" />
+              </a>
             </div>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-bold text-white mb-4">Explorar</h4>
+            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Explorar</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/products" className="hover:text-white transition-colors">Nuevos Lanzamientos</Link></li>
-              <li><Link to="/products?category=ropas" className="hover:text-white transition-colors">Ropa</Link></li>
-              <li><Link to="/products?category=gorras" className="hover:text-white transition-colors">Gorras</Link></li>
-              <li><Link to="/products?category=jerseys" className="hover:text-white transition-colors">Jerseys</Link></li>
+              <li>
+                <Link
+                  to="/products"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Nuevos Lanzamientos
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products?category=ropas"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Ropa
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products?category=gorras"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Gorras
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/products?category=jerseys"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Jerseys
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-white mb-4">Ayuda</h4>
+            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Ayuda</h4>
             <ul className="space-y-2 text-sm">
-              <li><Link to="/faq" className="hover:text-white transition-colors">Preguntas Frecuentes</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition-colors">Envíos y Devoluciones</Link></li>
-              <li><Link to="/terms" className="hover:text-white transition-colors">Términos y Condiciones</Link></li>
-              <li><Link to="/contact" className="hover:text-white transition-colors">Contacto</Link></li>
+              <li>
+                <Link
+                  to="/faq"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Preguntas Frecuentes
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/shipping"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Envíos y Devoluciones
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/terms"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Términos y Condiciones
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="hover:text-primary dark:hover:text-white transition-colors"
+                >
+                  Contacto
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold text-white mb-4">Newsletter</h4>
-            <p className="text-sm text-neutral-400 mb-4">
+            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Newsletter</h4>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
               Suscríbete para recibir ofertas exclusivas y drops limitados.
             </p>
             <form className="flex gap-2">
-              <Input 
+              <Input
                 aria-label="Correo electrónico"
-                placeholder="tu@email.com" 
-                className="bg-neutral-800 border-neutral-700 text-white placeholder:text-neutral-500"
+                placeholder="tu@email.com"
+                className="bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
               />
               <Button size="icon" variant="primary" aria-label="Suscribirse">
                 <Mail className="w-4 h-4" />
@@ -62,7 +126,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-800 pt-8 text-center text-sm text-neutral-400">
+        <div className="border-t border-neutral-200 dark:border-neutral-800 pt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

@@ -23,8 +23,9 @@ Este proyecto es la implementación del Frontend para el E-commerce de ropa urba
 
 El sistema de diseño está configurado en `tailwind.config.js` y utiliza las siguientes variables principales:
 
--   **Primary Color:** `#FF6B35` (Naranja vibrante)
--   **Secondary Color:** `#004E89` (Azul profundo)
+-   **Primary Color:** `#FF6B35` (Coral vibrante)
+-   **Secondary Color:** `#1A365D` (Azul medianoche)
+-   **Accent Color:** `#FDBA74` (Naranja suave)
 -   **Fonts:** `Space Grotesk` (Headings) y `Inter` (Body)
 
 ### Componentes Base (`src/components/ui`)

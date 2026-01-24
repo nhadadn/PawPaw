@@ -16,18 +16,20 @@ export function ProductFilters({
   priceRange,
   onPriceChange,
   onClear,
-  categories = []
+  categories = [],
 }: ProductFiltersProps) {
   return (
     <div className="space-y-8">
       {/* Categories */}
       <div className="space-y-4">
-        <h3 className="font-bold text-lg">Categorías</h3>
+        <h3 className="font-bold text-lg text-neutral-900 dark:text-white">Categorías</h3>
         <div className="space-y-2">
           <button
             onClick={() => onCategoryChange(null)}
             className={`block w-full text-left text-sm ${
-              selectedCategory === null ? 'font-bold text-primary' : 'text-neutral-600'
+              selectedCategory === null
+                ? 'font-bold text-primary'
+                : 'text-neutral-600 dark:text-neutral-400 dark:hover:text-neutral-200'
             }`}
           >
             Todas
@@ -37,7 +39,9 @@ export function ProductFilters({
               key={cat.id}
               onClick={() => onCategoryChange(cat.slug)}
               className={`block w-full text-left text-sm ${
-                selectedCategory === cat.slug ? 'font-bold text-primary' : 'text-neutral-600'
+                selectedCategory === cat.slug
+                  ? 'font-bold text-primary'
+                  : 'text-neutral-600 dark:text-neutral-400 dark:hover:text-neutral-200'
               }`}
             >
               {cat.name}
@@ -48,7 +52,7 @@ export function ProductFilters({
 
       {/* Price */}
       <div className="space-y-4">
-        <h3 className="font-bold text-lg">Precio</h3>
+        <h3 className="font-bold text-lg text-neutral-900 dark:text-white">Precio</h3>
         <div className="flex items-center gap-2">
           <Input
             type="number"

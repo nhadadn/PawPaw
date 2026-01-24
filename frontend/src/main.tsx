@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
 import { ErrorBoundary, ErrorFallback } from './components/ErrorBoundary';
+import { ThemeProvider } from './providers/ThemeProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,9 @@ createRoot(document.getElementById('root')!).render(
     <ErrorBoundary fallback={<ErrorFallback />}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <App />
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <App />
+          </ThemeProvider>
         </BrowserRouter>
       </QueryClientProvider>
     </ErrorBoundary>

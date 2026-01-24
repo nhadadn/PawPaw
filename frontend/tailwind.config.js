@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -8,41 +9,44 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#FF6B35', // Naranja vibrante
-          hover: '#E55A2A',
-          light: '#FF855A',
+          DEFAULT: 'rgb(var(--color-primary) / <alpha-value>)',
+          hover: 'rgb(var(--color-primary-hover) / <alpha-value>)',
+          light: 'rgb(var(--color-primary-light) / <alpha-value>)',
         },
         secondary: {
-          DEFAULT: '#004E89', // Azul profundo
-          hover: '#003C6E',
-          light: '#2A6FA3',
+          DEFAULT: 'rgb(var(--color-secondary) / <alpha-value>)',
+          hover: 'rgb(var(--color-secondary-hover) / <alpha-value>)',
+          light: 'rgb(var(--color-secondary-light) / <alpha-value>)',
         },
         accent: {
-          DEFAULT: '#F77F00', // Naranja cálido
-          hover: '#DE7200',
+          DEFAULT: 'rgb(var(--color-accent) / <alpha-value>)',
+          hover: 'rgb(var(--color-accent-hover) / <alpha-value>)',
         },
         success: {
-          DEFAULT: '#06A77D',
-          light: '#E6F6F2',
+          DEFAULT: 'rgb(var(--color-success) / <alpha-value>)',
+          light: 'rgb(var(--color-success-light) / <alpha-value>)',
+        },
+        warning: {
+          DEFAULT: 'rgb(var(--color-warning) / <alpha-value>)',
         },
         error: {
-          DEFAULT: '#D62828',
-          light: '#FBEAEA',
+          DEFAULT: 'rgb(var(--color-error) / <alpha-value>)',
+          light: 'rgb(var(--color-error-light) / <alpha-value>)',
         },
         neutral: {
-          50: '#F9FAFB',
-          100: '#F5F5F5',
-          200: '#E0E0E0',
-          300: '#D1D5DB',
-          400: '#9CA3AF', // ~#999999
-          500: '#6B7280',
-          600: '#4B5563',
-          700: '#374151',
-          800: '#333333', // Dark text
-          900: '#111827',
+          50: 'rgb(var(--color-neutral-50) / <alpha-value>)',
+          100: 'rgb(var(--color-neutral-100) / <alpha-value>)',
+          200: 'rgb(var(--color-neutral-200) / <alpha-value>)',
+          300: 'rgb(var(--color-neutral-300) / <alpha-value>)',
+          400: 'rgb(var(--color-neutral-400) / <alpha-value>)',
+          500: 'rgb(var(--color-neutral-500) / <alpha-value>)',
+          600: 'rgb(var(--color-neutral-600) / <alpha-value>)',
+          700: 'rgb(var(--color-neutral-700) / <alpha-value>)',
+          800: 'rgb(var(--color-neutral-800) / <alpha-value>)',
+          900: 'rgb(var(--color-neutral-900) / <alpha-value>)',
         },
-        background: '#FFFFFF',
-        surface: '#F5F5F5',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
+        surface: 'rgb(var(--color-surface) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

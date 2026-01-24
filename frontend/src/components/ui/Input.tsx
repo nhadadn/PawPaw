@@ -1,24 +1,23 @@
-import * as React from "react"
-import { cn } from "../../lib/utils"
+import * as React from 'react';
+import { cn } from '../../lib/utils';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  error?: string
-  icon?: React.ReactNode
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+  icon?: React.ReactNode;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, label, error, icon, id, ...props }, ref) => {
-    const generatedId = React.useId()
-    const inputId = id || generatedId
+    const generatedId = React.useId();
+    const inputId = id || generatedId;
 
     return (
       <div className="w-full space-y-2">
         {label && (
           <label
             htmlFor={inputId}
-            className="text-sm font-bold text-neutral-700 block"
+            className="text-sm font-bold text-neutral-700 dark:text-neutral-300 block"
           >
             {label}
           </label>
@@ -28,9 +27,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             type={type}
             className={cn(
-              "flex h-11 w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors",
-              error ? "border-error focus-visible:ring-error" : "focus:border-primary",
-              icon ? "pl-11" : "",
+              'flex h-11 w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:ring-offset-neutral-950 dark:placeholder:text-neutral-500',
+              error ? 'border-error focus-visible:ring-error' : 'focus:border-primary',
+              icon ? 'pl-11' : '',
               className
             )}
             ref={ref}
@@ -42,15 +41,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        {error && (
-          <p className="text-sm text-error font-medium animate-slide-up">
-            {error}
-          </p>
-        )}
+        {error && <p className="text-sm text-error font-medium animate-slide-up">{error}</p>}
       </div>
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = 'Input';
 
-export { Input }
+export { Input };

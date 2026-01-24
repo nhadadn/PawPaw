@@ -6,6 +6,11 @@ export interface ProductVariant {
   sku: string;
   price: number;
   stock: number;
+  isNew?: boolean;
+  discount?: number;
+  totalReviews?: number;
+  averageRating?: number;
+  availableSizes?: string[];
 }
 
 export interface ProductImage {

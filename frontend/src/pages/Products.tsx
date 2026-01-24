@@ -12,11 +12,15 @@ type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'newest';
 export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
-  
-  const { data: products, isLoading, error } = useProducts({ 
-    category: categoryParam || undefined 
+
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useProducts({
+    category: categoryParam || undefined,
   });
-  
+
   const { data: categories } = useCategories();
 
   const searchParam = searchParams.get('search');
@@ -42,20 +46,24 @@ export function Products() {
     if (!products) return [];
 
     console.log('[Products Page] Filtering products:', {
-       total: products.length,
-       categoryParam,
-       selectedCategory,
-       priceRange,
-       searchParam
+      total: products.length,
+      categoryParam,
+      selectedCategory,
+      priceRange,
+      searchParam,
     });
 
     return products
       .filter((p) => {
         // Category Filter - Handled by Backend
         // if (selectedCategory && p.category.toLowerCase() !== selectedCategory.toLowerCase()) return false;
-        
+
         // Price Filter
-        if (p.price < priceRange.min * 100 || (priceRange.max > 0 && p.price > priceRange.max * 100)) return false;
+        if (
+          p.price < priceRange.min * 100 ||
+          (priceRange.max > 0 && p.price > priceRange.max * 100)
+        )
+          return false;
 
         // Search Filter
         if (searchParam && !p.name.toLowerCase().includes(searchParam.toLowerCase())) return false;
@@ -79,9 +87,9 @@ export function Products() {
   const handleCategoryChange = (cat: string | null) => {
     setSelectedCategory(cat);
     if (cat) {
-        setSearchParams({ category: cat });
+      setSearchParams({ category: cat });
     } else {
-        setSearchParams({});
+      setSearchParams({});
     }
   };
 
@@ -95,7 +103,9 @@ export function Products() {
     <div className="container mx-auto px-4 py-8">
       {/* Breadcrumbs */}
       <div className="flex items-center text-sm text-neutral-500 mb-8">
-        <Link to="/" className="hover:text-primary">Inicio</Link>
+        <Link to="/" className="hover:text-primary">
+          Inicio
+        </Link>
         <span className="mx-2">/</span>
         <span className="font-bold text-neutral-800">Productos</span>
       </div>
@@ -103,15 +113,21 @@ export function Products() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Mobile Filters Trigger */}
         <div className="lg:hidden flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold font-display">Catálogo</h1>
-            <Button variant="outline" size="sm" onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}>
-                <Filter className="w-4 h-4 mr-2" />
-                Filtros
-            </Button>
+          <h1 className="text-2xl font-bold font-display">Catálogo</h1>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+          >
+            <Filter className="w-4 h-4 mr-2" />
+            Filtros
+          </Button>
         </div>
 
         {/* Sidebar Filters */}
-        <aside className={`lg:w-64 flex-shrink-0 ${isMobileFiltersOpen ? 'block' : 'hidden lg:block'}`}>
+        <aside
+          className={`lg:w-64 flex-shrink-0 ${isMobileFiltersOpen ? 'block' : 'hidden lg:block'}`}
+        >
           <div className="sticky top-24">
             <ProductFilters
               selectedCategory={selectedCategory}
@@ -127,22 +143,36 @@ export function Products() {
         {/* Main Content */}
         <div className="flex-1 space-y-6">
           {/* Header & Sort */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-50 p-4 rounded-lg">
-            <p className="text-sm text-neutral-500">
-              Mostrando <span className="font-bold text-neutral-900">{filteredProducts.length}</span> productos
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-50 dark:bg-neutral-900 p-4 rounded-lg border border-neutral-100 dark:border-neutral-800">
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+              Mostrando{' '}
+              <span className="font-bold text-neutral-900 dark:text-white">
+                {filteredProducts.length}
+              </span>{' '}
+              productos
             </p>
-            
+
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-neutral-600">Ordenar por:</span>
-              <select 
-                className="text-sm border-none bg-transparent font-bold focus:ring-0 cursor-pointer"
+              <span className="text-sm font-medium text-neutral-600 dark:text-neutral-300">
+                Ordenar por:
+              </span>
+              <select
+                className="text-sm border-none bg-transparent font-bold focus:ring-0 cursor-pointer text-neutral-900 dark:text-white"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
               >
-                <option value="relevance">Relevancia</option>
-                <option value="price-asc">Menor Precio</option>
-                <option value="price-desc">Mayor Precio</option>
-                <option value="newest">Más Nuevos</option>
+                <option value="relevance" className="dark:bg-neutral-800">
+                  Relevancia
+                </option>
+                <option value="price-asc" className="dark:bg-neutral-800">
+                  Menor Precio
+                </option>
+                <option value="price-desc" className="dark:bg-neutral-800">
+                  Mayor Precio
+                </option>
+                <option value="newest" className="dark:bg-neutral-800">
+                  Más Nuevos
+                </option>
               </select>
             </div>
           </div>
