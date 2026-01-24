@@ -67,6 +67,9 @@ export const createApp = () => {
 
         if (allowedOrigins.includes(origin)) {
           callback(null, true);
+        } else if (origin.endsWith('.vercel.app')) {
+          // Allow Vercel preview deployments dynamically
+          callback(null, true);
         } else {
           logger.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
           callback(new Error('Not allowed by CORS'));
