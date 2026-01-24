@@ -40,9 +40,17 @@ export const createApp = () => {
     })
   );
 
-  const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+  const envOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
     .split(',')
     .map((origin) => origin.trim());
+
+  // Explicitly add production domains to ensure they are always allowed
+  const allowedOrigins = [
+    ...envOrigins,
+    'https://pawpawtrc.com',
+    'https://www.pawpawtrc.com',
+    'https://pawpaw-production-d636.up.railway.app',
+  ];
 
   logger.info(`CORS configured with allowed origins: ${allowedOrigins.join(', ')}`);
 
