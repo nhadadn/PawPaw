@@ -193,36 +193,62 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Health Check
+        env:
+          SECRET_DOMAIN: ${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
         run: |
           echo "Checking Backend Health..."
           RETRIES=60
-          RAILWAY_PUBLIC_DOMAIN=${{ secrets.RAILWAY_PUBLIC_DOMAIN }}
+          FALLBACK_DOMAIN="pawpaw-production-d636.up.railway.app"
           
-          # Fallback to known domain if secret is missing
-          if [ -z "$RAILWAY_PUBLIC_DOMAIN" ]; then
-            echo "Warning: RAILWAY_PUBLIC_DOMAIN secret is not set. Using default."
-            RAILWAY_PUBLIC_DOMAIN="pawpaw-production-d636.up.railway.app"
+          # Select initial domain
+          if [ -n "$SECRET_DOMAIN" ]; then
+            CURRENT_DOMAIN="$SECRET_DOMAIN"
+            echo "Using configured RAILWAY_PUBLIC_DOMAIN (masked)"
+          else
+            CURRENT_DOMAIN="$FALLBACK_DOMAIN"
+            echo "Using fallback domain: $FALLBACK_DOMAIN"
           fi
-
-          # Use root path which is confirmed to be working
-          HEALTH_CHECK_URL="https://${RAILWAY_PUBLIC_DOMAIN}/"
           
-          echo "Checking URL: $HEALTH_CHECK_URL"
+          HEALTH_CHECK_URL="https://${CURRENT_DOMAIN}/"
+          echo "Target URL: $HEALTH_CHECK_URL"
+          
           echo "Waiting for Railway deployment to propagate..."
-          # Initial wait to allow build to start
           sleep 60
+          
+          PASSED=false
           
           for i in $(seq 1 $RETRIES); do
             HTTP_CODE=$(curl -k -L -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL || echo "000")
+            
             if [ "$HTTP_CODE" -eq 200 ]; then
-              echo "Health check passed!"
-              exit 0
+              PASSED=true
+              break
             fi
+            
+            # Check for specific "Application not found" error from Railway
+            # This indicates the domain is wrong or not bound
+            if [ "$HTTP_CODE" -eq 404 ] && [ "$CURRENT_DOMAIN" != "$FALLBACK_DOMAIN" ]; then
+               RESPONSE=$(curl -k -L -s $HEALTH_CHECK_URL)
+               if echo "$RESPONSE" | grep -q "Application not found"; then
+                  echo "Domain $CURRENT_DOMAIN returned 'Application not found'. Switching to fallback: $FALLBACK_DOMAIN"
+                  CURRENT_DOMAIN="$FALLBACK_DOMAIN"
+                  HEALTH_CHECK_URL="https://${CURRENT_DOMAIN}/"
+                  # Don't sleep, try immediately next iteration
+                  continue
+               fi
+            fi
+            
             echo "Attempt $i failed (Status: $HTTP_CODE). Retrying in 10s..."
             sleep 10
           done
+          
+          if [ "$PASSED" = true ]; then
+            echo "Health check passed!"
+            exit 0
+          fi
+          
           echo "Health check failed after $RETRIES attempts."
-          echo "Last response body for debugging:"
+          echo "Last response body from $HEALTH_CHECK_URL for debugging:"
           curl -k -L -v $HEALTH_CHECK_URL || true
           exit 1
 
