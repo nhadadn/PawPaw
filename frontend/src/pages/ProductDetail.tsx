@@ -7,6 +7,7 @@ import { Button } from '../components/ui/Button';
 import { Spinner } from '../components/ui/Spinner';
 import { Alert } from '../components/ui/Alert';
 import { Badge } from '../components/ui/Badge';
+import { ProductGallery } from '../components/features/products/ProductGallery';
 import { formatCurrency, getImageUrl } from '../lib/utils';
 
 export function ProductDetail() {
@@ -17,7 +18,6 @@ export function ProductDetail() {
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   // Derive available sizes from variants
   const variants = product?.variants || [];
@@ -33,8 +33,6 @@ export function ProductDetail() {
       : product?.imageUrl
         ? [{ id: 'main', url: getImageUrl(product.imageUrl), order: 0 }]
         : [];
-
-  const currentImage = selectedImage || (images.length > 0 ? images[0].url : '');
 
   if (isLoading)
     return (
@@ -77,7 +75,7 @@ export function ProductDetail() {
       id: selectedVariant.id, // Use Variant ID!
       name: `${product.name} ${selectedVariant.size ? `(${selectedVariant.size})` : ''}`, // Append size to name for clarity in cart
       price: product.price,
-      image: currentImage, // Use currently selected image
+      image: images[0]?.url || '', // Use main image
       quantity: quantity,
       stock: selectedVariant.stock,
     });
@@ -105,33 +103,7 @@ export function ProductDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Gallery */}
-        <div className="space-y-4">
-          <div className="aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-2xl overflow-hidden">
-            <img
-              src={currentImage}
-              alt={product.name}
-              className="w-full h-full object-cover transition-all duration-300 dark:brightness-90"
-            />
-          </div>
-          {/* Thumbnails */}
-          {images.length > 1 && (
-            <div className="grid grid-cols-4 gap-4">
-              {images.map((img) => (
-                <button
-                  key={img.id}
-                  onClick={() => setSelectedImage(img.url)}
-                  className={`aspect-square bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden cursor-pointer transition-all border-2 ${currentImage === img.url ? 'border-primary opacity-100' : 'border-transparent opacity-70 hover:opacity-100'}`}
-                >
-                  <img
-                    src={img.url}
-                    alt=""
-                    className="w-full h-full object-cover dark:brightness-90"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+        <ProductGallery images={images} />
 
         {/* Info */}
         <div className="space-y-8">
