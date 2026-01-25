@@ -79,7 +79,7 @@ export function ProductDetail() {
       price: product.price,
       image: currentImage, // Use currently selected image
       quantity: quantity,
-      stock: selectedVariant.stock_quantity,
+      stock: selectedVariant.stock,
     });
 
     // Optional: Show toast or feedback
