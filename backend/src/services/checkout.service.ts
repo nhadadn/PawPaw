@@ -145,10 +145,14 @@ export class CheckoutService {
       // client_secret will be generated in createPaymentIntent
     };
 
+    // Store in Redis with 24h TTL to allow for abandoned cart recovery
+    // The logical expiration (stock release) is handled by 'reservations:by_expiry' and the scheduler
+    const REDIS_PERSISTENCE_TTL = 86400; // 24 hours
+
     await redis
       .multi()
-      .set(`reservation:${reservationId}`, JSON.stringify(payload), 'EX', RESERVATION_TTL)
-      .set(`reservation:user:${userId}`, reservationId, 'EX', RESERVATION_TTL)
+      .set(`reservation:${reservationId}`, JSON.stringify(payload), 'EX', REDIS_PERSISTENCE_TTL)
+      .set(`reservation:user:${userId}`, reservationId, 'EX', REDIS_PERSISTENCE_TTL)
       .zadd('reservations:by_expiry', expiresAt.getTime(), reservationId)
       .exec();
 

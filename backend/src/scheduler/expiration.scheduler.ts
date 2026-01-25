@@ -49,11 +49,14 @@ export async function processExpiredReservationsOnce(): Promise<void> {
           }
         });
 
-        await redis.del(`reservation:${reservationId}`);
-        await redis.del(`reservation:user:${reservation.user_id}`);
+        // Remove from expiry queue but KEEP the data for abandoned cart recovery
+        // The data will expire naturally via Redis TTL (24h) or be processed by recovery service
         await redis.zrem('reservations:by_expiry', reservationId);
 
-        logger.info(`Expired reservation ${reservationId} released`);
+        // Add to a set of potential abandoned carts to scan
+        await redis.sadd('reservations:abandoned', reservationId);
+
+        logger.info(`Expired reservation ${reservationId} released and marked for recovery check`);
       } catch (err) {
         logger.error(`Failed to process expired reservation ${reservationId}`, { error: err });
       }
