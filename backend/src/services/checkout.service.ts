@@ -423,6 +423,13 @@ export class CheckoutService {
           item.quantity
         );
 
+        if (!updatedVariant) {
+          logger.warn(
+            `Failed to release stock for variant ${item.product_variant_id}: Variant not found`
+          );
+          continue;
+        }
+
         // Emit real-time stock update
         const available = updatedVariant.initialStock - updatedVariant.reservedStock;
         emitStockUpdate(Number(updatedVariant.productId), available);

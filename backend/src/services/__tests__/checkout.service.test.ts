@@ -11,6 +11,7 @@ const mockRepoInstance = {
   createOrder: jest.fn(),
   confirmStockDeduction: jest.fn(),
   releaseStock: jest.fn(),
+  releaseReservedStock: jest.fn(),
   createReservation: jest.fn(),
 };
 
@@ -219,6 +220,29 @@ describe('CheckoutService', () => {
       await expect(service.confirm(userId, reservationId, paymentIntentId)).rejects.toThrow(
         'Reservation not found'
       );
+    });
+
+    it('should release stock and throw error if payment failed', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(mockReservation));
+
+      (stripe.paymentIntents.retrieve as jest.Mock).mockResolvedValue({
+        status: 'requires_payment_method',
+      });
+
+      mockRepoInstance.releaseReservedStock.mockResolvedValue({
+        id: BigInt(1),
+        productId: BigInt(10),
+        initialStock: 10,
+        reservedStock: 0,
+      });
+      mockRepoInstance.createInventoryLog.mockResolvedValue(undefined);
+
+      await expect(service.confirm(userId, reservationId, paymentIntentId)).rejects.toThrow(
+        'Payment status is requires_payment_method'
+      );
+
+      expect(mockRepoInstance.releaseReservedStock).toHaveBeenCalled();
+      expect(redis.del).toHaveBeenCalled();
     });
   });
 });

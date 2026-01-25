@@ -51,7 +51,12 @@ jest.mock('../repositories/checkout.repository', () => ({
     createOrder: jest.fn().mockResolvedValue({ id: BigInt(1), totalCents: 1000 }),
     confirmStockDeduction: jest.fn().mockResolvedValue(undefined),
     releaseStock: jest.fn().mockResolvedValue(undefined),
-    releaseReservedStock: jest.fn().mockResolvedValue(undefined),
+    releaseReservedStock: jest.fn().mockResolvedValue({
+      id: BigInt(1),
+      productId: BigInt(10),
+      initialStock: 10,
+      reservedStock: 0,
+    }),
   })),
 }));
 
