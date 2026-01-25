@@ -100,24 +100,27 @@ export function Products() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 mb-8">
-        <Link to="/" className="hover:text-primary">
+      <div className="flex items-center text-sm text-neutral-500 mb-8 font-medium">
+        <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
           Inicio
         </Link>
-        <span className="mx-2">/</span>
-        <span className="font-bold text-neutral-800">Productos</span>
+        <span className="mx-3 text-neutral-300">/</span>
+        <span className="font-bold text-neutral-900 dark:text-white">Productos</span>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-12">
         {/* Mobile Filters Trigger */}
-        <div className="lg:hidden flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold font-display">Catálogo</h1>
+        <div className="lg:hidden flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-display font-black tracking-tight text-neutral-900 dark:text-white">
+            Catálogo
+          </h1>
           <Button
-            variant="outline"
+            variant="primary"
             size="sm"
             onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+            className="bg-black text-white dark:bg-white dark:text-black font-bold"
           >
             <Filter className="w-4 h-4 mr-2" />
             Filtros
@@ -141,10 +144,10 @@ export function Products() {
         </aside>
 
         {/* Main Content */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-8">
           {/* Header & Sort */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-50 dark:bg-neutral-900 p-4 rounded-lg border border-neutral-100 dark:border-neutral-800">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#141414] p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">
               Mostrando{' '}
               <span className="font-bold text-neutral-900 dark:text-white">
                 {filteredProducts.length}
@@ -152,25 +155,34 @@ export function Products() {
               productos
             </p>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-neutral-600 dark:text-neutral-300">
                 Ordenar por:
               </span>
               <select
-                className="text-sm border-none bg-transparent font-bold focus:ring-0 cursor-pointer text-neutral-900 dark:text-white"
+                className="text-sm border-none bg-transparent font-bold focus:ring-0 cursor-pointer text-neutral-900 dark:text-white pr-8 py-1"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
               >
-                <option value="relevance" className="dark:bg-neutral-800">
+                <option
+                  value="relevance"
+                  className="dark:bg-neutral-900 text-black dark:text-white"
+                >
                   Relevancia
                 </option>
-                <option value="price-asc" className="dark:bg-neutral-800">
+                <option
+                  value="price-asc"
+                  className="dark:bg-neutral-900 text-black dark:text-white"
+                >
                   Menor Precio
                 </option>
-                <option value="price-desc" className="dark:bg-neutral-800">
+                <option
+                  value="price-desc"
+                  className="dark:bg-neutral-900 text-black dark:text-white"
+                >
                   Mayor Precio
                 </option>
-                <option value="newest" className="dark:bg-neutral-800">
+                <option value="newest" className="dark:bg-neutral-900 text-black dark:text-white">
                   Más Nuevos
                 </option>
               </select>
@@ -178,7 +190,20 @@ export function Products() {
           </div>
 
           {/* Grid */}
-          <ProductGrid products={filteredProducts} isLoading={isLoading} error={error} />
+          {!isLoading && filteredProducts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <Button
+                className="h-14 px-8 text-lg font-bold bg-white dark:bg-black text-black dark:text-white border-2 border-neutral-200 dark:border-neutral-800 hover:border-black dark:hover:border-white hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all rounded-xl"
+                variant="outline"
+                size="xl"
+                onClick={clearFilters}
+              >
+                Ver todos los productos
+              </Button>
+            </div>
+          ) : (
+            <ProductGrid products={filteredProducts} isLoading={isLoading} error={error} />
+          )}
         </div>
       </div>
     </div>

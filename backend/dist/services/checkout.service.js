@@ -13,6 +13,7 @@ const errors_1 = require("../utils/errors");
 const logger_1 = __importDefault(require("../lib/logger"));
 const RESERVATION_TTL = 600; // 10 minutes
 const client_1 = require("@prisma/client");
+const inventory_socket_1 = require("../websocket/inventory.socket");
 class CheckoutService {
     constructor() {
         this.repo = new checkout_repository_1.CheckoutRepository();
@@ -330,7 +331,10 @@ class CheckoutService {
         // Release Stock
         const executeTransaction = async (trx) => {
             for (const item of reservation.items) {
-                await this.repo.releaseReservedStock(trx, item.product_variant_id, item.quantity);
+                const updatedVariant = await this.repo.releaseReservedStock(trx, item.product_variant_id, item.quantity);
+                // Emit real-time stock update
+                const available = updatedVariant.initialStock - updatedVariant.reservedStock;
+                (0, inventory_socket_1.emitStockUpdate)(Number(updatedVariant.productId), available);
                 await this.repo.createInventoryLog(trx, {
                     productVariantId: item.product_variant_id,
                     changeType: client_1.InventoryChangeType.RELEASE,

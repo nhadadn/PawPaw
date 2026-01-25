@@ -46,7 +46,9 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
       <div className="border-t border-neutral-200 dark:border-neutral-800 pt-4">
         <div className="flex justify-between items-end mb-1">
           <span className="font-bold text-lg text-neutral-900 dark:text-white">Total</span>
-          <span className="font-bold text-2xl text-primary">{formatCurrency(finalTotal)}</span>
+          <span className="font-bold text-3xl text-neutral-900 dark:text-white">
+            {formatCurrency(finalTotal)}
+          </span>
         </div>
         <p className="text-xs text-neutral-500 dark:text-neutral-500 text-right">
           Impuestos incluidos
@@ -54,7 +56,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
       </div>
 
       {hasStockIssues && (
-        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm font-medium">
+        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-xl text-sm font-medium">
           Algunos productos superan el stock disponible. Por favor ajusta las cantidades.
         </div>
       )}
@@ -62,7 +64,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
       <div className="space-y-3">
         <Button
           size="lg"
-          className="w-full"
+          className="w-full h-14 text-lg font-bold bg-accent hover:bg-accent-hover text-white shadow-lg shadow-accent/20"
           onClick={() => navigate('/checkout')}
           disabled={hasStockIssues}
         >
@@ -71,7 +73,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
         </Button>
         <Link
           to="/products"
-          className="block text-center text-sm text-neutral-500 dark:text-neutral-400 hover:text-primary dark:hover:text-primary underline"
+          className="block text-center text-sm font-medium text-neutral-500 dark:text-neutral-400 hover:text-accent dark:hover:text-accent transition-colors"
         >
           Continuar comprando
         </Link>
@@ -83,10 +85,10 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
           Código Promocional
         </label>
         <div className="flex gap-2">
-          <Input placeholder="PAWPAW2024" className="bg-white dark:bg-neutral-800" />
+          <Input placeholder="PAWPAW2024" className="bg-white dark:bg-neutral-800 h-11" />
           <Button
             variant="outline"
-            className="dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="h-11 px-6 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Aplicar
           </Button>

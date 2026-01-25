@@ -27,8 +27,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             type={type}
             className={cn(
-              'flex h-11 w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:ring-offset-neutral-950 dark:placeholder:text-neutral-500',
-              error ? 'border-error focus-visible:ring-error' : 'focus:border-primary',
+              'flex h-12 w-full rounded-lg border-2 border-neutral-200 bg-white px-4 py-2 text-base ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:ring-offset-neutral-950 dark:placeholder:text-neutral-500 dark:focus-visible:ring-white',
+              error
+                ? 'border-error focus-visible:ring-error'
+                : 'focus:border-black dark:focus:border-white',
               icon ? 'pl-11' : '',
               className
             )}

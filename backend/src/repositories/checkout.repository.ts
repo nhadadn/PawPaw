@@ -108,7 +108,7 @@ export class CheckoutRepository {
   }
 
   async releaseReservedStock(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
-    await tx.productVariant.update({
+    return await tx.productVariant.update({
       where: { id: BigInt(variantId) },
       data: {
         reservedStock: { decrement: quantity },
@@ -118,7 +118,7 @@ export class CheckoutRepository {
 
   async confirmStockDeduction(tx: PrismaTransaction, variantId: number | bigint, quantity: number) {
     // When confirmed, we reduce reserved_stock AND initial_stock
-    await tx.productVariant.update({
+    return await tx.productVariant.update({
       where: { id: variantId },
       data: {
         reservedStock: { decrement: quantity },

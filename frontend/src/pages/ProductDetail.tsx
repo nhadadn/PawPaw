@@ -87,35 +87,38 @@ export function ProductDetail() {
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mb-8">
-        <Link to="/" className="hover:text-primary">
+      <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mb-8 font-medium">
+        <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
           Inicio
         </Link>
-        <span className="mx-2">/</span>
-        <Link to="/products" className="hover:text-primary">
+        <span className="mx-3 text-neutral-300">/</span>
+        <Link to="/products" className="hover:text-black dark:hover:text-white transition-colors">
           Productos
         </Link>
-        <span className="mx-2">/</span>
-        <span className="font-bold text-neutral-800 dark:text-white line-clamp-1">
+        <span className="mx-3 text-neutral-300">/</span>
+        <span className="font-bold text-neutral-900 dark:text-white line-clamp-1">
           {product.name}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Gallery */}
         <ProductGallery images={images} />
 
         {/* Info */}
         <div className="space-y-8">
           <div>
-            <Badge variant="secondary" className="mb-2 dark:bg-neutral-800 dark:text-neutral-200">
+            <Badge
+              variant="secondary"
+              className="mb-4 dark:bg-neutral-800 dark:text-neutral-200 uppercase tracking-wider text-xs font-bold px-3 py-1"
+            >
               {product.category}
             </Badge>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-neutral-900 dark:text-white mb-2">
+            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white mb-4 leading-tight">
               {product.name}
             </h1>
             <div className="flex items-center gap-4">
-              <span className="text-2xl font-bold text-primary">
+              <span className="text-3xl font-bold text-accent">
                 {formatCurrency(product.price)}
               </span>
               <div className="flex items-center gap-1 text-yellow-500">
@@ -127,27 +130,32 @@ export function ProductDetail() {
             </div>
           </div>
 
-          <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+          <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
             {product.description ||
               'Este es un producto exclusivo de la colección Paw Paw Urban. Diseñado para ofrecer estilo y comodidad sin compromisos. Fabricado con materiales de alta calidad para asegurar durabilidad y un look impecable.'}
           </p>
 
           {/* Selectors */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {showSizes && (
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-neutral-900 dark:text-white">
-                  Selecciona Talla
-                </label>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <label className="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wide">
+                    Selecciona Talla
+                  </label>
+                  <button className="text-xs text-neutral-500 hover:text-black dark:hover:text-white underline">
+                    Guía de tallas
+                  </button>
+                </div>
                 <div className="flex flex-wrap gap-3">
                   {sizes.map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold border-2 transition-all ${
+                      className={`w-14 h-14 rounded-xl flex items-center justify-center font-bold text-sm border-2 transition-all duration-200 ${
                         selectedSize === size
-                          ? 'border-primary bg-primary text-white'
-                          : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-primary/50'
+                          ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black shadow-lg transform scale-105'
+                          : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-black dark:hover:border-white'
                       }`}
                     >
                       {size}
@@ -158,43 +166,51 @@ export function ProductDetail() {
             )}
 
             {/* Quantity */}
-            <div className="space-y-3">
-              <label className="text-sm font-bold text-neutral-900 dark:text-white">Cantidad</label>
-              <div className="flex items-center gap-4">
-                <div className="flex items-center border border-neutral-300 dark:border-neutral-700 rounded-lg">
+            <div className="space-y-4">
+              <label className="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wide">
+                Cantidad
+              </label>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center border-2 border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden bg-white dark:bg-neutral-900">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400"
+                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-bold dark:text-white">{quantity}</span>
+                  <span className="w-12 text-center font-bold text-lg text-neutral-900 dark:text-white">
+                    {quantity}
+                  </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400"
+                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                  {product.stock} disponibles
+                <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">
+                  {product.stock} unidades disponibles
                 </span>
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-4 pt-4 border-t border-neutral-100 dark:border-neutral-800">
-            <Button size="xl" className="flex-1" onClick={handleAddToCart}>
-              <ShoppingBag className="w-5 h-5 mr-2" />
+          <div className="flex gap-4 pt-8 border-t border-neutral-100 dark:border-neutral-800">
+            <Button
+              size="xl"
+              className="flex-1 h-16 text-lg font-bold bg-accent hover:bg-accent-hover text-white shadow-xl shadow-accent/20 border-none uppercase tracking-wide"
+              onClick={handleAddToCart}
+            >
+              <ShoppingBag className="w-6 h-6 mr-3" />
               Agregar al Carrito
             </Button>
             <Button
               size="xl"
               variant="outline"
-              className="px-6 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800"
+              className="px-6 h-16 border-2 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 hover:border-accent hover:text-accent transition-colors"
             >
-              <Star className="w-5 h-5" />
+              <Star className="w-6 h-6" />
             </Button>
           </div>
 

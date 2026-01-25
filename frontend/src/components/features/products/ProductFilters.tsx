@@ -22,14 +22,16 @@ export function ProductFilters({
     <div className="space-y-8">
       {/* Categories */}
       <div className="space-y-4">
-        <h3 className="font-bold text-lg text-neutral-900 dark:text-white">Categorías</h3>
-        <div className="space-y-2">
+        <h3 className="font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight">
+          Categorías
+        </h3>
+        <div className="space-y-1">
           <button
             onClick={() => onCategoryChange(null)}
-            className={`block w-full text-left text-sm ${
+            className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
               selectedCategory === null
-                ? 'font-bold text-primary'
-                : 'text-neutral-600 dark:text-neutral-400 dark:hover:text-neutral-200'
+                ? 'bg-black text-white font-bold dark:bg-white dark:text-black shadow-md transform scale-[1.02]'
+                : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
             }`}
           >
             Todas
@@ -38,10 +40,10 @@ export function ProductFilters({
             <button
               key={cat.id}
               onClick={() => onCategoryChange(cat.slug)}
-              className={`block w-full text-left text-sm ${
+              className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
                 selectedCategory === cat.slug
-                  ? 'font-bold text-primary'
-                  : 'text-neutral-600 dark:text-neutral-400 dark:hover:text-neutral-200'
+                  ? 'bg-black text-white font-bold dark:bg-white dark:text-black shadow-md transform scale-[1.02]'
+                  : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
               }`}
             >
               {cat.name}
@@ -52,20 +54,22 @@ export function ProductFilters({
 
       {/* Price */}
       <div className="space-y-4">
-        <h3 className="font-bold text-lg text-neutral-900 dark:text-white">Precio</h3>
+        <h3 className="font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight">
+          Precio
+        </h3>
         <div className="flex items-center gap-2">
           <Input
             type="number"
             placeholder="Min"
-            className="w-full"
+            className="w-full h-11"
             value={priceRange.min || ''}
             onChange={(e) => onPriceChange(Number(e.target.value), priceRange.max)}
           />
-          <span className="text-neutral-400">-</span>
+          <span className="text-neutral-400 font-medium">-</span>
           <Input
             type="number"
             placeholder="Max"
-            className="w-full"
+            className="w-full h-11"
             value={priceRange.max || ''}
             onChange={(e) => onPriceChange(priceRange.min, Number(e.target.value))}
           />
@@ -73,7 +77,11 @@ export function ProductFilters({
       </div>
 
       {/* Actions */}
-      <Button variant="outline" className="w-full" onClick={onClear}>
+      <Button
+        variant="outline"
+        className="w-full border-neutral-200 hover:border-red-500 hover:text-red-500 hover:bg-red-50 dark:border-neutral-800 dark:hover:bg-red-900/10 h-11 font-bold tracking-wide uppercase text-xs"
+        onClick={onClear}
+      >
         Limpiar Filtros
       </Button>
     </div>

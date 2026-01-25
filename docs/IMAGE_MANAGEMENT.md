@@ -13,8 +13,8 @@ Actualmente, el sistema utiliza una estrategia de almacenamiento local en el ser
 ## 2. Flujo de Datos Detallado
 
 ### A. Frontend (Captura y Envío)
-1.  **Componente de Admin:** El administrador selecciona una imagen en el formulario de creación/edición de productos.
-2.  **Envío:** La imagen se envía como parte de un `FormData` (multipart/form-data) al endpoint `POST /api/products` (o `PUT`).
+1.  **Componente de Admin:** El administrador selecciona una imagen en el formulario de creación/edición de productos o **categorías**.
+17→2.  **Envío:** La imagen se envía como parte de un `FormData` (multipart/form-data) al endpoint `POST /api/products` o `POST /api/categories`.
     *   Campo del formulario: `image` (según configuración de multer).
 
 ### B. Backend (Recepción y Procesamiento)

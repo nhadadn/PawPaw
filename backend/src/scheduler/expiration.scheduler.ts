@@ -3,6 +3,7 @@ import redis from '../lib/redis';
 import prisma from '../lib/prisma';
 import logger from '../lib/logger';
 import { InventoryChangeType } from '@prisma/client';
+import { emitStockUpdate } from '../websocket/inventory.socket';
 
 export async function processExpiredReservationsOnce(): Promise<void> {
   const now = Date.now();
@@ -32,12 +33,16 @@ export async function processExpiredReservationsOnce(): Promise<void> {
 
         await prisma.$transaction(async (tx) => {
           for (const item of reservation.items) {
-            await tx.productVariant.update({
+            const updatedVariant = await tx.productVariant.update({
               where: { id: BigInt(item.product_variant_id) },
               data: {
                 reservedStock: { decrement: item.quantity },
               },
             });
+
+            // Emit stock update
+            const available = updatedVariant.initialStock - updatedVariant.reservedStock;
+            emitStockUpdate(Number(updatedVariant.productId), available);
 
             await tx.inventoryLog.create({
               data: {

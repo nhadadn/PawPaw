@@ -113,10 +113,10 @@ export function ProductGallery({ images, className }: ProductGalleryProps) {
               key={img.id}
               onClick={() => setSelectedIndex(idx)}
               className={cn(
-                'relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all snap-start',
+                'relative flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 transition-all snap-start',
                 selectedIndex === idx
-                  ? 'border-primary opacity-100 ring-2 ring-primary/20'
-                  : 'border-transparent opacity-70 hover:opacity-100 hover:border-neutral-300 dark:hover:border-neutral-600'
+                  ? 'border-black dark:border-white opacity-100 shadow-md scale-105'
+                  : 'border-transparent opacity-60 hover:opacity-100 hover:border-neutral-300 dark:hover:border-neutral-600'
               )}
             >
               <img src={img.url} alt="" className="w-full h-full object-cover dark:brightness-90" />

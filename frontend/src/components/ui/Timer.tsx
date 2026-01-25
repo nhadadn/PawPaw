@@ -1,56 +1,56 @@
-import * as React from "react"
-import { cn } from "../../lib/utils"
-import { Clock } from "lucide-react"
+import * as React from 'react';
+import { cn } from '../../lib/utils';
+import { Clock } from 'lucide-react';
 
 interface TimerProps {
-  expiresAt: string | Date
-  onExpire?: () => void
-  className?: string
+  expiresAt: string | Date;
+  onExpire?: () => void;
+  className?: string;
 }
 
 export function Timer({ expiresAt, onExpire, className }: TimerProps) {
-  const [timeLeft, setTimeLeft] = React.useState<number>(0)
-  const [isExpired, setIsExpired] = React.useState(false)
+  const [timeLeft, setTimeLeft] = React.useState<number>(0);
+  const [isExpired, setIsExpired] = React.useState(false);
 
   React.useEffect(() => {
     const calculateTimeLeft = () => {
-      const difference = new Date(expiresAt).getTime() - new Date().getTime()
-      
-      if (difference <= 0) {
-        setTimeLeft(0)
-        if (!isExpired) {
-          setIsExpired(true)
-          onExpire?.()
-        }
-        return 0
-      }
-      
-      return Math.floor(difference / 1000)
-    }
+      const difference = new Date(expiresAt).getTime() - new Date().getTime();
 
-    setTimeLeft(calculateTimeLeft())
+      if (difference <= 0) {
+        setTimeLeft(0);
+        if (!isExpired) {
+          setIsExpired(true);
+          onExpire?.();
+        }
+        return 0;
+      }
+
+      return Math.floor(difference / 1000);
+    };
+
+    setTimeLeft(calculateTimeLeft());
 
     const timer = setInterval(() => {
-      const remaining = calculateTimeLeft()
-      setTimeLeft(remaining)
+      const remaining = calculateTimeLeft();
+      setTimeLeft(remaining);
       if (remaining <= 0) {
-        clearInterval(timer)
+        clearInterval(timer);
       }
-    }, 1000)
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [expiresAt, onExpire, isExpired])
+    return () => clearInterval(timer);
+  }, [expiresAt, onExpire, isExpired]);
 
-  const minutes = Math.floor(timeLeft / 60)
-  const seconds = timeLeft % 60
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
 
-  const formatTime = (val: number) => val.toString().padStart(2, "0")
+  const formatTime = (val: number) => val.toString().padStart(2, '0');
 
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 font-mono font-bold text-lg",
-        timeLeft < 60 ? "text-error animate-pulse" : "text-secondary",
+        'inline-flex items-center gap-2 font-mono font-bold text-lg',
+        timeLeft < 60 ? 'text-error animate-pulse' : 'text-neutral-900 dark:text-white',
         className
       )}
       role="timer"
@@ -61,5 +61,5 @@ export function Timer({ expiresAt, onExpire, className }: TimerProps) {
         {formatTime(minutes)}:{formatTime(seconds)}
       </span>
     </div>
-  )
+  );
 }

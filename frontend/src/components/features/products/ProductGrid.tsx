@@ -28,8 +28,16 @@ export function ProductGrid({ products, isLoading, error }: ProductGridProps) {
 
   if (products.length === 0) {
     return (
-      <div className="text-center py-20 text-neutral-500 dark:text-neutral-400">
-        No se encontraron productos.
+      <div className="flex flex-col items-center justify-center py-32 text-center">
+        <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-6">
+          <span className="text-4xl">🔍</span>
+        </div>
+        <h3 className="text-xl font-display font-bold text-neutral-900 dark:text-white mb-2">
+          No se encontraron productos
+        </h3>
+        <p className="text-neutral-500 dark:text-neutral-400 max-w-md">
+          Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.
+        </p>
       </div>
     );
   }

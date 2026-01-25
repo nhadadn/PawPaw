@@ -65,7 +65,7 @@ class CheckoutRepository {
         });
     }
     async releaseReservedStock(tx, variantId, quantity) {
-        await tx.productVariant.update({
+        return await tx.productVariant.update({
             where: { id: BigInt(variantId) },
             data: {
                 reservedStock: { decrement: quantity },
@@ -74,7 +74,7 @@ class CheckoutRepository {
     }
     async confirmStockDeduction(tx, variantId, quantity) {
         // When confirmed, we reduce reserved_stock AND initial_stock
-        await tx.productVariant.update({
+        return await tx.productVariant.update({
             where: { id: variantId },
             data: {
                 reservedStock: { decrement: quantity },

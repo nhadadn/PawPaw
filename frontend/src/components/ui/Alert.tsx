@@ -10,20 +10,20 @@ interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   ({ className, variant = 'info', title, children, ...props }, ref) => {
     const variants = {
-      info: 'bg-blue-50 text-blue-900 border-blue-200 dark:bg-blue-900/20 dark:text-blue-200 dark:border-blue-900',
+      info: 'bg-info-bg text-info border-info/20 dark:bg-info/10 dark:text-info dark:border-info/20',
       success:
-        'bg-green-50 text-green-900 border-green-200 dark:bg-green-900/20 dark:text-green-200 dark:border-green-900',
+        'bg-success-bg text-success border-success/20 dark:bg-success/10 dark:text-success dark:border-success/20',
       warning:
-        'bg-yellow-50 text-yellow-900 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-200 dark:border-yellow-900',
+        'bg-warning-bg text-yellow-800 border-warning/20 dark:bg-warning/10 dark:text-warning dark:border-warning/20',
       error:
-        'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/20 dark:text-red-200 dark:border-red-900',
+        'bg-error-bg text-error border-error/20 dark:bg-error/10 dark:text-error dark:border-error/20',
     };
 
     const icons = {
-      info: <Info className="h-5 w-5 text-blue-600 dark:text-blue-400" />,
-      success: <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />,
-      warning: <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />,
-      error: <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />,
+      info: <Info className="h-5 w-5 text-info" />,
+      success: <CheckCircle2 className="h-5 w-5 text-success" />,
+      warning: <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-warning" />,
+      error: <XCircle className="h-5 w-5 text-error" />,
     };
 
     return (

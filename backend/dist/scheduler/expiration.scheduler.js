@@ -10,6 +10,7 @@ const redis_1 = __importDefault(require("../lib/redis"));
 const prisma_1 = __importDefault(require("../lib/prisma"));
 const logger_1 = __importDefault(require("../lib/logger"));
 const client_1 = require("@prisma/client");
+const inventory_socket_1 = require("../websocket/inventory.socket");
 async function processExpiredReservationsOnce() {
     const now = Date.now();
     try {
@@ -28,12 +29,15 @@ async function processExpiredReservationsOnce() {
                 const reservation = JSON.parse(rawReservation);
                 await prisma_1.default.$transaction(async (tx) => {
                     for (const item of reservation.items) {
-                        await tx.productVariant.update({
+                        const updatedVariant = await tx.productVariant.update({
                             where: { id: BigInt(item.product_variant_id) },
                             data: {
                                 reservedStock: { decrement: item.quantity },
                             },
                         });
+                        // Emit stock update
+                        const available = updatedVariant.initialStock - updatedVariant.reservedStock;
+                        (0, inventory_socket_1.emitStockUpdate)(Number(updatedVariant.productId), available);
                         await tx.inventoryLog.create({
                             data: {
                                 productVariantId: BigInt(item.product_variant_id),

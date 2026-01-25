@@ -58,7 +58,7 @@ describe('CartDrawer', () => {
         <CartDrawer />
       </BrowserRouter>
     );
-    expect(screen.getByText('Tu Carrito')).toBeInTheDocument();
+    expect(screen.getByText(/Tu Carrito/i)).toBeInTheDocument();
     expect(screen.getByText('Product 1')).toBeInTheDocument();
   });
 

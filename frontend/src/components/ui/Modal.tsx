@@ -32,11 +32,11 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
       <div
-        className="bg-white dark:bg-neutral-900 rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-up border border-neutral-200 dark:border-neutral-800"
+        className="bg-surface dark:bg-surface rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-up border border-border"
         role="dialog"
         aria-modal="true"
       >
-        <div className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <h3 className="font-display font-bold text-xl text-neutral-900 dark:text-white">
             {title}
           </h3>

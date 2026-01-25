@@ -133,18 +133,18 @@ const ProductCardComponent = ({
     <>
       <div
         className={cn(
-          'group relative flex flex-col h-full bg-white dark:bg-neutral-900 overflow-hidden',
+          'group relative flex flex-col h-full bg-white dark:bg-[#141414] overflow-hidden rounded-xl border border-transparent hover:border-neutral-200 dark:hover:border-neutral-800 transition-all duration-300 hover:shadow-xl',
           className
         )}
       >
         {/* Image Container */}
-        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-sm">
+        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
           {/* Badges */}
-          <div className="absolute top-2 right-2 z-10 flex flex-col gap-2">
+          <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
             {product.isNew && (
               <Badge
                 variant="secondary"
-                className="uppercase text-[10px] tracking-wider px-2 py-1 font-bold shadow-sm"
+                className="uppercase text-[10px] tracking-wider px-2.5 py-1 font-bold shadow-sm bg-white/90 text-black backdrop-blur-sm border-none"
               >
                 Nuevo
               </Badge>
@@ -152,7 +152,7 @@ const ProductCardComponent = ({
             {hasDiscount && (
               <Badge
                 variant="destructive"
-                className="uppercase text-[10px] tracking-wider px-2 py-1 font-bold shadow-sm"
+                className="uppercase text-[10px] tracking-wider px-2.5 py-1 font-bold shadow-sm bg-accent text-white border-none"
               >
                 -{product.discount}%
               </Badge>
@@ -160,15 +160,15 @@ const ProductCardComponent = ({
           </div>
 
           {/* Action Buttons (Wishlist / QuickView / Gallery) */}
-          <div className="absolute top-2 left-2 z-10 flex flex-col gap-2 transition-opacity duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
+          <div className="absolute top-3 left-3 z-10 flex flex-col gap-2 transition-opacity duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100">
             {showWishlist && (
               <button
                 onClick={handleWishlist}
                 className={cn(
-                  'p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 shadow-sm backdrop-blur-sm transition-transform hover:scale-110 active:scale-95',
+                  'p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10',
                   isWishlistActive
-                    ? 'text-red-500'
-                    : 'text-neutral-600 dark:text-neutral-300 hover:text-red-500'
+                    ? 'text-accent fill-accent'
+                    : 'text-neutral-600 dark:text-neutral-300 hover:text-accent dark:hover:text-accent'
                 )}
                 aria-label="Añadir a lista de deseos"
               >
@@ -178,7 +178,7 @@ const ProductCardComponent = ({
             {showQuickView && (
               <button
                 onClick={handleQuickView}
-                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-transform hover:scale-110 active:scale-95 hover:text-primary"
+                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
                 aria-label="Vista rápida"
               >
                 <Eye className="w-4 h-4" />
@@ -187,7 +187,7 @@ const ProductCardComponent = ({
             {showGallery && galleryImages.length > 0 && (
               <button
                 onClick={handleGalleryOpen}
-                className="p-2 rounded-full bg-white/90 dark:bg-neutral-900/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-transform hover:scale-110 active:scale-95 hover:text-primary"
+                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
                 aria-label="Ver galería"
               >
                 <Images className="w-4 h-4" />
@@ -201,7 +201,7 @@ const ProductCardComponent = ({
               src={getImageUrl(product.imageUrl)}
               alt={product.name}
               loading="lazy"
-              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+              className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = 'https://placehold.co/400x600?text=No+Image';
@@ -210,25 +210,25 @@ const ProductCardComponent = ({
           </Link>
 
           {/* Desktop CTA (Hover) */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full transition-transform duration-300 ease-in-out lg:group-hover:translate-y-0 hidden lg:block">
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full transition-transform duration-300 ease-in-out lg:group-hover:translate-y-0 hidden lg:block bg-gradient-to-t from-black/80 via-black/40 to-transparent pt-12">
             <Button
               onClick={handleAddToCart}
-              className="w-full shadow-lg font-medium tracking-wide uppercase text-xs"
-              size="sm"
+              className="w-full shadow-lg font-bold tracking-wide uppercase text-sm h-11 bg-accent hover:bg-accent-hover text-white border-none"
+              size="lg"
             >
-              {selectedSize ? 'Añadir al carrito' : 'Seleccionar opciones'}
+              {selectedSize ? 'Añadir al Carrito' : 'Seleccionar Opciones'}
             </Button>
           </div>
         </div>
 
         {/* Product Details */}
-        <div className="flex flex-col flex-grow pt-3 pb-2 px-1 space-y-2">
+        <div className="flex flex-col flex-grow p-4 space-y-3">
           {/* Name */}
           <Link
             to={`/products/${product.id}`}
-            className="group-hover:text-primary transition-colors"
+            className="group-hover:text-accent transition-colors"
           >
-            <h3 className="font-display font-medium text-neutral-900 dark:text-white text-base leading-tight line-clamp-2">
+            <h3 className="font-display font-bold text-neutral-900 dark:text-white text-lg leading-tight line-clamp-2">
               {product.name}
             </h3>
           </Link>
@@ -238,16 +238,14 @@ const ProductCardComponent = ({
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  'font-bold text-sm',
-                  hasDiscount
-                    ? 'text-red-600 dark:text-red-400'
-                    : 'text-neutral-900 dark:text-white'
+                  'font-bold text-lg',
+                  hasDiscount ? 'text-accent' : 'text-neutral-900 dark:text-white'
                 )}
               >
                 {formatCurrency(displayPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-neutral-400 dark:text-neutral-500 line-through">
+                <span className="text-xs text-neutral-400 dark:text-neutral-500 line-through font-medium">
                   {formatCurrency(product.price)}
                 </span>
               )}
@@ -260,16 +258,16 @@ const ProductCardComponent = ({
                   <Star
                     key={star}
                     className={cn(
-                      'w-3 h-3',
+                      'w-3.5 h-3.5',
                       (product.averageRating || 4.5) >= star
                         ? 'fill-yellow-400 text-yellow-400'
-                        : 'fill-neutral-200 text-neutral-200 dark:fill-neutral-700 dark:text-neutral-700'
+                        : 'fill-neutral-200 text-neutral-200 dark:fill-neutral-800 dark:text-neutral-800'
                     )}
                   />
                 ))}
               </div>
               {product.totalReviews && (
-                <span className="text-[10px] text-neutral-400 dark:text-neutral-500">
+                <span className="text-[10px] font-medium text-neutral-400 dark:text-neutral-500">
                   ({product.totalReviews})
                 </span>
               )}
@@ -278,23 +276,23 @@ const ProductCardComponent = ({
 
           {/* Sizes - Always visible on mobile, or managed via state */}
           {sizes.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-1">
+            <div className="flex flex-wrap gap-2 mt-1">
               {sizes.slice(0, 5).map((size: string) => (
                 <button
                   key={size}
                   onClick={(e) => handleSizeSelect(e, size)}
                   className={cn(
-                    'w-6 h-6 flex items-center justify-center rounded-full text-[10px] border transition-all',
+                    'w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border transition-all',
                     selectedSize === size
-                      ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-white dark:text-neutral-900'
-                      : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-400'
+                      ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white'
+                      : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:border-neutral-600'
                   )}
                 >
                   {size}
                 </button>
               ))}
               {sizes.length > 5 && (
-                <span className="text-[10px] text-neutral-400 self-center">+</span>
+                <span className="text-xs text-neutral-400 self-center pl-1">+</span>
               )}
             </div>
           )}
@@ -303,9 +301,9 @@ const ProductCardComponent = ({
           <div className="mt-auto pt-2 lg:hidden">
             <Button
               onClick={handleAddToCart}
-              className="w-full text-xs py-2 h-auto"
-              variant="outline"
-              size="sm"
+              className="w-full font-bold"
+              variant="primary"
+              size="md"
             >
               Añadir
             </Button>

@@ -5,46 +5,55 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-neutral-100 dark:bg-neutral-950 text-neutral-600 dark:text-neutral-400 pt-16 pb-8 border-t border-neutral-200 dark:border-neutral-800 transition-colors">
+    <footer className="bg-black text-neutral-400 pt-20 pb-10 border-t border-neutral-900 transition-colors">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display font-bold text-neutral-900 dark:text-white">
+          <div className="space-y-6">
+            <h3 className="text-3xl font-display font-black tracking-tighter text-white">
               PAW PAW
             </h3>
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            <p className="text-sm leading-relaxed max-w-xs">
               Estilo urbano para la nueva generación. Ropa, accesorios y cultura en un solo lugar.
             </p>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors">
-                <Instagram className="w-5 h-5" />
+            <div className="flex gap-6">
+              <a
+                href="#"
+                aria-label="Instagram"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+              >
+                <Instagram className="w-6 h-6" />
               </a>
-              <a href="#" aria-label="Twitter" className="hover:text-primary transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a
+                href="#"
+                aria-label="Twitter"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+              >
+                <Twitter className="w-6 h-6" />
               </a>
-              <a href="#" aria-label="Facebook" className="hover:text-primary transition-colors">
-                <Facebook className="w-5 h-5" />
+              <a
+                href="#"
+                aria-label="Facebook"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+              >
+                <Facebook className="w-6 h-6" />
               </a>
             </div>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Explorar</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Explorar</h4>
+            <ul className="space-y-4 text-sm font-medium">
               <li>
-                <Link
-                  to="/products"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
-                >
+                <Link to="/products" className="hover:text-accent transition-colors block w-fit">
                   Nuevos Lanzamientos
                 </Link>
               </li>
               <li>
                 <Link
                   to="/products?category=ropas"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
+                  className="hover:text-accent transition-colors block w-fit"
                 >
                   Ropa
                 </Link>
@@ -52,7 +61,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/products?category=gorras"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
+                  className="hover:text-accent transition-colors block w-fit"
                 >
                   Gorras
                 </Link>
@@ -60,7 +69,7 @@ export function Footer() {
               <li>
                 <Link
                   to="/products?category=jerseys"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
+                  className="hover:text-accent transition-colors block w-fit"
                 >
                   Jerseys
                 </Link>
@@ -70,37 +79,25 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Ayuda</h4>
-            <ul className="space-y-2 text-sm">
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Ayuda</h4>
+            <ul className="space-y-4 text-sm font-medium">
               <li>
-                <Link
-                  to="/faq"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
-                >
+                <Link to="/faq" className="hover:text-accent transition-colors block w-fit">
                   Preguntas Frecuentes
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/shipping"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
-                >
+                <Link to="/shipping" className="hover:text-accent transition-colors block w-fit">
                   Envíos y Devoluciones
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/terms"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
-                >
+                <Link to="/terms" className="hover:text-accent transition-colors block w-fit">
                   Términos y Condiciones
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact"
-                  className="hover:text-primary dark:hover:text-white transition-colors"
-                >
+                <Link to="/contact" className="hover:text-accent transition-colors block w-fit">
                   Contacto
                 </Link>
               </li>
@@ -109,24 +106,30 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold text-neutral-900 dark:text-white mb-4">Newsletter</h4>
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">
+              Newsletter
+            </h4>
+            <p className="text-sm leading-relaxed mb-6">
               Suscríbete para recibir ofertas exclusivas y drops limitados.
             </p>
             <form className="flex gap-2">
               <Input
                 aria-label="Correo electrónico"
-                placeholder="tu@email.com"
-                className="bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-500"
+                placeholder="TU@EMAIL.COM"
+                className="bg-neutral-900 border-neutral-800 text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
               />
-              <Button size="icon" variant="primary" aria-label="Suscribirse">
-                <Mail className="w-4 h-4" />
+              <Button
+                size="icon"
+                className="bg-white text-black hover:bg-neutral-200 h-11 w-11"
+                aria-label="Suscribirse"
+              >
+                <Mail className="w-5 h-5" />
               </Button>
             </form>
           </div>
         </div>
 
-        <div className="border-t border-neutral-200 dark:border-neutral-800 pt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-500">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

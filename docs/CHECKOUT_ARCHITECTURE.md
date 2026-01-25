@@ -98,6 +98,26 @@ func checkout_reserve(request):
 
 - **Reconexión / reintentos de red:**
   - El cliente debe reutilizar el mismo `Idempotency-Key` al reintentar.
+
+## 2. Persistencia y Estado en Frontend (Nuevo en v2.1.2)
+
+Para mejorar la experiencia de usuario y prevenir la pérdida de datos ante recargas de página, se implementó una estrategia de persistencia sincronizada.
+
+### 2.1 Almacenamiento Local (Zustand Persist)
+El `checkoutStore` utiliza el middleware `persist` para guardar en `localStorage`:
+*   `reservationId`: ID de la reserva activa.
+*   `activeStep`: Paso actual del wizard (Reserva, Pago, Confirmación).
+*   `clientSecret`: Secreto de Stripe (si ya se generó).
+
+### 2.2 Recuperación y Validación (Hydration)
+Al cargar la aplicación (`CheckoutPage`):
+1.  **Hydration:** Zustand recupera el estado desde `localStorage`.
+2.  **Validación (`useValidateReservation`):**
+    *   Si existe un `reservationId`, se consulta `GET /api/checkout/reservations/:id`.
+    *   **Si es válido:** Se mantiene el estado y el usuario continúa donde se quedó.
+    *   **Si expiró (404/Expired):** El hook limpia automáticamente el store (`clearCheckout()`) y redirige al carrito, notificando al usuario.
+
+Este mecanismo garantiza que el estado visual del frontend nunca esté desincronizado con la validez real de la reserva en el backend (Redis).
   - La API devolverá la misma respuesta si la operación ya fue procesada.
 - **Usuario intenta reservar mientras tiene una orden pendiente:**
   - Política recomendada: permitir nuevas reservas, pero el negocio puede decidir restringir.

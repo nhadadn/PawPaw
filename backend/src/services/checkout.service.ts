@@ -10,6 +10,8 @@ const RESERVATION_TTL = 600; // 10 minutes
 
 import { Prisma, InventoryChangeType, OrderStatus } from '@prisma/client';
 
+import { emitStockUpdate } from '../websocket/inventory.socket';
+
 export class CheckoutService {
   private repo: CheckoutRepository;
 
@@ -415,7 +417,16 @@ export class CheckoutService {
     // Release Stock
     const executeTransaction = async (trx: Prisma.TransactionClient) => {
       for (const item of reservation.items) {
-        await this.repo.releaseReservedStock(trx, item.product_variant_id, item.quantity);
+        const updatedVariant = await this.repo.releaseReservedStock(
+          trx,
+          item.product_variant_id,
+          item.quantity
+        );
+
+        // Emit real-time stock update
+        const available = updatedVariant.initialStock - updatedVariant.reservedStock;
+        emitStockUpdate(Number(updatedVariant.productId), available);
+
         await this.repo.createInventoryLog(trx, {
           productVariantId: item.product_variant_id,
           changeType: InventoryChangeType.RELEASE,
