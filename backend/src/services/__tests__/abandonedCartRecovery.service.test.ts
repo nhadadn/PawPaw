@@ -20,6 +20,12 @@ jest.mock('../../lib/redis', () => {
   };
 });
 
+jest.mock('../../lib/prisma', () => ({
+  user: {
+    findUnique: jest.fn(),
+  },
+}));
+
 jest.mock('nodemailer');
 jest.mock('../checkout.service');
 jest.mock('../../lib/logger');
