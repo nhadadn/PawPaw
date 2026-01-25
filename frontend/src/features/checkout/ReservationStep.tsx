@@ -67,7 +67,7 @@ export function ReservationStep() {
     handleSubmit,
     control,
     watch,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<ReservationForm>({
     resolver: zodResolver(reservationSchema),
@@ -78,11 +78,11 @@ export function ReservationStep() {
   });
 
   // Restore form data from store if available (e.g. on mount)
-  useEffect(() => {
+  /* useEffect(() => {
     if (formData) {
       reset(formData);
     }
-  }, [formData, reset]);
+  }, [formData, reset]); */
 
   // Persist form data to store on change
   useEffect(() => {

@@ -122,6 +122,47 @@ class MockRedis {
     async ping() {
         return 'PONG';
     }
+    // Set operations (Mock implementation)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async sadd(_key, ..._members) {
+        // Basic mock: just return 1 to simulate success
+        return 1;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async srem(_key, ..._members) {
+        return 1;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async smembers(_key) {
+        return [];
+    }
+    // Sorted Set operations (Mock implementation)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async zadd(_key, ..._args) {
+        return 1;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async zrem(_key, ..._members) {
+        return 1;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async zrangebyscore(_key, _min, _max) {
+        return [];
+    }
+    // Multi/Pipeline (Mock implementation)
+    multi() {
+        return {
+            set: () => this.multi(),
+            get: () => this.multi(),
+            del: () => this.multi(),
+            sadd: () => this.multi(),
+            srem: () => this.multi(),
+            zadd: () => this.multi(),
+            zrem: () => this.multi(),
+            exec: async () => [['ok', 'OK']],
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        };
+    }
 }
 // Check if we should use real Redis or Mock
 const useRealRedis = !!process.env.REDIS_URL;

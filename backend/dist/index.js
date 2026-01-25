@@ -9,11 +9,16 @@ const app_1 = require("./app");
 const logger_1 = __importDefault(require("./lib/logger"));
 const expiration_scheduler_1 = require("./scheduler/expiration.scheduler");
 const webhookCleanup_1 = require("./scheduler/webhookCleanup");
+const abandonedCartRecovery_job_1 = require("./scheduler/abandonedCartRecovery.job");
 const port = process.env.PORT || 4000;
 const startServer = async () => {
     const app = (0, app_1.createApp)();
     (0, expiration_scheduler_1.startExpirationScheduler)();
     (0, webhookCleanup_1.startWebhookCleanupScheduler)();
+    // Only start recovery job if enabled (or default to true in prod)
+    if (process.env.ENABLE_RECOVERY_JOB !== 'false') {
+        (0, abandonedCartRecovery_job_1.startAbandonedCartRecoveryJob)();
+    }
     app.listen(port, () => {
         logger_1.default.info(`Server running on port ${port}`);
     });

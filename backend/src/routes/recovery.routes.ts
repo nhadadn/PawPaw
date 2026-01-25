@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { CheckoutService } from '../services/checkout.service';
 import redis from '../lib/redis';
-import { logger } from '../lib/logger';
+import logger from '../lib/logger';
 
 export const recoveryRouter = Router();
 const checkoutService = new CheckoutService();

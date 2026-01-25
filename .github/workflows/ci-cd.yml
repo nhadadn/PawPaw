@@ -113,6 +113,9 @@ jobs:
 
       - name: Run E2E Tests
         uses: cypress-io/github-action@v6
+        env:
+          VITE_STRIPE_PUBLISHABLE_KEY: ${{ secrets.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_TYooMQauvdEDq54NiTphI7jx' }}
+          VITE_API_URL: http://localhost:4000
         with:
           working-directory: ./frontend
           start: npm run dev

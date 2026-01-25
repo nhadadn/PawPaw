@@ -1,5 +1,5 @@
 import redis from '../lib/redis';
-import { logger } from '../lib/logger';
+import logger from '../lib/logger';
 import { CheckoutService } from './checkout.service';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';

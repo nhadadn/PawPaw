@@ -19,6 +19,7 @@ BigInt.prototype.toJSON = function () {
 const morgan_1 = __importDefault(require("morgan"));
 const shop_routes_1 = __importDefault(require("./routes/shop.routes"));
 const checkout_routes_1 = __importDefault(require("./routes/checkout.routes"));
+const recovery_routes_1 = require("./routes/recovery.routes");
 const admin_routes_1 = require("./routes/admin.routes");
 const health_1 = __importDefault(require("./routes/health"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
@@ -31,28 +32,53 @@ const express_prom_bundle_1 = __importDefault(require("express-prom-bundle"));
 const rateLimit_middleware_1 = require("./middleware/rateLimit.middleware");
 const createApp = () => {
     const app = (0, express_1.default)();
+    // Trust proxy is required when running behind a load balancer (like Railway/Heroku/AWS ELB)
+    // to correctly identify client IP addresses for rate limiting and logging
+    app.set('trust proxy', 1);
     app.use((0, helmet_1.default)({
         crossOriginResourcePolicy: { policy: 'cross-origin' },
     }));
-    const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
+    const envOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173')
         .split(',')
         .map((origin) => origin.trim());
+    // Explicitly add production domains to ensure they are always allowed
+    const allowedOrigins = [
+        ...envOrigins,
+        'https://pawpawtrc.com',
+        'https://www.pawpawtrc.com',
+        'https://pawpaw-production-d636.up.railway.app',
+    ];
+    logger_1.default.info(`CORS configured with allowed origins: ${allowedOrigins.join(', ')}`);
     app.use((0, cors_1.default)({
         origin: (origin, callback) => {
             // Allow requests with no origin (like mobile apps, curl, or server-to-server webhooks)
             if (!origin)
                 return callback(null, true);
+            // Check for wildcard '*' to allow any origin (use with caution in production)
+            if (allowedOrigins.includes('*')) {
+                return callback(null, true);
+            }
             if (allowedOrigins.includes(origin)) {
                 callback(null, true);
             }
+            else if (origin.endsWith('.vercel.app')) {
+                // Allow Vercel preview deployments dynamically
+                callback(null, true);
+            }
             else {
-                logger_1.default.warn(`CORS blocked for origin: ${origin}`);
+                logger_1.default.warn(`CORS blocked for origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
                 callback(new Error('Not allowed by CORS'));
             }
         },
         credentials: true,
-        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-        allowedHeaders: ['Content-Type', 'Authorization'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+        allowedHeaders: [
+            'Content-Type',
+            'Authorization',
+            'X-Requested-With',
+            'Accept',
+            'idempotency-key',
+        ],
     }));
     // Prometheus metrics middleware
     const metricsMiddleware = (0, express_prom_bundle_1.default)({
@@ -98,15 +124,14 @@ const createApp = () => {
         }
     });
     app.use(express_1.default.json());
-    app.use('/uploads', express_1.default.static(path_1.default.join(process.cwd(), 'uploads')));
+    const uploadDir = process.env.UPLOAD_DIR || path_1.default.join(process.cwd(), 'uploads');
+    app.use('/uploads', express_1.default.static(uploadDir));
+    logger_1.default.info(`Serving static files from: ${uploadDir}`);
     app.use((0, morgan_1.default)('dev'));
     app.use('/api/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
-    app.get('/', (req, res) => {
-        res.json({
-            status: 'ok',
-            message: 'PawPaw Backend is running',
-            timestamp: new Date().toISOString(),
-        });
+    // Root endpoint for health checks
+    app.get('/', (_req, res) => {
+        res.status(200).send('PawPaw Backend API is running');
     });
     app.get('/health', async (req, res) => {
         try {
@@ -123,9 +148,10 @@ const createApp = () => {
     app.use('/api/auth/login', rateLimit_middleware_1.authLimiter);
     app.use('/api/auth/register', rateLimit_middleware_1.authLimiter);
     app.use('/api/admin/login', rateLimit_middleware_1.authLimiter);
+    app.use('/api/shop', shop_routes_1.default);
     app.use('/api/checkout', checkout_routes_1.default);
+    app.use('/api/recovery', recovery_routes_1.recoveryRouter);
     app.use('/api/admin', admin_routes_1.adminRoutes);
-    app.use('/api', shop_routes_1.default);
     app.use('/api', health_1.default);
     // 404 Handler
     app.use(notFound_middleware_1.notFoundHandler);
