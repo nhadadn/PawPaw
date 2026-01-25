@@ -41,6 +41,8 @@ export function ReservationStep() {
     error: paymentError,
   } = useCheckoutCreatePaymentIntent();
 
+  const error = reserveError || paymentError;
+
   // Validate existing reservation
   const { isExpired } = useValidateReservation(reservation?.id ?? null);
 
