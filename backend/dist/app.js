@@ -148,7 +148,7 @@ const createApp = () => {
     app.use('/api/auth/login', rateLimit_middleware_1.authLimiter);
     app.use('/api/auth/register', rateLimit_middleware_1.authLimiter);
     app.use('/api/admin/login', rateLimit_middleware_1.authLimiter);
-    app.use('/api/shop', shop_routes_1.default);
+    app.use('/api', shop_routes_1.default);
     app.use('/api/checkout', checkout_routes_1.default);
     app.use('/api/recovery', recovery_routes_1.recoveryRouter);
     app.use('/api/admin', admin_routes_1.adminRoutes);

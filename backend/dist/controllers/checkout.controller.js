@@ -16,6 +16,7 @@ const ReserveSchema = zod_1.z.object({
         quantity: zod_1.z.number().positive(),
     }))
         .nonempty(),
+    email: zod_1.z.string().email().optional(),
 });
 const CreatePaymentIntentSchema = zod_1.z.object({
     reservation_id: zod_1.z.string().uuid(),
@@ -38,7 +39,7 @@ class CheckoutController {
                 const validated = ReserveSchema.parse(req.body);
                 // If user is not authenticated, generate a guest ID
                 const userId = req.user?.id || `guest:${(0, uuid_1.v4)()}`;
-                const result = await this.service.reserve(userId, validated.items);
+                const result = await this.service.reserve(userId, validated.items, validated.email);
                 return res.status(201).json(result);
             }
             catch (error) {

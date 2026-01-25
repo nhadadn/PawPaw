@@ -17,11 +17,27 @@ class CheckoutService {
     constructor() {
         this.repo = new checkout_repository_1.CheckoutRepository();
     }
-    async reserve(userId, items) {
+    async reserve(userId, items, email) {
         // For guests, we use the generated guest ID.
         const existingReservation = await redis_1.default.get(`reservation:user:${userId}`);
         if (existingReservation) {
             throw new errors_1.CheckoutError('ACTIVE_RESERVATION_EXISTS', 'User already has an active reservation');
+        }
+        // Resolve email for registered users if not provided
+        let resolvedEmail = email;
+        if (!resolvedEmail && !userId.startsWith('guest:')) {
+            try {
+                const user = await prisma_1.default.user.findUnique({
+                    where: { id: userId },
+                    select: { email: true },
+                });
+                if (user) {
+                    resolvedEmail = user.email;
+                }
+            }
+            catch (error) {
+                logger_1.default.warn(`Failed to fetch email for user ${userId}`, { error });
+            }
         }
         if (!Array.isArray(items) || items.length === 0) {
             throw new errors_1.CheckoutError('INVALID_REQUEST', 'Items must be a non-empty array');
@@ -100,6 +116,7 @@ class CheckoutService {
             id: reservationId,
             reservation_id: reservationId,
             user_id: userId,
+            email: resolvedEmail,
             items: reservationItems,
             total_cents: totalCents,
             currency,

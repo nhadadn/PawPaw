@@ -3,9 +3,8 @@ import { useAdminStore } from '../stores/adminStore';
 
 const adminClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Removed default Content-Type to allow Axios to set it automatically
+  // (e.g. multipart/form-data for FormData, application/json for objects)
 });
 
 // Request interceptor

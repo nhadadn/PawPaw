@@ -3,9 +3,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:4000',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Removed default Content-Type to allow Axios to set it automatically
 });
 
 // Request interceptor
@@ -47,9 +45,9 @@ apiClient.interceptors.response.use(
   (error) => {
     // Handle global errors if needed (e.g., 401 Unauthorized -> logout)
     if (error.response?.status === 401) {
-       // We can't import the store here directly to avoid circular dependency
-       // Dispatch a custom event or handle it in the UI
-       window.dispatchEvent(new Event('auth:unauthorized'));
+      // We can't import the store here directly to avoid circular dependency
+      // Dispatch a custom event or handle it in the UI
+      window.dispatchEvent(new Event('auth:unauthorized'));
     }
     return Promise.reject(error);
   }
