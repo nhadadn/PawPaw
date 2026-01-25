@@ -1,8 +1,23 @@
 import { AdminService } from './admin.service';
 import { AdminRepository } from '../repositories/admin.repository';
+import redis from '../lib/redis';
 
 // Mock the repository class
 jest.mock('../repositories/admin.repository');
+
+// Mock Redis
+jest.mock('../lib/redis', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+    set: jest.fn(),
+    setex: jest.fn(),
+    del: jest.fn(),
+    keys: jest.fn().mockResolvedValue([]),
+    quit: jest.fn(),
+    ping: jest.fn().mockResolvedValue('PONG'),
+  },
+}));
 
 describe('AdminService Image Handling', () => {
   let service: AdminService;
@@ -11,12 +26,20 @@ describe('AdminService Image Handling', () => {
   beforeEach(() => {
     // Clear all mocks
     (AdminRepository as unknown as jest.Mock).mockClear();
+    jest.clearAllMocks();
 
     // Instantiate service, which triggers new AdminRepository()
     service = new AdminService();
 
     // Get the mock instance
     mockRepoInstance = (AdminRepository as unknown as jest.Mock).mock.instances[0];
+  });
+
+  afterAll(async () => {
+    // Ensure redis connection is closed (mocked, but good practice)
+    if (redis.quit) {
+      await redis.quit();
+    }
   });
 
   it('createProduct should correctly map multiple images from repository response', async () => {

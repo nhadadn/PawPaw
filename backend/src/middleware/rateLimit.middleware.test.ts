@@ -1,12 +1,14 @@
 import request from 'supertest';
 import express from 'express';
 import { globalLimiter, authLimiter, checkoutLimiter } from './rateLimit.middleware';
+import redis from '../lib/redis';
 
 // Mock Redis to force MemoryStore behavior for tests
 jest.mock('../lib/redis', () => ({
   __esModule: true,
   default: {
     call: jest.fn(),
+    quit: jest.fn(),
   },
 }));
 
@@ -15,6 +17,13 @@ describe('Rate Limit Middleware', () => {
 
   beforeEach(() => {
     app = express();
+  });
+
+  afterAll(async () => {
+    // Ensure redis connection is closed (mocked, but good practice)
+    if (redis.quit) {
+      await redis.quit();
+    }
   });
 
   it('should apply global limiter headers', async () => {

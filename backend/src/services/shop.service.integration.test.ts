@@ -7,7 +7,12 @@ jest.mock('../lib/redis', () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
+    set: jest.fn(),
     setex: jest.fn(),
+    del: jest.fn(),
+    keys: jest.fn().mockResolvedValue([]),
+    quit: jest.fn(),
+    ping: jest.fn().mockResolvedValue('PONG'),
   },
 }));
 
@@ -23,6 +28,13 @@ describe('ShopService Integration (Cache)', () => {
     service = new ShopService();
     // Get the instance of the repository that was created inside the service
     repoMock = (ShopRepository as unknown as jest.Mock).mock.instances[0];
+  });
+
+  afterAll(async () => {
+    // Ensure redis connection is closed (mocked, but good practice)
+    if (redis.quit) {
+      await redis.quit();
+    }
   });
 
   describe('getProducts', () => {

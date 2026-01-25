@@ -2,6 +2,16 @@ import request from 'supertest';
 import { createApp } from '../app';
 import redis from '../lib/redis';
 
+// Mock Redis
+jest.mock('../lib/redis', () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+  del: jest.fn(),
+  keys: jest.fn().mockResolvedValue([]),
+  quit: jest.fn(),
+  ping: jest.fn().mockResolvedValue('PONG'),
+}));
+
 const app = createApp();
 
 describe('Global Error Handling', () => {

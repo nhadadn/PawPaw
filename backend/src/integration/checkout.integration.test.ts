@@ -15,6 +15,9 @@ jest.mock('../lib/redis', () => ({
   get: jest.fn(),
   set: jest.fn(() => ({ catch: jest.fn() })),
   del: jest.fn(),
+  keys: jest.fn().mockResolvedValue([]),
+  quit: jest.fn(),
+  ping: jest.fn().mockResolvedValue('PONG'),
   zadd: jest.fn(),
   zrem: jest.fn(),
   multi: jest.fn(),
@@ -69,6 +72,13 @@ describe('Checkout routes', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterAll(async () => {
+    // Ensure redis connection is closed (mocked, but good practice)
+    if (redis.quit) {
+      await redis.quit();
+    }
   });
 
   it('POST /api/checkout/reserve returns 201 on success', async () => {

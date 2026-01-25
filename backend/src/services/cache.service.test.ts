@@ -6,9 +6,12 @@ jest.mock('../lib/redis', () => ({
   __esModule: true,
   default: {
     get: jest.fn(),
+    set: jest.fn(),
     setex: jest.fn(),
     del: jest.fn(),
     keys: jest.fn(),
+    quit: jest.fn(),
+    ping: jest.fn().mockResolvedValue('PONG'),
   },
 }));
 
@@ -18,6 +21,13 @@ describe('CacheService', () => {
   beforeEach(() => {
     cacheService = new CacheService();
     jest.clearAllMocks();
+  });
+
+  afterAll(async () => {
+    // Ensure redis connection is closed (mocked, but good practice)
+    if (redis.quit) {
+      await redis.quit();
+    }
   });
 
   it('should get value from cache', async () => {
