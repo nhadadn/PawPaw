@@ -4,6 +4,7 @@ export interface CartItem {
   price: number;
   image: string;
   quantity: number;
+  stock?: number;
 }
 
 export interface ReservationItem {

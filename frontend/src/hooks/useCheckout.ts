@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiClient from '../api/client';
+import { AxiosError } from 'axios';
 import type { Reservation, Order, ReservationItem } from '../types/checkout';
 import { useCheckoutStore } from '../stores/checkoutStore';
 
@@ -30,8 +31,19 @@ export const useCheckoutReserve = () => {
 
   return useMutation({
     mutationFn: async (payload: ReservePayload) => {
-      const { data } = await apiClient.post<Reservation>('/api/checkout/reserve', payload);
-      return data;
+      try {
+        const { data } = await apiClient.post<Reservation>('/api/checkout/reserve', payload);
+        return data;
+      } catch (error: unknown) {
+        if (error instanceof AxiosError && error.response && error.response.status === 409) {
+          // You might want to throw a specific error or handle it in UI
+          throw new Error(
+            error.response.data.message ||
+              'Conflicto de reserva: Stock insuficiente o reserva existente.'
+          );
+        }
+        throw error;
+      }
     },
     onSuccess: (data) => {
       setReservation(data);

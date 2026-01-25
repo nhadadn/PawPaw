@@ -195,7 +195,7 @@ export class AdminController {
   static async createCategory(req: Request, res: Response) {
     try {
       if (req.file) {
-        req.body.imageUrl = `/uploads/${req.file.filename}`;
+        req.body.imageUrl = `/uploads/products/${req.file.filename}`;
       }
 
       if (!req.body.slug && req.body.name) {
@@ -239,7 +239,7 @@ export class AdminController {
       const id = parseInt(req.params.id);
 
       if (req.file) {
-        req.body.imageUrl = `/uploads/${req.file.filename}`;
+        req.body.imageUrl = `/uploads/products/${req.file.filename}`;
       }
 
       // If name is updated but slug is not provided, update slug too?

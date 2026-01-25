@@ -123,12 +123,26 @@ export function ReservationStep() {
   }
 
   const isLoading = isReserving || isCreatingPayment;
-  const error = reserveError || paymentError;
+  // const error = reserveError || paymentError; // We will handle error display manually
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Left Column: Form */}
       <div className="lg:col-span-2 space-y-6">
+        {(reserveError || paymentError) && (
+          <Alert variant="error" title="Error">
+            {reserveError?.message ||
+              paymentError?.message ||
+              'Ocurrió un error al procesar tu solicitud.'}
+          </Alert>
+        )}
+
+        {expirationError && (
+          <Alert variant="warning" title="Sesión Expirada">
+            Tu sesión de reserva ha expirado. Por favor intenta nuevamente.
+          </Alert>
+        )}
+
         <form id="reservation-form" onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           {/* Shipping Address */}
           <Card>

@@ -75,10 +75,11 @@ export function ProductDetail() {
 
     addItem({
       id: selectedVariant.id, // Use Variant ID!
-      name: `${product.name} (${selectedVariant.size})`, // Append size to name for clarity in cart
+      name: `${product.name} ${selectedVariant.size ? `(${selectedVariant.size})` : ''}`, // Append size to name for clarity in cart
       price: product.price,
       image: currentImage, // Use currently selected image
       quantity: quantity,
+      stock: selectedVariant.stock_quantity,
     });
 
     // Optional: Show toast or feedback

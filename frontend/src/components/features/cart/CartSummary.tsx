@@ -3,6 +3,8 @@ import { ArrowRight } from 'lucide-react';
 import { formatCurrency } from '../../../lib/utils';
 import { Button } from '../../ui/Button';
 import { Input } from '../../ui/Input';
+import { Link } from 'react-router-dom';
+import { useCartStore } from '../../../stores/cartStore';
 
 interface CartSummaryProps {
   total: number;
@@ -11,8 +13,16 @@ interface CartSummaryProps {
 
 export function CartSummary({ total, itemCount }: CartSummaryProps) {
   const navigate = useNavigate();
+  const { items } = useCartStore();
   const shipping = total > 999 ? 0 : 150;
   const finalTotal = total + shipping;
+
+  // Check if any item exceeds stock
+  const hasStockIssues = items.some((item) => {
+    // If stock is undefined, we assume it's available (or handle as unlimited)
+    // If stock is defined, we check quantity
+    return item.stock !== undefined && item.quantity > item.stock;
+  });
 
   return (
     <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 space-y-6 sticky top-24 border border-transparent dark:border-neutral-800 transition-colors">
@@ -43,8 +53,19 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
         </p>
       </div>
 
+      {hasStockIssues && (
+        <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm font-medium">
+          Algunos productos superan el stock disponible. Por favor ajusta las cantidades.
+        </div>
+      )}
+
       <div className="space-y-3">
-        <Button size="lg" className="w-full" onClick={() => navigate('/checkout')}>
+        <Button
+          size="lg"
+          className="w-full"
+          onClick={() => navigate('/checkout')}
+          disabled={hasStockIssues}
+        >
           Proceder al Pago
           <ArrowRight className="w-5 h-5 ml-2" />
         </Button>
@@ -74,4 +95,3 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
     </div>
   );
 }
-import { Link } from 'react-router-dom';

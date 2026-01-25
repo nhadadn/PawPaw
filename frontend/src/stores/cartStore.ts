@@ -30,7 +30,7 @@ export const useCartStore = create<CartStore>()(
           set({
             items: items.map((item) =>
               item.id === newItem.id
-                ? { ...item, quantity: item.quantity + newItem.quantity }
+                ? { ...item, quantity: item.quantity + newItem.quantity, stock: newItem.stock } // Update stock as well just in case
                 : item
             ),
             isDrawerOpen: true,
