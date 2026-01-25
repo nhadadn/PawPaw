@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { ReservationStep } from './ReservationStep';
 import { PaymentStep } from './PaymentStep';
 import { ConfirmationStep } from './ConfirmationStep';
@@ -7,21 +8,47 @@ import { Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export function CheckoutPage() {
-  const { step, confirmedOrder, reservation, clientSecret } = useCheckoutStore();
+  const { step, setStep, confirmedOrder, reservation, clientSecret } = useCheckoutStore();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // Steps configuration for the progress bar
   const steps = [
     { id: 'reservation', label: 'Envío', number: 1 },
     { id: 'payment', label: 'Pago', number: 2 },
     { id: 'confirmation', label: 'Confirmación', number: 3 },
-  ];
+  ] as const;
 
   const getCurrentStepIndex = () => steps.findIndex((s) => s.id === step);
 
-  // Scroll to top on step change
+  // Initialize step from URL if present and valid
   useEffect(() => {
+    const stepParam = searchParams.get('step');
+    if (stepParam) {
+      const stepNumber = parseInt(stepParam);
+      const matchedStep = steps.find((s) => s.number === stepNumber);
+      if (matchedStep && matchedStep.id !== step) {
+        // Basic validation: Don't allow jumping to payment/confirmation without data
+        if (matchedStep.id === 'payment' && !reservation) {
+          setStep('reservation');
+        } else if (matchedStep.id === 'confirmation' && !confirmedOrder) {
+          setStep('reservation'); // Or handle differently
+        } else {
+          setStep(matchedStep.id);
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Run once on mount
+
+  // Sync URL with store step
+  useEffect(() => {
+    const currentStepObj = steps.find((s) => s.id === step);
+    if (currentStepObj) {
+      setSearchParams({ step: currentStepObj.number.toString() }, { replace: true });
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [step]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step, setSearchParams]);
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 pb-12 transition-colors duration-300">

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { X, ShoppingBag, ArrowRight } from 'lucide-react';
 import { useCartStore } from '../../../stores/cartStore';
@@ -22,21 +23,46 @@ export function CartDrawer() {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
+  // Swipe state
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchCurrent, setTouchCurrent] = useState<number | null>(null);
+
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
   // Sync state with prop during render to avoid effect flash/warning
   if (isDrawerOpen && !isVisible) {
     setIsVisible(true);
   }
 
-  // Handle animation and body scroll
+  // Handle animation, body scroll and focus trap
   useEffect(() => {
     if (isDrawerOpen) {
       // Disable body scroll
       document.body.style.overflow = 'hidden';
+
+      // Store previous focus
+      previousFocusRef.current = document.activeElement as HTMLElement;
+
+      // Focus trap init - focus first element
+      const focusable = drawerRef.current?.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable && focusable.length > 0) {
+        // Small timeout to ensure render is complete/transition started
+        setTimeout(() => (focusable[0] as HTMLElement).focus(), 50);
+      }
     } else {
       // When closing, wait for animation
       if (isVisible) {
         const timer = setTimeout(() => setIsVisible(false), 300); // Match transition duration
         document.body.style.overflow = 'unset';
+
+        // Restore focus
+        if (previousFocusRef.current) {
+          previousFocusRef.current.focus();
+        }
+
         return () => clearTimeout(timer);
       }
       document.body.style.overflow = 'unset';
@@ -45,24 +71,80 @@ export function CartDrawer() {
 
   // Handle auto-close
   useEffect(() => {
-    if (isDrawerOpen && drawerAutoClose && !isHovered) {
+    // Pause auto-close if hovered or currently touching/swiping
+    if (isDrawerOpen && drawerAutoClose && !isHovered && touchStart === null) {
       const timer = setTimeout(() => {
         closeDrawer();
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [isDrawerOpen, drawerAutoClose, isHovered, closeDrawer]);
+  }, [isDrawerOpen, drawerAutoClose, isHovered, touchStart, closeDrawer]);
 
-  // Handle Escape key
+  // Handle Escape key and Focus Trap
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isDrawerOpen) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isDrawerOpen) return;
+
+      if (e.key === 'Escape') {
         closeDrawer();
       }
+
+      if (e.key === 'Tab') {
+        const focusable = drawerRef.current?.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusable || focusable.length === 0) return;
+
+        const firstElement = focusable[0] as HTMLElement;
+        const lastElement = focusable[focusable.length - 1] as HTMLElement;
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isDrawerOpen, closeDrawer]);
+
+  // Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    // Only allow swiping right (closing)
+    if (currentTouch < touchStart) return;
+    setTouchCurrent(currentTouch);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStart === null || touchCurrent === null) {
+      setTouchStart(null);
+      setTouchCurrent(null);
+      return;
+    }
+    const distance = touchCurrent - touchStart;
+    const threshold = 100; // px to close
+    if (distance > threshold) {
+      closeDrawer();
+    }
+    setTouchStart(null);
+    setTouchCurrent(null);
+  };
+
+  const translateX =
+    touchStart !== null && touchCurrent !== null ? Math.max(0, touchCurrent - touchStart) : 0;
 
   if (!isVisible && !isDrawerOpen) return null;
 
@@ -71,7 +153,7 @@ export function CartDrawer() {
     navigate('/checkout');
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-modal="true">
       {/* Overlay */}
       <div
@@ -85,12 +167,21 @@ export function CartDrawer() {
 
       {/* Drawer Panel */}
       <div
+        ref={drawerRef}
         className={cn(
           'relative w-full sm:w-[400px] bg-white dark:bg-neutral-900 h-full shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out border-l border-neutral-200 dark:border-neutral-800',
           isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
         )}
+        style={
+          touchStart !== null && touchCurrent !== null
+            ? { transform: `translateX(${translateX}px)` }
+            : undefined
+        }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900">
@@ -167,6 +258,7 @@ export function CartDrawer() {
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

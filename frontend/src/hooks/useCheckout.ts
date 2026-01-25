@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiClient from '../api/client';
 import type { Reservation, Order, ReservationItem } from '../types/checkout';
 import { useCheckoutStore } from '../stores/checkoutStore';
@@ -35,6 +35,24 @@ export const useCheckoutReserve = () => {
     onSuccess: (data) => {
       setReservation(data);
     },
+  });
+};
+
+/**
+ * Hook to fetch and validate a reservation by ID.
+ * Used for recovering session state and checking expiration.
+ * @param id - The reservation ID to fetch
+ */
+export const useGetReservation = (id: string | null) => {
+  return useQuery({
+    queryKey: ['reservation', id],
+    queryFn: async () => {
+      if (!id) return null;
+      const { data } = await apiClient.get<Reservation>(`/api/checkout/reservations/${id}`);
+      return data;
+    },
+    enabled: !!id,
+    retry: false, // Don't retry if it fails (likely expired/not found)
   });
 };
 

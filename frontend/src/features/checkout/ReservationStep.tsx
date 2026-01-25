@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -6,7 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Ca
 import { Input } from '../../components/ui/Input';
 import { useCartStore } from '../../stores/cartStore';
 import { useCheckoutStore } from '../../stores/checkoutStore';
-import { useCheckoutReserve, useCheckoutCreatePaymentIntent } from '../../hooks/useCheckout';
+import {
+  useCheckoutReserve,
+  useCheckoutCreatePaymentIntent,
+  useGetReservation,
+} from '../../hooks/useCheckout';
 import { Alert } from '../../components/ui/Alert';
 import { formatCurrency, cn } from '../../lib/utils';
 import { Truck, MapPin, Package, ShieldCheck } from 'lucide-react';
@@ -26,7 +31,15 @@ type ReservationForm = z.infer<typeof reservationSchema>;
 
 export function ReservationStep() {
   const { items, totalPrice } = useCartStore();
-  const { setStep, setReservation, setClientSecret } = useCheckoutStore();
+  const {
+    setStep,
+    setReservation,
+    setClientSecret,
+    reservation,
+    formData,
+    setFormData,
+    clearCheckout,
+  } = useCheckoutStore();
   const { mutate: reserve, isPending: isReserving, error: reserveError } = useCheckoutReserve();
   const {
     mutate: createPaymentIntent,
@@ -34,17 +47,50 @@ export function ReservationStep() {
     error: paymentError,
   } = useCheckoutCreatePaymentIntent();
 
+  // Validate existing reservation
+  const { data: remoteReservation, error: remoteError } = useGetReservation(
+    reservation?.id ?? null
+  );
+
+  useEffect(() => {
+    if (reservation?.id) {
+      if (remoteError || (remoteReservation && remoteReservation.status === 'expired')) {
+        clearCheckout();
+      }
+      // Note: We do NOT auto-forward to payment step here to allow "Back" button functionality.
+      // The persistence of 'step' in checkoutStore handles the reload case on PaymentStep.
+    }
+  }, [reservation, remoteReservation, remoteError, clearCheckout]);
+
   const {
     register,
     handleSubmit,
     control,
+    watch,
+    reset,
     formState: { errors },
   } = useForm<ReservationForm>({
     resolver: zodResolver(reservationSchema),
     defaultValues: {
       shippingMethod: 'standard',
+      ...formData,
     },
   });
+
+  // Restore form data from store if available (e.g. on mount)
+  useEffect(() => {
+    if (formData) {
+      reset(formData);
+    }
+  }, [formData, reset]);
+
+  // Persist form data to store on change
+  useEffect(() => {
+    const subscription = watch((value) => {
+      setFormData(value as ReservationForm);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setFormData]);
 
   const shippingMethod = useWatch({ control, name: 'shippingMethod' });
   const shippingCost = shippingMethod === 'express' ? 15000 : 0; // $150.00 vs Free
