@@ -14,6 +14,7 @@ const ReserveSchema = z.object({
       })
     )
     .nonempty(),
+  email: z.string().email().optional(),
 });
 
 const CreatePaymentIntentSchema = z.object({
@@ -50,7 +51,7 @@ export class CheckoutController {
       // If user is not authenticated, generate a guest ID
       const userId = req.user?.id || `guest:${uuidv4()}`;
 
-      const result = await this.service.reserve(userId, validated.items);
+      const result = await this.service.reserve(userId, validated.items, validated.email);
       return res.status(201).json(result);
     } catch (error) {
       this.handleError(res, error);
