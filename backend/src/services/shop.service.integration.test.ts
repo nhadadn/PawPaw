@@ -2,6 +2,13 @@ import { ShopService } from './shop.service';
 import { ShopRepository } from '../repositories/shop.repository';
 import redis from '../lib/redis';
 
+// Mock Logger to prevent noise in tests
+jest.mock('../lib/logger', () => ({
+  info: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+}));
+
 // Mock Redis
 jest.mock('../lib/redis', () => ({
   __esModule: true,

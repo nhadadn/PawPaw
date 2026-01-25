@@ -1,4 +1,5 @@
-import Redis from 'ioredis';
+import Redis, { RedisOptions } from 'ioredis';
+import logger from './logger';
 
 // Mock Redis implementation for environments without Redis
 interface StoredValue {
@@ -210,6 +211,36 @@ if (useRealRedis && !process.env.REDIS_URL) {
 
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
 
-const redis = useRealRedis ? new Redis(redisUrl) : (new MockRedis() as unknown as Redis);
+const options: RedisOptions = {
+  retryStrategy(times) {
+    const delay = Math.min(times * 100, 3000);
+    logger.warn(`[Redis] Connection retry attempt ${times}. Delaying ${delay}ms`);
+    return delay;
+  },
+  maxRetriesPerRequest: 3,
+  connectTimeout: 10000, // 10s connection timeout
+  enableReadyCheck: true,
+  showFriendlyErrorStack: process.env.NODE_ENV !== 'production',
+};
+
+const redis = useRealRedis ? new Redis(redisUrl, options) : (new MockRedis() as unknown as Redis);
+
+if (useRealRedis) {
+  redis.on('error', (err) => {
+    // Only log connection errors if we are NOT in test mode (to avoid noise)
+    // OR if it's a critical failure not expected by tests
+    if (process.env.NODE_ENV !== 'test') {
+      logger.error('[Redis] Client Error:', err);
+    }
+  });
+
+  redis.on('connect', () => {
+    logger.info('[Redis] Client Connected');
+  });
+
+  redis.on('ready', () => {
+    logger.info('[Redis] Client Ready');
+  });
+}
 
 export default redis;

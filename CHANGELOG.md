@@ -5,6 +5,17 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-01-25
+
+### 🚀 Added
+- **Frontend (UX):** Nuevo sistema de visualización de productos con **Zoom de alta resolución** y **Lightbox** a pantalla completa con soporte de gestos táctiles.
+- **Backend (Real-time):** Documentación y estabilización del sistema de **WebSockets** para inventario en tiempo real (`WEBSOCKET_DOCS.md`).
+- **Seguridad:** Validación reforzada en el servicio de Checkout para prevenir estados inconsistentes en reservas.
+
+### 🐛 Fixed
+- **CI/CD:** Resolución de "Resource Leaks" (Open Handles) en tests de integración mediante mocks mejorados de Redis y Prisma.
+- **Estabilidad:** Prevención de timeouts en pipelines de prueba gracias a una gestión de conexiones más eficiente.
+
 ## [2.1.2] - 2026-01-25
 
 ### 🚀 Added

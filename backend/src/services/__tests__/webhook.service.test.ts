@@ -30,6 +30,13 @@ jest.mock('../../lib/prisma', () => ({
   $transaction: jest.fn((callback) => callback(prisma)),
 }));
 
+jest.mock('../../lib/redis', () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+  del: jest.fn(),
+  quit: jest.fn(),
+}));
+
 jest.mock('../checkout.service');
 jest.mock('../inventory.service');
 jest.mock('../../lib/logger');

@@ -4,6 +4,32 @@ Este documento registra los cambios, mejoras y actualizaciones técnicas del pro
 
 ---
 
+## v2.2.0: Product Experience & UI Enhancements
+**Fecha:** 25 de Enero, 2026
+**Enfoque:** Experiencia de Producto, Navegación Visual, Accesibilidad.
+
+### 1. Nuevos Componentes UI
+Se han introducido componentes interactivos para mejorar la visualización de productos:
+
+#### A. Sistema de Zoom y Galería
+*   **`ZoomImage`:**
+    *   **Desktop:** Efecto de lente ("lens zoom") al pasar el cursor, permitiendo inspección detallada de texturas.
+    *   **Mobile:** Modalidad "Tap-to-expand" para dispositivos táctiles.
+*   **`Lightbox`:**
+    *   Visor a pantalla completa con fondo desenfocado (backdrop blur).
+    *   Navegación por teclado (`ArrowLeft`, `ArrowRight`, `Escape`).
+    *   Soporte para gestos táctiles (Swipe) en móviles.
+*   **`ProductGallery`:**
+    *   Integración de miniaturas con scroll automático.
+    *   Navegación dual: Flechas para desktop, indicadores de puntos para mobile.
+
+### 2. Mejoras de Accesibilidad
+*   Implementación de etiquetas ARIA en controles de galería.
+*   Gestión de foco en modales (Lightbox).
+*   Soporte de teclado robusto para navegación de imágenes.
+
+---
+
 ## v2.1.1: Optimización de Dependencias & QA
 **Fecha:** 24 de Enero, 2026
 **Enfoque:** Mantenimiento, Seguridad y Limpieza de Código.
