@@ -3,6 +3,7 @@ import { createApp } from '../app';
 import { register } from 'prom-client';
 import path from 'path';
 import fs from 'fs';
+import redis from '../lib/redis';
 
 // Mock AdminRepository
 jest.mock('../repositories/admin.repository', () => ({
@@ -84,6 +85,7 @@ describe('Admin API Integration', () => {
 
   afterAll(async () => {
     register.clear();
+    await redis.quit();
   });
 
   describe('GET /api/admin/products', () => {

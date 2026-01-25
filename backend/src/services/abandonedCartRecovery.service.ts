@@ -1,5 +1,6 @@
 import redis from '../lib/redis';
 import logger from '../lib/logger';
+import prisma from '../lib/prisma';
 import { CheckoutService } from './checkout.service';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
@@ -63,7 +64,8 @@ export class AbandonedCartRecoveryService {
         // We want: expiresAt < tenMinutesAgo && expiresAt > seventyMinutesAgo
         if (expiresAt < tenMinutesAgo && expiresAt > seventyMinutesAgo) {
           // Process recovery
-          const email = await this.resolveEmail(reservation.user_id);
+          // Check if email is in reservation or resolve it
+          const email = reservation.email || (await this.resolveEmail(reservation.user_id));
 
           if (email) {
             const token = await this.generateRecoveryToken(reservationId, email);
@@ -129,12 +131,18 @@ export class AbandonedCartRecoveryService {
   }
 
   private async resolveEmail(userId: string): Promise<string | null> {
-    // In a real app, fetch from User service/DB.
-    // Here we assume we can get it or return a dummy for demo.
-    // If you have a UserService, use it here.
-    // For now, returning a dummy if ID starts with 'user' or null.
-    if (userId) return 'user@example.com';
-    return null;
+    if (!userId || userId.startsWith('guest:')) return null;
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: { email: true },
+      });
+      return user?.email || null;
+    } catch (error) {
+      logger.warn(`[Recovery] Failed to resolve email for user ${userId}`, { error });
+      return null;
+    }
   }
 }
 

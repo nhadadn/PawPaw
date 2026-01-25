@@ -17,7 +17,11 @@ export class CheckoutService {
     this.repo = new CheckoutRepository();
   }
 
-  async reserve(userId: string, items: { product_variant_id: number; quantity: number }[]) {
+  async reserve(
+    userId: string,
+    items: { product_variant_id: number; quantity: number }[],
+    email?: string
+  ) {
     // For guests, we use the generated guest ID.
     const existingReservation = await redis.get(`reservation:user:${userId}`);
     if (existingReservation) {
@@ -25,6 +29,22 @@ export class CheckoutService {
         'ACTIVE_RESERVATION_EXISTS',
         'User already has an active reservation'
       );
+    }
+
+    // Resolve email for registered users if not provided
+    let resolvedEmail = email;
+    if (!resolvedEmail && !userId.startsWith('guest:')) {
+      try {
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+          select: { email: true },
+        });
+        if (user) {
+          resolvedEmail = user.email;
+        }
+      } catch (error) {
+        logger.warn(`Failed to fetch email for user ${userId}`, { error });
+      }
     }
 
     if (!Array.isArray(items) || items.length === 0) {
@@ -138,6 +158,7 @@ export class CheckoutService {
       id: reservationId,
       reservation_id: reservationId,
       user_id: userId,
+      email: resolvedEmail,
       items: reservationItems,
       total_cents: totalCents,
       currency,

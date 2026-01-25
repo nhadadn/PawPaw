@@ -2,6 +2,7 @@ import request from 'supertest';
 import { createApp } from '../app';
 import stripe from '../lib/stripe';
 import { register } from 'prom-client';
+import redis from '../lib/redis';
 
 // Mock dependencies
 jest.mock('../lib/stripe', () => ({
@@ -38,8 +39,9 @@ describe('Stripe Webhook', () => {
     jest.clearAllMocks();
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     process.env = originalEnv;
+    await redis.quit();
   });
 
   it('POST /api/webhooks/stripe returns 400 if signature is missing', async () => {
