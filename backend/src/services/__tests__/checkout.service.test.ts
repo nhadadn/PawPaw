@@ -16,10 +16,13 @@ const mockRepoInstance = {
 
 // Mock dependencies
 jest.mock('../../lib/prisma', () => ({
-  $transaction: jest.fn((callback) => callback({})), // Mock tx object
-  $queryRaw: jest.fn(),
-  user: {
-    findUnique: jest.fn(),
+  __esModule: true,
+  default: {
+    $transaction: jest.fn((callback) => callback({})), // Mock tx object
+    $queryRaw: jest.fn(),
+    user: {
+      findUnique: jest.fn(),
+    },
   },
 }));
 jest.mock('../../lib/redis', () => ({

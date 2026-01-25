@@ -21,12 +21,19 @@ jest.mock('../../lib/redis', () => {
 });
 
 jest.mock('../../lib/prisma', () => ({
-  user: {
-    findUnique: jest.fn(),
+  __esModule: true,
+  default: {
+    user: {
+      findUnique: jest.fn(),
+    },
   },
 }));
 
-jest.mock('nodemailer');
+jest.mock('nodemailer', () => ({
+  createTransport: jest.fn().mockReturnValue({
+    sendMail: jest.fn().mockResolvedValue('OK'),
+  }),
+}));
 jest.mock('../checkout.service');
 jest.mock('../../lib/logger');
 
