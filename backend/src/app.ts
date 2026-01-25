@@ -173,7 +173,7 @@ export const createApp = () => {
   app.use('/api/auth/register', authLimiter);
   app.use('/api/admin/login', authLimiter);
 
-  app.use('/api/shop', shopRoutes);
+  app.use('/api', shopRoutes);
   app.use('/api/checkout', checkoutRoutes);
   app.use('/api/recovery', recoveryRouter);
   app.use('/api/admin', adminRoutes);

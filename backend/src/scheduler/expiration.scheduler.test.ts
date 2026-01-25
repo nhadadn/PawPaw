@@ -8,6 +8,7 @@ jest.mock('../lib/redis', () => ({
   del: jest.fn(),
   zadd: jest.fn(),
   zrem: jest.fn(),
+  sadd: jest.fn(),
   multi: jest.fn(),
 }));
 
@@ -86,9 +87,9 @@ describe('processExpiredReservationsOnce', () => {
         quantityDiff: 2,
       },
     });
-    expect(redis.del as jest.Mock).toHaveBeenCalledWith(`reservation:${reservationId}`);
-    expect(redis.del as jest.Mock).toHaveBeenCalledWith(`reservation:user:${userId}`);
     expect(redis.zrem as jest.Mock).toHaveBeenCalledWith('reservations:by_expiry', reservationId);
+    expect(redis.sadd as jest.Mock).toHaveBeenCalledWith('reservations:abandoned', reservationId);
+    expect(redis.del as jest.Mock).not.toHaveBeenCalled();
   });
 
   it('does nothing when there are no expired reservations', async () => {
