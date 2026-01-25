@@ -4,6 +4,24 @@ import fs from 'fs';
 import path from 'path';
 import redis from '../lib/redis';
 
+// Mock Redis
+jest.mock('../lib/redis', () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+  setex: jest.fn(),
+  del: jest.fn(),
+  quit: jest.fn(),
+  ping: jest.fn().mockResolvedValue('PONG'),
+}));
+
+// Mock Prisma
+jest.mock('../lib/prisma', () => ({
+  $transaction: jest.fn((callback) => callback({ $queryRaw: jest.fn() })),
+  $queryRaw: jest.fn(),
+  $connect: jest.fn(),
+  $disconnect: jest.fn(),
+}));
+
 // Mock repositories to avoid DB connection
 jest.mock('../repositories/admin.repository');
 jest.mock('../repositories/shop.repository', () => ({
