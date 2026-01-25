@@ -29,7 +29,7 @@ jest.mock('../services/webhook.service', () => {
 const originalEnv = process.env;
 
 describe('Stripe Webhook', () => {
-  let app: any;
+  let app: Express.Application;
 
   beforeEach(() => {
     register.clear();

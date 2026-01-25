@@ -138,7 +138,7 @@ export class AdminController {
       const data = ProductSchema.partial().parse(req.body); // Allow partial updates
 
       // Transform for Prisma
-      const updateData: any = { ...data };
+      const updateData: Record<string, unknown> = { ...data };
 
       if (imageUrls.length > 0) {
         updateData.newImages = imageUrls;
@@ -158,9 +158,9 @@ export class AdminController {
       // Pass stock to service
       const product = await service.updateProduct(id, updateData, stock);
       res.json(product);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('UpdateProduct Error:', error);
-      if (error.name === 'ZodError') {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to update product' });
@@ -205,12 +205,19 @@ export class AdminController {
       const data = CategorySchema.parse(req.body);
       const category = await service.createCategory(data);
       res.status(201).json(category);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('CreateCategory Error:', error);
-      if (error.name === 'ZodError') {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
-      if (error.code === 'P2002') {
+      // Check for Prisma unique constraint violation (P2002)
+      // Since error is unknown, we need to cast it or check properties safely
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        (error as { code: string }).code === 'P2002'
+      ) {
         return res
           .status(409)
           .json({ error: 'CONFLICT', message: 'Category name or slug already exists' });
@@ -239,12 +246,17 @@ export class AdminController {
       const data = CategorySchema.partial().parse(req.body);
       const category = await service.updateCategory(id, data);
       res.json(category);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('UpdateCategory Error:', error);
-      if (error.name === 'ZodError') {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
-      if (error.code === 'P2002') {
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        (error as { code: string }).code === 'P2002'
+      ) {
         return res
           .status(409)
           .json({ error: 'CONFLICT', message: 'Category name or slug already exists' });
@@ -298,8 +310,8 @@ export class AdminController {
       const { status } = UpdateOrderStatusSchema.parse(req.body);
       const order = await service.updateOrderStatus(id, status);
       res.json(order);
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res
@@ -315,8 +327,8 @@ export class AdminController {
       const data = UpdateInventorySchema.parse(req.body);
       const variant = await service.updateInventory(id, data);
       res.json(variant);
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res
@@ -344,8 +356,8 @@ export class AdminController {
       const { role } = UpdateUserStatusSchema.parse(req.body);
       const user = await service.updateUserStatus(id, role);
       res.json(user);
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res
@@ -394,8 +406,8 @@ export class AdminController {
       }
 
       res.status(401).json({ error: 'UNAUTHORIZED', message: 'Invalid credentials' });
-    } catch (error: any) {
-      if (error.name === 'ZodError') {
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
         return res.status(400).json({ error: 'VALIDATION_ERROR', details: error.errors });
       }
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Login failed' });
