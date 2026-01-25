@@ -14,6 +14,9 @@ jest.mock('../../lib/redis', () => ({
   default: {
     get: jest.fn(),
     del: jest.fn(),
+    quit: jest.fn(),
+    keys: jest.fn().mockResolvedValue([]),
+    ping: jest.fn().mockResolvedValue('PONG'),
   },
 }));
 
@@ -32,6 +35,10 @@ app.use(express.json());
 app.use('/api/recovery', recoveryRouter);
 
 describe('Recovery Routes', () => {
+  afterAll(async () => {
+    await redis.quit();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     // Reset mock implementation defaults if needed

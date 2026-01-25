@@ -148,7 +148,9 @@ export const createApp = () => {
   app.use('/uploads', express.static(uploadDir));
   logger.info(`Serving static files from: ${uploadDir}`);
 
-  app.use(morgan('dev'));
+  if (process.env.NODE_ENV !== 'test') {
+    app.use(morgan('dev'));
+  }
 
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

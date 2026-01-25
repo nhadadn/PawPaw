@@ -11,6 +11,7 @@ jest.mock('../lib/redis', () => ({
   setex: jest.fn(),
   del: jest.fn(),
   quit: jest.fn(),
+  keys: jest.fn().mockResolvedValue([]),
   ping: jest.fn().mockResolvedValue('PONG'),
 }));
 

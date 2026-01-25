@@ -16,6 +16,10 @@ const mockRepoInstance = {
 };
 
 // Mock dependencies
+jest.mock('../../websocket/inventory.socket', () => ({
+  emitStockUpdate: jest.fn(),
+}));
+
 jest.mock('../../lib/prisma', () => ({
   __esModule: true,
   default: {
@@ -33,6 +37,9 @@ jest.mock('../../lib/redis', () => ({
   zadd: jest.fn(),
   zrem: jest.fn(),
   multi: jest.fn(),
+  keys: jest.fn().mockResolvedValue([]),
+  quit: jest.fn(),
+  ping: jest.fn(),
 }));
 jest.mock('../../lib/stripe', () => ({
   __esModule: true,
@@ -48,8 +55,23 @@ jest.mock('../../repositories/checkout.repository', () => ({
   CheckoutRepository: jest.fn().mockImplementation(() => mockRepoInstance),
 }));
 
+jest.mock('../../lib/logger');
+
 describe('CheckoutService', () => {
   let service: CheckoutService;
+
+  beforeAll(() => {
+    // Suppress console logs during tests
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'info').mockImplementation(() => {});
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterAll(async () => {
+    await redis.quit();
+    jest.restoreAllMocks();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();

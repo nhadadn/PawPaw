@@ -16,6 +16,9 @@ jest.mock('../../lib/redis', () => {
       zrem: jest.fn(),
       zadd: jest.fn(),
       multi: jest.fn(),
+      quit: jest.fn(),
+      keys: jest.fn().mockResolvedValue([]),
+      ping: jest.fn().mockResolvedValue('PONG'),
     },
   };
 });
@@ -42,6 +45,10 @@ describe('AbandonedCartRecoveryService', () => {
   let sendMailMock: jest.Mock;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let checkoutServiceMock: jest.Mocked<CheckoutService>;
+
+  afterAll(async () => {
+    await redis.quit();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();

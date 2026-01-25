@@ -15,6 +15,9 @@ jest.mock('../../lib/stripe', () => ({
   },
 }));
 jest.mock('../../repositories/checkout.repository');
+jest.mock('../../websocket/inventory.socket', () => ({
+  emitStockUpdate: jest.fn(),
+}));
 
 describe('CheckoutService - Guest Claim', () => {
   let service: CheckoutService;

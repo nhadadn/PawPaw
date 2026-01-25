@@ -33,6 +33,11 @@ jest.mock('../../lib/prisma', () => ({
 jest.mock('../checkout.service');
 jest.mock('../inventory.service');
 jest.mock('../../lib/logger');
+// Mock lib/stripe to avoid STRIPE_SECRET_KEY warning
+jest.mock('../../lib/stripe', () => ({
+  __esModule: true,
+  default: {},
+}));
 
 describe('WebhookService', () => {
   let service: WebhookService;

@@ -36,6 +36,10 @@ jest.mock('../lib/stripe', () => ({
   },
 }));
 
+jest.mock('../websocket/inventory.socket', () => ({
+  emitStockUpdate: jest.fn(),
+}));
+
 jest.mock('../repositories/checkout.repository', () => ({
   CheckoutRepository: jest.fn().mockImplementation(() => ({
     findVariantWithLock: jest.fn().mockResolvedValue({

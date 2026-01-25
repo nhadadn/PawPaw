@@ -9,6 +9,8 @@ jest.mock('../lib/redis', () => ({
   default: {
     call: jest.fn(),
     quit: jest.fn(),
+    keys: jest.fn().mockResolvedValue([]),
+    ping: jest.fn().mockResolvedValue('PONG'),
   },
 }));
 

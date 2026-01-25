@@ -13,7 +13,12 @@ jest.mock('../lib/redis', () => ({
 }));
 
 jest.mock('../lib/prisma', () => {
-  const mockProductVariantUpdate = jest.fn();
+  const mockProductVariantUpdate = jest.fn().mockResolvedValue({
+    id: BigInt(1),
+    productId: BigInt(10),
+    initialStock: 10,
+    reservedStock: 2,
+  });
   const mockInventoryLogCreate = jest.fn();
   const prismaTransactionMock = jest.fn(
     async (
@@ -43,6 +48,10 @@ jest.mock('../lib/logger', () => ({
   debug: jest.fn(),
 }));
 
+jest.mock('../websocket/inventory.socket', () => ({
+  emitStockUpdate: jest.fn(),
+}));
+
 describe('processExpiredReservationsOnce', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -66,6 +75,12 @@ describe('processExpiredReservationsOnce', () => {
       __mockProductVariantUpdate: jest.Mock;
       __mockInventoryLogCreate: jest.Mock;
     };
+
+    prismaAny.__mockProductVariantUpdate.mockResolvedValue({
+      initialStock: 10,
+      reservedStock: 8,
+      productId: BigInt(100),
+    });
 
     await processExpiredReservationsOnce();
 

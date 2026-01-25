@@ -9,6 +9,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
   coverageDirectory: 'coverage',
+  setupFiles: ['<rootDir>/src/test/setup.ts'],
   transformIgnorePatterns: [
     "node_modules/(?!(uuid)/)"
   ]
