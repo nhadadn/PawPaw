@@ -1,11 +1,14 @@
 import { AdminRepository } from '../repositories/admin.repository';
 import { OrderStatus, UserRole, Prisma } from '@prisma/client';
+import { CacheService } from './cache.service';
 
 export class AdminService {
   private repository: AdminRepository;
+  private cache: CacheService;
 
   constructor() {
     this.repository = new AdminRepository();
+    this.cache = new CacheService();
   }
 
   // Products
@@ -42,6 +45,8 @@ export class AdminService {
     if (!product) {
       throw new Error('Failed to create product');
     }
+
+    await this.cache.del('products:list:*');
 
     return {
       ...product,
@@ -123,16 +128,19 @@ export class AdminService {
 
   async createCategory(data: Prisma.CategoryCreateInput) {
     const category = await this.repository.createCategory(data);
+    await this.cache.del('categories:list');
     return { ...category, id: category.id.toString() };
   }
 
   async updateCategory(id: number, data: Prisma.CategoryUpdateInput) {
     const category = await this.repository.updateCategory(id, data);
+    await this.cache.del('categories:list');
     return { ...category, id: category.id.toString() };
   }
 
   async deleteCategory(id: number) {
     const category = await this.repository.deleteCategory(id);
+    await this.cache.del('categories:list');
     return { ...category, id: category.id.toString() };
   }
 

@@ -1,5 +1,6 @@
 import { ShopRepository } from '../repositories/shop.repository';
 import { Prisma } from '@prisma/client';
+import { CacheService } from './cache.service';
 
 type ProductWithRelations = Prisma.ProductGetPayload<{
   include: {
@@ -11,9 +12,11 @@ type ProductWithRelations = Prisma.ProductGetPayload<{
 
 export class ShopService {
   private repository: ShopRepository;
+  private cache: CacheService;
 
   constructor() {
     this.repository = new ShopRepository();
+    this.cache = new CacheService();
   }
 
   private transformProduct(product: ProductWithRelations) {
@@ -49,8 +52,17 @@ export class ShopService {
   }
 
   async getProducts(limit: number, offset: number, categorySlug?: string) {
+    const cacheKey = `products:list:${limit}:${offset}:${categorySlug || 'all'}`;
+    const cached = await this.cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
     const products = await this.repository.findAllProducts(limit, offset, categorySlug);
-    return products.map((p) => this.transformProduct(p));
+    const result = products.map((p) => this.transformProduct(p));
+
+    await this.cache.set(cacheKey, result);
+    return result;
   }
 
   async getProduct(id: number) {
@@ -59,8 +71,32 @@ export class ShopService {
     return this.transformProduct(product);
   }
 
+  async getProductBySlug(slug: string) {
+    const cacheKey = `product:detail:${slug}`;
+    const cached = await this.cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
+    const product = await this.repository.findProductBySlug(slug);
+    if (!product) return null;
+
+    const result = this.transformProduct(product);
+    await this.cache.set(cacheKey, result);
+    return result;
+  }
+
   async getCategories() {
+    const cacheKey = 'categories:list';
+    const cached = await this.cache.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
     const categories = await this.repository.findAllCategories();
-    return categories.map((c) => ({ ...c, id: c.id.toString() }));
+    const result = categories.map((c) => ({ ...c, id: c.id.toString() }));
+
+    await this.cache.set(cacheKey, result);
+    return result;
   }
 }

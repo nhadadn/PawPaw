@@ -5,6 +5,18 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.2] - 2026-01-25
+
+### 🚀 Added
+- **Backend:** Integración de `nodemailer` para notificaciones por correo.
+- **Checkout:** Persistencia del estado del checkout para mejorar la experiencia de usuario.
+
+### 🐛 Fixed
+- **Imágenes:** Corrección en la subida de imágenes de categorías y manejo de `Content-Type`.
+- **Checkout:** Validación de stock mejorada y manejo de errores durante el proceso de compra.
+- **Tests:** Mejoras en los mocks de pruebas y resolución de errores de TypeScript relacionados con `nodemailer`.
+- **Documentación:** Actualización de documentación técnica relacionada con la gestión de imágenes.
+
 ## [2.1.1] - 2026-01-25
 
 ### 🚀 Added (Nuevo)
