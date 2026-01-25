@@ -5,7 +5,7 @@ import { useCheckoutStore } from '../stores/checkoutStore';
 import {
   useCheckoutReserve,
   useCheckoutCreatePaymentIntent,
-  useGetReservation,
+  useValidateReservation,
 } from '../hooks/useCheckout';
 import { vi, describe, it, expect, beforeEach, type Mock } from 'vitest';
 
@@ -42,9 +42,10 @@ describe('ReservationStep', () => {
       isPending: false,
       error: null,
     });
-    (useGetReservation as unknown as Mock).mockReturnValue({
+    (useValidateReservation as unknown as Mock).mockReturnValue({
       data: null,
       error: null,
+      isExpired: false,
     });
     (useCheckoutStore as unknown as Mock).mockReturnValue({
       setStep: mockSetStep,

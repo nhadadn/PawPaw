@@ -37,9 +37,9 @@ export const useAuthStore = create<AuthState>()(
           set({ user, token, isAuthenticated: true, isLoading: false });
         } catch (error: unknown) {
           const err = error as AxiosError<ApiError>;
-          set({ 
-            isLoading: false, 
-            error: err.response?.data?.message || 'Error al iniciar sesión' 
+          set({
+            isLoading: false,
+            error: err.response?.data?.message || 'Error al iniciar sesión',
           });
           throw error;
         }
@@ -47,15 +47,17 @@ export const useAuthStore = create<AuthState>()(
       logout: () => {
         set({ user: null, token: null, isAuthenticated: false });
         localStorage.removeItem('auth-storage');
+        // Clear checkout state on logout
+        localStorage.removeItem('pawpaw-checkout-storage');
       },
       clearError: () => set({ error: null }),
     }),
     {
       name: 'auth-storage',
-      partialize: (state) => ({ 
-        user: state.user, 
-        token: state.token, 
-        isAuthenticated: state.isAuthenticated 
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
       }),
     }
   )

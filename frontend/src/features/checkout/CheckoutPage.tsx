@@ -46,7 +46,7 @@ export function CheckoutPage() {
     if (currentStepObj) {
       setSearchParams({ step: currentStepObj.number.toString() }, { replace: true });
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // window.scrollTo({ top: 0, behavior: 'smooth' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [step, setSearchParams]);
 

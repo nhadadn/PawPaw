@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -10,7 +10,7 @@ import { useCheckoutStore } from '../../stores/checkoutStore';
 import {
   useCheckoutReserve,
   useCheckoutCreatePaymentIntent,
-  useGetReservation,
+  useValidateReservation,
 } from '../../hooks/useCheckout';
 import { Alert } from '../../components/ui/Alert';
 import { formatCurrency, cn } from '../../lib/utils';
@@ -31,15 +31,9 @@ type ReservationForm = z.infer<typeof reservationSchema>;
 
 export function ReservationStep() {
   const { items, totalPrice } = useCartStore();
-  const {
-    setStep,
-    setReservation,
-    setClientSecret,
-    reservation,
-    formData,
-    setFormData,
-    clearCheckout,
-  } = useCheckoutStore();
+  const { setStep, setReservation, setClientSecret, reservation, formData, setFormData } =
+    useCheckoutStore();
+  const [expirationError, setExpirationError] = useState(false);
   const { mutate: reserve, isPending: isReserving, error: reserveError } = useCheckoutReserve();
   const {
     mutate: createPaymentIntent,
@@ -48,19 +42,13 @@ export function ReservationStep() {
   } = useCheckoutCreatePaymentIntent();
 
   // Validate existing reservation
-  const { data: remoteReservation, error: remoteError } = useGetReservation(
-    reservation?.id ?? null
-  );
+  const { isExpired } = useValidateReservation(reservation?.id ?? null);
 
   useEffect(() => {
-    if (reservation?.id) {
-      if (remoteError || (remoteReservation && remoteReservation.status === 'expired')) {
-        clearCheckout();
-      }
-      // Note: We do NOT auto-forward to payment step here to allow "Back" button functionality.
-      // The persistence of 'step' in checkoutStore handles the reload case on PaymentStep.
+    if (isExpired) {
+      setExpirationError(true);
     }
-  }, [reservation, remoteReservation, remoteError, clearCheckout]);
+  }, [isExpired]);
 
   const {
     register,
@@ -361,11 +349,13 @@ export function ReservationStep() {
               <p>Tu información está protegida con encriptación SSL de 256-bits.</p>
             </div>
 
-            {error && (
+            {(error || expirationError) && (
               <Alert variant="error" title="Error">
-                {error instanceof Error
-                  ? error.message
-                  : 'Ocurrió un error al procesar tu solicitud.'}
+                {expirationError
+                  ? 'Tu reserva ha expirado. Por favor, inicia el proceso nuevamente.'
+                  : error instanceof Error
+                    ? error.message
+                    : 'Ocurrió un error al procesar tu solicitud.'}
               </Alert>
             )}
 

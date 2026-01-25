@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import apiClient from '../api/client';
 import type { Reservation, Order, ReservationItem } from '../types/checkout';
@@ -54,6 +55,29 @@ export const useGetReservation = (id: string | null) => {
     enabled: !!id,
     retry: false, // Don't retry if it fails (likely expired/not found)
   });
+};
+
+/**
+ * Hook to validate reservation status and handle expiration.
+ * Clears checkout store if reservation is expired or not found.
+ */
+export const useValidateReservation = (id: string | null) => {
+  const clearCheckout = useCheckoutStore((state) => state.clearCheckout);
+  const [isExpired, setIsExpired] = useState(false);
+
+  const query = useGetReservation(id);
+
+  useEffect(() => {
+    if (id) {
+      if (query.error || (query.data && query.data.status === 'expired')) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsExpired(true);
+        clearCheckout();
+      }
+    }
+  }, [id, query.error, query.data, clearCheckout]);
+
+  return { ...query, isExpired };
 };
 
 export const useCheckoutCreatePaymentIntent = () => {
