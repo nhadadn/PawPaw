@@ -147,24 +147,54 @@ describe('Paw Paw Urban Show Critical Flows', () => {
     // 3. Visit Checkout
     cy.visit('/checkout');
 
-    // 4. Reserve Step
+    // Fill Reservation Form
+    cy.get('input[name="fullName"]').type(mockUser.name);
+    cy.get('input[name="email"]').type(mockUser.email);
+    cy.get('input[name="address"]').type('123 Test St');
+    cy.get('input[name="city"]').type('Test City');
+    cy.get('input[name="state"]').type('Test State');
+    cy.get('input[name="zipCode"]').type('12345');
+    cy.get('input[name="phone"]').type('1234567890');
+
+    // 4. Reserve Step & Payment Intent
     cy.intercept('POST', '**/api/checkout/reserve', {
-      statusCode: 201,
+      statusCode: 200,
       body: {
         reservation_id: 'res-123',
-        expires_at: new Date(Date.now() + 600000).toISOString(),
-        client_secret: 'pi_test_secret_123',
-        total_cents: 2500,
+        status: 'reserved',
+        expires_at: new Date(Date.now() + 15 * 60000).toISOString(), // 15 mins
+        total_amount: 25000,
+        currency: 'mxn',
+        items: [
+          {
+            product_variant_id: 1,
+            quantity: 1,
+            price_at_time: 25000,
+            product_name: 'Premium Dog Food',
+          },
+        ],
       },
     }).as('reserveStock');
 
-    cy.contains('Reservar Stock').click();
+    cy.intercept('POST', '**/api/checkout/create-payment-intent', {
+      statusCode: 200,
+      body: {
+        client_secret: 'pi_test_secret_123',
+        payment_intent_id: 'pi_123',
+        amount: 25000,
+        currency: 'mxn',
+      },
+    }).as('createPaymentIntent');
+
+    cy.contains('Continuar al Pago').click();
+
     cy.wait('@reserveStock');
+    cy.wait('@createPaymentIntent');
 
     // 5. Payment Step (Mock Stripe)
     // Since we can't easily interact with Stripe iframe in Cypress without plugins,
     // we will mock the "Pay" action if possible or check that the form is present.
-    cy.contains('Pago Seguro').should('be.visible');
+    cy.contains('Detalles del Pago').should('be.visible');
 
     // Note: To fully test payment, we'd need to mock stripe.confirmPayment
     // For this level, ensuring we reached the payment step with a client_secret is good.

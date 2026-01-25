@@ -15,7 +15,7 @@ import { notFoundHandler } from './middleware/notFound.middleware';
 
 import morgan from 'morgan';
 import shopRoutes from './routes/shop.routes';
-import { checkoutRoutes } from './routes/checkout.routes';
+import checkoutRoutes from './routes/checkout.routes';
 import { recoveryRouter } from './routes/recovery.routes';
 import { adminRoutes } from './routes/admin.routes';
 import healthRoutes from './routes/health';
