@@ -2,13 +2,14 @@ import multer, { FileFilterCallback } from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { Request } from 'express';
+import logger from '../lib/logger';
 
 // Ensure uploads directory exists
 // Allow overriding via env var for Railway volumes (e.g., /app/backend/uploads)
 const uploadDir = process.env.UPLOAD_DIR || path.join(process.cwd(), 'uploads');
 const productsDir = path.join(uploadDir, 'products');
 
-console.log(`Upload configuration:
+logger.info(`Upload configuration:
   Root: ${uploadDir}
   Products: ${productsDir}
 `);

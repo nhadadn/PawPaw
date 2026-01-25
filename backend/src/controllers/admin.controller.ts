@@ -77,8 +77,11 @@ export class AdminController {
       }
 
       const data = ProductSchema.parse(req.body);
+      // Ensure slug is present (it was auto-generated on req.body if missing)
+      const slug = data.slug || req.body.slug || '';
+
       // images is not in schema yet but we pass it
-      const product = await service.createProduct({ ...data, images: imageUrls });
+      const product = await service.createProduct({ ...data, slug, images: imageUrls });
       res.status(201).json(product);
     } catch (error: unknown) {
       logger.error('CreateProduct Error:', error); // Log error
@@ -172,7 +175,7 @@ export class AdminController {
       const id = parseInt(req.params.id);
       await service.deleteProduct(id);
       res.status(204).send();
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to delete product' });
     }
   }
@@ -182,7 +185,7 @@ export class AdminController {
     try {
       const categories = await service.getCategories();
       res.json(categories);
-    } catch (error) {
+    } catch (error: unknown) {
       res
         .status(500)
         .json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch categories' });
@@ -203,7 +206,10 @@ export class AdminController {
       }
 
       const data = CategorySchema.parse(req.body);
-      const category = await service.createCategory(data);
+      // Ensure slug is present
+      const slug = data.slug || req.body.slug || '';
+
+      const category = await service.createCategory({ ...data, slug });
       res.status(201).json(category);
     } catch (error: unknown) {
       console.error('CreateCategory Error:', error);
@@ -272,7 +278,7 @@ export class AdminController {
       const id = parseInt(req.params.id);
       await service.deleteCategory(id);
       res.status(204).send();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('DeleteCategory Error:', error);
       res
         .status(500)
@@ -288,7 +294,7 @@ export class AdminController {
       const offset = (page - 1) * limit;
       const orders = await service.getOrders(limit, offset);
       res.json(orders);
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch orders' });
     }
   }
@@ -299,7 +305,7 @@ export class AdminController {
       const order = await service.getOrder(id);
       if (!order) return res.status(404).json({ error: 'NOT_FOUND', message: 'Order not found' });
       res.json(order);
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch order' });
     }
   }
@@ -345,7 +351,7 @@ export class AdminController {
       const offset = (page - 1) * limit;
       const users = await service.getUsers(limit, offset);
       res.json(users);
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch users' });
     }
   }
@@ -371,7 +377,7 @@ export class AdminController {
     try {
       const stats = await service.getDashboardStats();
       res.json(stats);
-    } catch (error) {
+    } catch (error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch stats' });
     }
   }

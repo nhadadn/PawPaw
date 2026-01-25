@@ -1,4 +1,13 @@
 import { ShopRepository } from '../repositories/shop.repository';
+import { Prisma } from '@prisma/client';
+
+type ProductWithRelations = Prisma.ProductGetPayload<{
+  include: {
+    category: true;
+    variants: true;
+    images: true;
+  };
+}>;
 
 export class ShopService {
   private repository: ShopRepository;
@@ -7,12 +16,12 @@ export class ShopService {
     this.repository = new ShopRepository();
   }
 
-  private transformProduct(product: any) {
+  private transformProduct(product: ProductWithRelations) {
     const images =
-      product.images?.map((img: any) => ({
+      product.images?.map((img) => ({
         ...img,
-        id: img.id?.toString() || '',
-        productId: img.productId?.toString() || product.id?.toString() || '',
+        id: img.id.toString(),
+        productId: img.productId.toString(),
       })) || [];
 
     // Fallback: If imageUrl is missing but we have images, use the first one
@@ -20,23 +29,19 @@ export class ShopService {
 
     return {
       ...product,
-      id: product.id?.toString() || '',
+      id: product.id.toString(),
       categoryId: product.categoryId?.toString(),
       price: (product.priceCents || 0) / 100,
-      stock:
-        product.variants?.reduce(
-          (acc: number, v: any) => acc + (v.initialStock - v.reservedStock),
-          0
-        ) || 0,
+      stock: product.variants?.reduce((acc, v) => acc + (v.initialStock - v.reservedStock), 0) || 0,
       // Transform category object to name string as expected by frontend type, or keep object if needed?
       // Frontend type says string, but some components might expect object.
       // ProductCard renders {product.category}, so it expects string.
       category: product.category?.name || 'Uncategorized',
       variants:
-        product.variants?.map((v: any) => ({
+        product.variants?.map((v) => ({
           ...v,
-          id: v.id?.toString() || '',
-          productId: v.productId?.toString() || product.id?.toString() || '',
+          id: v.id.toString(),
+          productId: v.productId.toString(),
         })) || [],
       imageUrl, // Ensure imageUrl is populated
       images,

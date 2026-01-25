@@ -40,7 +40,7 @@ describe('AbandonedCartRecoveryService', () => {
     });
 
     // Setup CheckoutService mock
-    checkoutServiceMock = new CheckoutService() as any;
+    checkoutServiceMock = new CheckoutService() as unknown as jest.Mocked<CheckoutService>;
 
     service = new AbandonedCartRecoveryService();
   });
@@ -76,7 +76,10 @@ describe('AbandonedCartRecoveryService', () => {
 
       // 3. Mock resolveEmail
       const resolveEmailSpy = jest
-        .spyOn(service as any, 'resolveEmail')
+        .spyOn(
+          service as unknown as { resolveEmail: (userId: string) => Promise<string> },
+          'resolveEmail'
+        )
         .mockResolvedValue('test@example.com');
 
       await service.scanExpiredReservations();

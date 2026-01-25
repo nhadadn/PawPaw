@@ -1,5 +1,5 @@
 import { AdminRepository } from '../repositories/admin.repository';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, UserRole, Prisma } from '@prisma/client';
 
 export class AdminService {
   private repository: AdminRepository;
@@ -19,7 +19,7 @@ export class AdminService {
       price: p.priceCents / 100, // Convert to unit
       stock: p.variants.reduce((acc, v) => acc + (v.initialStock - v.reservedStock), 0), // Calculate total stock
       images:
-        (p as any).images?.map((img: any) => ({
+        p.images?.map((img) => ({
           id: img.id.toString(),
           url: img.url,
           order: img.order,
@@ -27,11 +27,17 @@ export class AdminService {
     }));
   }
 
-  async createProduct(data: any) {
+  async createProduct(
+    data: Prisma.ProductUncheckedCreateInput & { initialStock?: number; images?: string[] }
+  ) {
     const { initialStock, ...productData } = data;
 
     // Create product and default variant if stock provided
-    const product = await this.repository.createProductWithVariant(productData, initialStock || 0);
+    const product = await this.repository.createProductWithVariant(
+      // Ensure slug is present as required by the repository method signature we updated
+      productData as Prisma.ProductUncheckedCreateInput & { images?: string[]; slug: string },
+      initialStock || 0
+    );
 
     if (!product) {
       throw new Error('Failed to create product');
@@ -42,7 +48,7 @@ export class AdminService {
       id: product.id.toString(),
       stock: initialStock || 0,
       images:
-        (product as any).images?.map((img: any) => ({
+        product.images?.map((img) => ({
           id: img.id.toString(),
           url: img.url,
           order: img.order,
@@ -63,7 +69,7 @@ export class AdminService {
         productId: v.productId.toString(),
       })),
       images:
-        (product as any).images?.map((img: any) => ({
+        product.images?.map((img) => ({
           id: img.id.toString(),
           url: img.url,
           order: img.order,
@@ -71,7 +77,14 @@ export class AdminService {
     };
   }
 
-  async updateProduct(id: number, data: any, stock?: number) {
+  async updateProduct(
+    id: number,
+    data: Prisma.ProductUpdateInput & {
+      imageOrder?: { type: 'existing' | 'new'; id?: string; index?: number }[];
+      newImages?: string[];
+    },
+    stock?: number
+  ) {
     const { imageOrder, newImages, ...updateData } = data;
     const product = await this.repository.updateProduct(
       id,
@@ -89,7 +102,7 @@ export class AdminService {
       ...product,
       id: product.id.toString(),
       images:
-        (product as any).images?.map((img: any) => ({
+        product.images?.map((img) => ({
           id: img.id.toString(),
           url: img.url,
           order: img.order,
@@ -108,12 +121,12 @@ export class AdminService {
     return categories.map((c) => ({ ...c, id: c.id.toString() }));
   }
 
-  async createCategory(data: any) {
+  async createCategory(data: Prisma.CategoryCreateInput) {
     const category = await this.repository.createCategory(data);
     return { ...category, id: category.id.toString() };
   }
 
-  async updateCategory(id: number, data: any) {
+  async updateCategory(id: number, data: Prisma.CategoryUpdateInput) {
     const category = await this.repository.updateCategory(id, data);
     return { ...category, id: category.id.toString() };
   }
@@ -159,7 +172,10 @@ export class AdminService {
   }
 
   // Inventory
-  async updateInventory(variantId: number, data: any) {
+  async updateInventory(
+    variantId: number,
+    data: { initialStock?: number; reservedStock?: number }
+  ) {
     const variant = await this.repository.updateInventory(variantId, data);
     return { ...variant, id: variant.id.toString(), productId: variant.productId.toString() };
   }

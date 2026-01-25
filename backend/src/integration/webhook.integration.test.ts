@@ -29,7 +29,8 @@ jest.mock('../services/webhook.service', () => {
 const originalEnv = process.env;
 
 describe('Stripe Webhook', () => {
-  let app: Express.Application;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let app: any;
 
   beforeEach(() => {
     register.clear();

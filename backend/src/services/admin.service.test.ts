@@ -6,22 +6,23 @@ jest.mock('../repositories/admin.repository');
 
 describe('AdminService Image Handling', () => {
   let service: AdminService;
-  let mockRepoInstance: any;
+  let mockRepoInstance: jest.Mocked<AdminRepository>;
 
   beforeEach(() => {
     // Clear all mocks
-    (AdminRepository as any).mockClear();
+    (AdminRepository as unknown as jest.Mock).mockClear();
 
     // Instantiate service, which triggers new AdminRepository()
     service = new AdminService();
 
     // Get the mock instance
-    mockRepoInstance = (AdminRepository as any).mock.instances[0];
+    mockRepoInstance = (AdminRepository as unknown as jest.Mock).mock.instances[0];
   });
 
   it('createProduct should correctly map multiple images from repository response', async () => {
     const inputData = {
       name: 'Test Product',
+      slug: 'test-product',
       description: 'Desc',
       priceCents: 1000,
       images: ['/uploads/1.jpg', '/uploads/2.jpg'],
@@ -31,13 +32,49 @@ describe('AdminService Image Handling', () => {
     const mockDbResponse = {
       id: BigInt(100),
       name: 'Test Product',
+      slug: 'test-product',
       description: 'Desc',
+      imageUrl: '/uploads/1.jpg',
+      categoryId: null,
       priceCents: 1000,
-      variants: [{ id: BigInt(1), initialStock: 10, reservedStock: 0 }],
-      images: [
-        { id: BigInt(50), url: '/uploads/1.jpg', order: 0 },
-        { id: BigInt(51), url: '/uploads/2.jpg', order: 1 },
+      currency: 'MXN',
+      isActive: true,
+      isDrop: false,
+      dropDate: null,
+      maxPerCustomer: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: null,
+      variants: [
+        {
+          id: BigInt(1),
+          productId: BigInt(100),
+          sku: 'test-product-001',
+          initialStock: 10,
+          reservedStock: 0,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          size: null,
+          color: null,
+        },
       ],
+      images: [
+        {
+          id: BigInt(50),
+          productId: BigInt(100),
+          url: '/uploads/1.jpg',
+          order: 0,
+          createdAt: new Date(),
+        },
+        {
+          id: BigInt(51),
+          productId: BigInt(100),
+          url: '/uploads/2.jpg',
+          order: 1,
+          createdAt: new Date(),
+        },
+      ],
+      waitlist: [],
     };
 
     // Mock the repository method
@@ -80,10 +117,49 @@ describe('AdminService Image Handling', () => {
     const mockDbResponse = {
       id: BigInt(100),
       name: 'Updated Product',
-      images: [
-        { id: BigInt(50), url: '/uploads/1.jpg', order: 0 }, // Existing
-        { id: BigInt(52), url: '/uploads/3.jpg', order: 1 }, // New
+      slug: 'updated-product',
+      description: 'Desc',
+      imageUrl: '/uploads/1.jpg',
+      categoryId: null,
+      priceCents: 1000,
+      currency: 'MXN',
+      isActive: true,
+      isDrop: false,
+      dropDate: null,
+      maxPerCustomer: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: null,
+      variants: [
+        {
+          id: BigInt(1),
+          productId: BigInt(100),
+          sku: 'updated-product-001',
+          initialStock: 10,
+          reservedStock: 0,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          size: null,
+          color: null,
+        },
       ],
+      images: [
+        {
+          id: BigInt(50),
+          productId: BigInt(100),
+          url: '/uploads/1.jpg',
+          order: 0,
+          createdAt: new Date(),
+        }, // Existing
+        {
+          id: BigInt(52),
+          productId: BigInt(100),
+          url: '/uploads/3.jpg',
+          order: 1,
+          createdAt: new Date(),
+        }, // New
+      ],
+      waitlist: [],
     };
 
     mockRepoInstance.updateProduct.mockResolvedValue(mockDbResponse);
@@ -107,8 +183,30 @@ describe('AdminService Image Handling', () => {
     const mockDbResponse = {
       id: BigInt(100),
       name: 'Test Product',
+      slug: 'test-product',
+      description: 'Desc',
+      imageUrl: '/uploads/1.jpg',
+      categoryId: null,
+      priceCents: 1000,
+      currency: 'MXN',
+      isActive: true,
+      isDrop: false,
+      dropDate: null,
+      maxPerCustomer: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      category: null,
       variants: [],
-      images: [{ id: BigInt(50), url: '/uploads/1.jpg', order: 0 }],
+      images: [
+        {
+          id: BigInt(50),
+          productId: BigInt(100),
+          url: '/uploads/1.jpg',
+          order: 0,
+          createdAt: new Date(),
+        },
+      ],
+      waitlist: [],
     };
 
     mockRepoInstance.findProductById.mockResolvedValue(mockDbResponse);

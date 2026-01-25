@@ -5,6 +5,22 @@ import { CheckoutService } from './checkout.service';
 import { v4 as uuidv4 } from 'uuid';
 import nodemailer from 'nodemailer';
 
+interface ReservationItem {
+  product_variant_id: number;
+  quantity: number;
+}
+
+interface ReservationPayload {
+  id: string;
+  reservation_id: string;
+  user_id: string;
+  email?: string;
+  items: ReservationItem[];
+  total_cents: number;
+  currency: string;
+  expires_at: string;
+}
+
 export class AbandonedCartRecoveryService {
   private checkoutService: CheckoutService;
   private transporter: nodemailer.Transporter;
@@ -98,8 +114,11 @@ export class AbandonedCartRecoveryService {
     return token;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private async sendRecoveryEmail(email: string, token: string, reservation: any): Promise<void> {
+  private async sendRecoveryEmail(
+    email: string,
+    token: string,
+    reservation: ReservationPayload
+  ): Promise<void> {
     const recoveryLink = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/checkout/recover?token=${token}`;
 
     // Simple HTML template
@@ -107,7 +126,9 @@ export class AbandonedCartRecoveryService {
       <h1>¡No pierdas tu carrito!</h1>
       <p>Notamos que dejaste items en tu carrito. Aún están disponibles.</p>
       <ul>
-        ${reservation.items.map((i: any) => `<li>Product ${i.product_variant_id} x${i.quantity}</li>`).join('')}
+        ${reservation.items
+          .map((i: ReservationItem) => `<li>Product ${i.product_variant_id} x${i.quantity}</li>`)
+          .join('')}
       </ul>
       <p>Total: $${(reservation.total_cents / 100).toFixed(2)} ${reservation.currency}</p>
       <a href="${recoveryLink}" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none;">Restaurar Carrito</a>

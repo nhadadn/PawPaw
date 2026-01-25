@@ -42,7 +42,7 @@ export const errorHandler = (
   else if (
     error instanceof SyntaxError &&
     'status' in error &&
-    (error as any).status === 400 &&
+    (error as { status: number }).status === 400 &&
     'body' in error
   ) {
     error = new ValidationError('Invalid JSON format');
@@ -84,7 +84,7 @@ export const errorHandler = (
   }
 
   // 4. Enviar Respuesta
-  const response: any = {
+  const response: Record<string, unknown> = {
     error: appError.code,
     message: appError.message,
   };

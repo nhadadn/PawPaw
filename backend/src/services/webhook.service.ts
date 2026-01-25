@@ -4,6 +4,7 @@ import prisma from '../lib/prisma';
 import logger from '../lib/logger';
 import { CheckoutService } from './checkout.service';
 import { InventoryService } from './inventory.service';
+import { CheckoutError } from '../utils/errors';
 
 export class WebhookService {
   private checkoutService: CheckoutService;
@@ -29,7 +30,7 @@ export class WebhookService {
             logger.info(`Unhandled Stripe event type: ${event.type}`);
         }
       });
-    } catch (error) {
+    } catch (error: unknown) {
       // This catch block might not be reached if processIdempotent swallows errors,
       // but it serves as a safety net.
       logger.error('Error handling webhook event', {
@@ -91,7 +92,7 @@ export class WebhookService {
           },
         });
       });
-    } catch (error) {
+    } catch (error: unknown) {
       // Handle known concurrency errors (Idempotency)
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         logger.info(`Event ${id} is being processed concurrently. Skipping.`);
@@ -174,8 +175,8 @@ export class WebhookService {
       );
 
       logger.info('Order created via webhook', { orderId: result.order_id });
-    } catch (error: any) {
-      if (error.code === 'RESERVATION_NOT_FOUND') {
+    } catch (error: unknown) {
+      if (error instanceof CheckoutError && error.code === 'RESERVATION_NOT_FOUND') {
         logger.error(
           'Reservation not found or expired for successful payment. Manual intervention required.',
           {
@@ -249,8 +250,8 @@ export class WebhookService {
     try {
       await this.checkoutService.cancel(user_id || null, reservation_id, tx); // <--- Pass tx
       logger.info('Reservation released via webhook');
-    } catch (error: any) {
-      if (error.code === 'RESERVATION_NOT_FOUND') {
+    } catch (error: unknown) {
+      if (error instanceof CheckoutError && error.code === 'RESERVATION_NOT_FOUND') {
         logger.info('Reservation already gone, nothing to release.');
       } else {
         logger.error('Failed to release reservation', { error });

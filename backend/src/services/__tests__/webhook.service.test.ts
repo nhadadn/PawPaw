@@ -1,5 +1,7 @@
 import { WebhookService } from '../webhook.service';
 import { OrderStatus } from '@prisma/client';
+import Stripe from 'stripe';
+import { CheckoutError } from '../../utils/errors';
 import prisma from '../../lib/prisma';
 import { CheckoutService } from '../checkout.service';
 import logger from '../../lib/logger';
@@ -39,13 +41,15 @@ describe('WebhookService', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     service = new WebhookService();
-    mockCheckoutService = (service as any).checkoutService;
+    mockCheckoutService = (service as unknown as { checkoutService: CheckoutService })
+      .checkoutService as jest.Mocked<CheckoutService>;
     // Default: Event not processed
     (prisma.webhookEvent.findUnique as jest.Mock).mockResolvedValue(null);
   });
 
   describe('handlePaymentSucceeded', () => {
-    const mockEvent: any = {
+    const mockEvent = {
+      id: 'evt_123',
       type: 'payment_intent.succeeded',
       data: {
         object: {
@@ -57,7 +61,7 @@ describe('WebhookService', () => {
           receipt_email: 'test@example.com',
         },
       },
-    };
+    } as unknown as Stripe.Event;
 
     it('should update order status if order exists but not paid', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue({
@@ -90,7 +94,12 @@ describe('WebhookService', () => {
 
     it('should create order from reservation if order does not exist', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue(null);
-      mockCheckoutService.confirm.mockResolvedValue({ order_id: '1' } as any);
+      mockCheckoutService.confirm.mockResolvedValue({
+        order_id: '1',
+        order_number: '1',
+        status: OrderStatus.PAID,
+        total_cents: 1000,
+      });
 
       await service.handleEvent(mockEvent);
 
@@ -105,7 +114,9 @@ describe('WebhookService', () => {
 
     it('should handle RESERVATION_NOT_FOUND error gracefully', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue(null);
-      mockCheckoutService.confirm.mockRejectedValue({ code: 'RESERVATION_NOT_FOUND' });
+      mockCheckoutService.confirm.mockRejectedValue(
+        new CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found')
+      );
 
       await service.handleEvent(mockEvent);
 
@@ -117,7 +128,8 @@ describe('WebhookService', () => {
   });
 
   describe('handlePaymentFailed', () => {
-    const mockEvent: any = {
+    const mockEvent = {
+      id: 'evt_123_failed',
       type: 'payment_intent.payment_failed',
       data: {
         object: {
@@ -129,7 +141,7 @@ describe('WebhookService', () => {
           status: 'payment_failed',
         },
       },
-    };
+    } as unknown as Stripe.Event;
 
     it('should cancel order and restock if order exists', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue({
@@ -168,11 +180,11 @@ describe('WebhookService', () => {
   });
 
   describe('Idempotency', () => {
-    const mockEvent: any = {
+    const mockEvent = {
       type: 'payment_intent.succeeded',
       id: 'evt_123',
       data: { object: { id: 'pi_123' } },
-    };
+    } as unknown as Stripe.Event;
 
     it('should skip processing if event is already processed', async () => {
       (prisma.webhookEvent.findUnique as jest.Mock).mockResolvedValue({

@@ -1,12 +1,13 @@
 import prisma from '../lib/prisma';
+import { Prisma } from '@prisma/client';
 
 export class ShopRepository {
   async findAllProducts(limit = 20, offset = 0, categorySlug?: string) {
-    const where: any = { isActive: true };
-    
+    const where: Prisma.ProductWhereInput = { isActive: true };
+
     if (categorySlug) {
       where.category = {
-        slug: categorySlug
+        slug: categorySlug,
       };
     }
 
@@ -18,8 +19,8 @@ export class ShopRepository {
         category: true,
         variants: true,
         images: {
-          orderBy: { order: 'asc' }
-        }
+          orderBy: { order: 'asc' },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -27,16 +28,16 @@ export class ShopRepository {
 
   async findProductById(id: number) {
     return prisma.product.findFirst({
-      where: { 
+      where: {
         id: BigInt(id),
-        isActive: true 
+        isActive: true,
       },
       include: {
         category: true,
         variants: true,
         images: {
-          orderBy: { order: 'asc' }
-        }
+          orderBy: { order: 'asc' },
+        },
       },
     });
   }
@@ -48,8 +49,8 @@ export class ShopRepository {
         category: true,
         variants: true,
         images: {
-          orderBy: { order: 'asc' }
-        }
+          orderBy: { order: 'asc' },
+        },
       },
     });
   }
@@ -68,9 +69,9 @@ export class ShopRepository {
           where: { isActive: true },
           include: {
             variants: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
   }
 }

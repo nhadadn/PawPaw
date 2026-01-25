@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, UserRole, Prisma } from '@prisma/client';
 
 export class AdminRepository {
   // Products
@@ -31,7 +31,10 @@ export class AdminRepository {
     });
   }
 
-  async createProductWithVariant(data: any, initialStock: number) {
+  async createProductWithVariant(
+    data: Prisma.ProductUncheckedCreateInput & { images?: string[]; slug: string },
+    initialStock: number
+  ) {
     const { images, ...productData } = data;
 
     return prisma.$transaction(async (tx) => {
@@ -71,7 +74,7 @@ export class AdminRepository {
     });
   }
 
-  async createProduct(data: any) {
+  async createProduct(data: Prisma.ProductUncheckedCreateInput) {
     return prisma.product.create({
       data,
     });
@@ -79,7 +82,7 @@ export class AdminRepository {
 
   async updateProduct(
     id: number,
-    data: any,
+    data: Prisma.ProductUpdateInput,
     imageOrder?: { type: 'existing' | 'new'; id?: string; index?: number }[],
     newImageUrls?: string[],
     stock?: number
@@ -203,13 +206,13 @@ export class AdminRepository {
     return prisma.category.findMany();
   }
 
-  async createCategory(data: any) {
+  async createCategory(data: Prisma.CategoryCreateInput) {
     return prisma.category.create({
       data,
     });
   }
 
-  async updateCategory(id: number, data: any) {
+  async updateCategory(id: number, data: Prisma.CategoryUpdateInput) {
     return prisma.category.update({
       where: { id: BigInt(id) },
       data,

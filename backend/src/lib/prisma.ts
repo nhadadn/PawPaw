@@ -54,7 +54,7 @@ class MockPrisma {
   $connect = async () => {};
   $disconnect = async () => {};
   $queryRaw = async () => [1];
-  $transaction = async (callback: any) => callback(this);
+  $transaction = async (callback: (prisma: MockPrisma) => Promise<unknown>) => callback(this);
 }
 
 const isDatabaseConfigured = !!process.env.DATABASE_URL;
