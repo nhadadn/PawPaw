@@ -2,6 +2,7 @@ import request from 'supertest';
 import { createApp } from '../app';
 import fs from 'fs';
 import path from 'path';
+import redis from '../lib/redis';
 
 // Mock repositories to avoid DB connection
 jest.mock('../repositories/admin.repository');
@@ -47,11 +48,12 @@ describe('Image Serving & Visibility Integration', () => {
     fs.writeFileSync(testFilePath, testContent);
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     // Cleanup
     if (fs.existsSync(testFilePath)) {
       fs.unlinkSync(testFilePath);
     }
+    await redis.quit();
   });
 
   test('Static file serving: should serve /uploads/integration-test.jpg', async () => {

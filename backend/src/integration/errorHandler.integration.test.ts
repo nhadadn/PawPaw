@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { createApp } from '../app';
+import redis from '../lib/redis';
 
 const app = createApp();
 
@@ -31,5 +32,9 @@ describe('Global Error Handling', () => {
       expect(res.body).toHaveProperty('details');
       expect(Array.isArray(res.body.details)).toBe(true);
     });
+  });
+
+  afterAll(async () => {
+    await redis.quit();
   });
 });
