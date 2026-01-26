@@ -40,6 +40,12 @@ jest.mock('../websocket/inventory.socket', () => ({
   emitStockUpdate: jest.fn(),
 }));
 
+jest.mock('../middleware/rateLimit.middleware', () => ({
+  globalLimiter: (req: any, res: any, next: any) => next(),
+  authLimiter: (req: any, res: any, next: any) => next(),
+  checkoutLimiter: (req: any, res: any, next: any) => next(),
+}));
+
 jest.mock('../repositories/checkout.repository', () => ({
   CheckoutRepository: jest.fn().mockImplementation(() => ({
     findVariantWithLock: jest.fn().mockResolvedValue({
@@ -305,5 +311,23 @@ describe('Checkout routes', () => {
     expect(response.body).toHaveProperty('client_secret');
     expect(response.body).toHaveProperty('payment_intent_id');
     expect(response.body.amount).toBe(1000);
+  });
+
+  it('GET /api/checkout/reservations/:id returns 200 with status', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440006';
+    (redis.get as jest.Mock).mockResolvedValue(
+      JSON.stringify({
+        user_id: 'user-123',
+        items: [],
+        expires_at: new Date(Date.now() + 60000).toISOString(),
+      })
+    );
+
+    const response = await request(app)
+      .get(`/api/checkout/reservations/${reservationId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('status', 'active');
   });
 });
