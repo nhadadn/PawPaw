@@ -53,8 +53,9 @@ describe('Paw Paw Urban Show Critical Flows', () => {
           impact,
           description,
           nodes: nodes.length,
+          details: nodes.map((n) => n.html).join(', '),
         }));
-        cy.task('table', violationData);
+        cy.task('log', JSON.stringify(violationData, null, 2));
       }
     );
   });

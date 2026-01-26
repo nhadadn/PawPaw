@@ -69,7 +69,7 @@ export function Home() {
                 <span className="text-white text-xs font-bold uppercase tracking-wider">
                   +10k Clientes
                 </span>
-                <div className="flex text-accent" aria-label="5 de 5 estrellas">
+                <div className="flex text-accent" role="img" aria-label="5 de 5 estrellas">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <Star key={i} className="w-3 h-3 fill-current" aria-hidden="true" />
                   ))}
