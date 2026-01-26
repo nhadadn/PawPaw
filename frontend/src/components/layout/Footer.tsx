@@ -5,12 +5,12 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-black text-neutral-400 pt-20 pb-10 border-t border-neutral-900 transition-colors">
+    <footer className="bg-black text-neutral-400 dark:text-neutral-500 pt-20 pb-10 border-t border-neutral-900 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-display font-black tracking-tighter text-neutral-50">
+            <h3 className="text-3xl font-display font-black tracking-tighter text-neutral-50 dark:text-white">
               PAW PAW
             </h3>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -43,7 +43,7 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-bold text-neutral-50 mb-6 uppercase tracking-wider text-sm">
+            <h4 className="font-bold text-neutral-50 dark:text-white mb-6 uppercase tracking-wider text-sm">
               Explorar
             </h4>
             <ul className="space-y-4 text-sm font-medium">
@@ -81,7 +81,7 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-neutral-50 dark:text-neutral-900 mb-6 uppercase tracking-wider text-sm">
+            <h4 className="font-bold text-neutral-50 dark:text-white mb-6 uppercase tracking-wider text-sm">
               Ayuda
             </h4>
             <ul className="space-y-4 text-sm font-medium">
@@ -110,7 +110,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold text-neutral-50 mb-6 uppercase tracking-wider text-sm">
+            <h4 className="font-bold text-neutral-50 dark:text-white mb-6 uppercase tracking-wider text-sm">
               Newsletter
             </h4>
             <p className="text-sm leading-relaxed mb-6">
@@ -120,7 +120,7 @@ export function Footer() {
               <Input
                 aria-label="Correo electrónico"
                 placeholder="TU@EMAIL.COM"
-                className="bg-neutral-900 border-neutral-800 text-neutral-50 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
+                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-200 dark:border-neutral-700 dark:text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
               />
               <Button
                 size="icon"

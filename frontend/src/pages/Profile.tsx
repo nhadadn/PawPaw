@@ -31,23 +31,34 @@ export function Profile() {
           <div className="space-y-6">
             <h2 className="text-2xl font-bold font-display">Mis Pedidos</h2>
             {isLoadingOrders ? (
-              <div className="flex justify-center py-10"><Spinner /></div>
+              <div className="flex justify-center py-10">
+                <Spinner />
+              </div>
             ) : orders && orders.length > 0 ? (
               <div className="space-y-4">
                 {orders.map((order) => (
-                  <div key={order.id} className="bg-white border border-neutral-200 rounded-xl p-6 hover:shadow-sm transition-shadow">
+                  <div
+                    key={order.id}
+                    className="bg-white border border-neutral-200 rounded-xl p-6 hover:shadow-sm transition-shadow"
+                  >
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
                       <div>
                         <p className="font-bold text-lg">Pedido #{order.id.slice(0, 8)}</p>
                         <p className="text-sm text-neutral-500">{formatDate(order.created_at)}</p>
                       </div>
                       <Badge variant={order.status === 'pending' ? 'secondary' : 'default'}>
-                        {order.status === 'pending' ? 'Pendiente' : order.status === 'paid' ? 'Pagado' : order.status}
+                        {order.status === 'pending'
+                          ? 'Pendiente'
+                          : order.status === 'paid'
+                            ? 'Pagado'
+                            : order.status}
                       </Badge>
                     </div>
                     <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
                       <p className="font-bold text-primary">{formatCurrency(order.total_amount)}</p>
-                      <Button variant="outline" size="sm">Ver Detalles</Button>
+                      <Button variant="outline" size="sm">
+                        Ver Detalles
+                      </Button>
                     </div>
                   </div>
                 ))}
@@ -61,24 +72,38 @@ export function Profile() {
             )}
           </div>
         );
-      
+
       case 'settings':
         return (
           <div className="space-y-6">
-             <h2 className="text-2xl font-bold font-display">Configuración</h2>
-             <div className="bg-white border border-neutral-200 rounded-xl p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                   <div className="space-y-2">
-                      <label className="text-sm font-bold text-neutral-900">Nombre Completo</label>
-                      <input type="text" value={user.name} disabled className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-500" />
-                   </div>
-                   <div className="space-y-2">
-                      <label className="text-sm font-bold text-neutral-900">Correo Electrónico</label>
-                      <input type="email" value={user.email} disabled className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-500" />
-                   </div>
+            <h2 className="text-2xl font-bold font-display">Configuración</h2>
+            <div className="bg-white border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700 rounded-xl p-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                    Nombre Completo
+                  </label>
+                  <input
+                    type="text"
+                    value={user.name}
+                    disabled
+                    className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-500 dark:bg-neutral-900/50 dark:border-neutral-600 dark:text-neutral-400"
+                  />
                 </div>
-                <Button disabled>Guardar Cambios</Button>
-             </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+                    Correo Electrónico
+                  </label>
+                  <input
+                    type="email"
+                    value={user.email}
+                    disabled
+                    className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-500 dark:bg-neutral-900/50 dark:border-neutral-600 dark:text-neutral-400"
+                  />
+                </div>
+              </div>
+              <Button disabled>Guardar Cambios</Button>
+            </div>
           </div>
         );
 
@@ -87,25 +112,27 @@ export function Profile() {
         return (
           <div className="space-y-8">
             <h2 className="text-2xl font-bold font-display">Hola, {user.name}</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div 
+              <div
                 className="bg-primary/5 p-6 rounded-xl border border-primary/10 cursor-pointer hover:bg-primary/10 transition-colors"
                 onClick={() => setActiveTab('orders')}
               >
                 <Package className="w-8 h-8 text-primary mb-4" />
                 <h3 className="font-bold text-lg mb-1">Pedidos</h3>
-                <p className="text-sm text-neutral-600">{orders?.length || 0} pedidos realizados</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                  {orders?.length || 0} pedidos realizados
+                </p>
               </div>
-              <div className="bg-white p-6 rounded-xl border border-neutral-200">
-                <MapPin className="w-8 h-8 text-neutral-700 mb-4" />
+              <div className="bg-white p-6 rounded-xl border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700">
+                <MapPin className="w-8 h-8 text-neutral-700 dark:text-neutral-300 mb-4" />
                 <h3 className="font-bold text-lg mb-1">Direcciones</h3>
-                <p className="text-sm text-neutral-600">Gestión de envíos</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">Gestión de envíos</p>
               </div>
-              <div className="bg-white p-6 rounded-xl border border-neutral-200">
-                <User className="w-8 h-8 text-neutral-700 mb-4" />
+              <div className="bg-white p-6 rounded-xl border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700">
+                <User className="w-8 h-8 text-neutral-700 dark:text-neutral-300 mb-4" />
                 <h3 className="font-bold text-lg mb-1">Perfil</h3>
-                <p className="text-sm text-neutral-600">Datos personales</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">Datos personales</p>
               </div>
             </div>
 
@@ -113,17 +140,19 @@ export function Profile() {
             {orders && orders.length > 0 && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                   <h3 className="font-bold text-lg">Último Pedido</h3>
-                   <Button variant="ghost" size="sm" onClick={() => setActiveTab('orders')}>Ver todos</Button>
+                  <h3 className="font-bold text-lg">Último Pedido</h3>
+                  <Button variant="ghost" size="sm" onClick={() => setActiveTab('orders')}>
+                    Ver todos
+                  </Button>
                 </div>
-                <div className="bg-white border border-neutral-200 rounded-xl p-6">
-                    <div className="flex justify-between items-center">
-                       <div>
-                          <p className="font-bold text-lg">#{orders[0].id.slice(0, 8)}</p>
-                          <p className="text-sm text-neutral-500">{formatDate(orders[0].created_at)}</p>
-                       </div>
-                       <Badge>{orders[0].status}</Badge>
+                <div className="bg-white border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700 rounded-xl p-6">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="font-bold text-lg">#{orders[0].id.slice(0, 8)}</p>
+                      <p className="text-sm text-neutral-500">{formatDate(orders[0].created_at)}</p>
                     </div>
+                    <Badge>{orders[0].status}</Badge>
+                  </div>
                 </div>
               </div>
             )}
@@ -137,38 +166,44 @@ export function Profile() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
         <aside className="lg:w-64 shrink-0 space-y-2">
-          <button 
+          <button
             onClick={() => setActiveTab('overview')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === 'overview' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+              activeTab === 'overview'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
             <User className="w-4 h-4" />
             Vista General
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('orders')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === 'orders' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+              activeTab === 'orders'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
             <Package className="w-4 h-4" />
             Mis Pedidos
           </button>
-          <button 
+          <button
             onClick={() => setActiveTab('settings')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === 'settings' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'
+              activeTab === 'settings'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
             <Settings className="w-4 h-4" />
             Configuración
           </button>
-          
-          <div className="pt-4 mt-4 border-t border-neutral-200">
-            <button 
+
+          <div className="pt-4 mt-4 border-t border-neutral-200 dark:border-neutral-700">
+            <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-error hover:bg-red-50 transition-colors"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-error hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <LogOut className="w-4 h-4" />
               Cerrar Sesión
@@ -177,9 +212,7 @@ export function Profile() {
         </aside>
 
         {/* Content */}
-        <div className="flex-1">
-          {renderContent()}
-        </div>
+        <div className="flex-1">{renderContent()}</div>
       </div>
     </div>
   );

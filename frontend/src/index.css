@@ -73,39 +73,39 @@
 
   /* Dark Mode Support */
   .dark {
-    /* Backgrounds */
-    --color-background: 26 32 44;     /* #1A202C (Softer Dark) */
-    --color-surface: 35 41 54;        /* Slightly lighter than bg */
-    --color-surface-muted: 45 55 72;  /* #2D3748 */
-    --color-border: 74 85 104;        /* #4A5568 */
+    /* Backgrounds - Deep Dark Blue/Gray */
+    --color-background: 10 14 23;     /* #0A0E17 (Much Darker) */
+    --color-surface: 23 29 41;        /* #171D29 */
+    --color-surface-muted: 31 41 55;  /* #1F2937 */
+    --color-border: 55 65 81;         /* #374151 */
     
     /* Text Colors (Inverted Neutrals) */
-    --color-neutral-950: 255 255 255; /* #FFFFFF */
-    --color-neutral-900: 247 250 252; /* #F7FAFC (Off-white for text) */
-    --color-neutral-800: 237 242 247; /* #EDF2F7 */
-    --color-neutral-700: 226 232 240; /* #E2E8F0 */
-    --color-neutral-600: 203 213 225; /* #CBD5E1 */
-    --color-neutral-500: 160 174 192; /* #A0AEC0 */
-    --color-neutral-400: 113 128 150; /* #718096 */
-    --color-neutral-300: 74 85 104;   /* #4A5568 */
-    --color-neutral-200: 45 55 72;    /* #2D3748 */
-    --color-neutral-100: 26 32 44;    /* #1A202C */
-    --color-neutral-50: 23 25 35;     /* #171923 */
+    --color-neutral-950: 255 255 255; /* #FFFFFF (Main Text) */
+    --color-neutral-900: 243 244 246; /* #F3F4F6 */
+    --color-neutral-800: 229 231 235; /* #E5E7EB */
+    --color-neutral-700: 209 213 219; /* #D1D5DB */
+    --color-neutral-600: 156 163 175; /* #9CA3AF */
+    --color-neutral-500: 107 114 128; /* #6B7280 */
+    --color-neutral-400: 75 85 99;    /* #4B5563 */
+    --color-neutral-300: 55 65 81;    /* #374151 */
+    --color-neutral-200: 31 41 55;    /* #1F2937 (Dark Surface) */
+    --color-neutral-100: 17 24 39;    /* #111827 */
+    --color-neutral-50: 3 7 18;       /* #030712 (Almost Black) */
     
-    /* Primary in Dark Mode */
-    --color-primary: 255 255 255;     /* #FFFFFF */
-    --color-primary-hover: 237 242 247; /* #EDF2F7 */
+    /* Primary in Dark Mode - Keep Brand Color but adjusted for dark bg */
+    --color-primary: 255 107 53;      /* #FF6B35 (Original Brand Color) */
+    --color-primary-hover: 255 138 91; /* #FF8A5B (Lighter for hover) */
     
-    --color-secondary: 26 32 44;      /* #1A202C */
-    --color-secondary-hover: 45 55 72; /* #2D3748 */
+    --color-secondary: 31 41 55;      /* #1F2937 */
+    --color-secondary-hover: 55 65 81; /* #374151 */
   }
 
   body {
-    @apply bg-background text-neutral-700 dark:text-neutral-900 antialiased font-sans transition-colors duration-300;
+    @apply bg-background text-neutral-800 dark:text-neutral-900 antialiased font-sans transition-colors duration-300;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold text-neutral-900 dark:text-neutral-950;
+    @apply font-display font-bold text-neutral-900 dark:text-white;
   }
   h1 { @apply text-4xl md:text-5xl leading-tight tracking-tight; }
   h2 { @apply text-3xl md:text-4xl leading-snug; }
@@ -113,6 +113,12 @@
   h4 { @apply text-xl md:text-2xl leading-normal; }
   h5 { @apply text-lg leading-normal; }
   h6 { @apply text-base leading-normal uppercase tracking-wide; }
+  
+  /* Typography Utility Classes */
+  .text-body { @apply text-base text-neutral-700 dark:text-neutral-300; }
+  .text-small { @apply text-sm text-neutral-600 dark:text-neutral-400; }
+  .text-tiny { @apply text-xs text-neutral-500 dark:text-neutral-500; }
+  .text-label { @apply text-sm font-semibold text-neutral-900 dark:text-neutral-100 uppercase tracking-wider; }
 }
 
 @layer components {
@@ -120,16 +126,33 @@
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-hover focus:ring-primary dark:text-black;
+    @apply bg-primary text-white hover:bg-primary-hover focus:ring-primary border border-transparent shadow-md hover:shadow-lg dark:text-white;
   }
   .btn-secondary {
-    @apply bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 focus:ring-neutral-200 dark:bg-neutral-800 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-700;
+    @apply bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 focus:ring-neutral-200 
+           dark:bg-neutral-200 dark:text-white dark:border-neutral-300 dark:hover:bg-neutral-300;
   }
+  
   .btn-accent {
     @apply bg-accent text-white hover:bg-accent-hover focus:ring-accent shadow-glow;
   }
+  .btn-outline {
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white 
+           dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black;
+  }
+  .btn-ghost {
+    @apply bg-transparent text-neutral-700 hover:bg-neutral-100 
+           dark:text-neutral-300 dark:hover:bg-neutral-200 dark:hover:text-white;
+  }
+  
   .card {
     @apply bg-surface rounded-xl shadow-card hover:shadow-card-hover transition-shadow duration-300 border border-border;
+  }
+  
+  .input {
+    @apply w-full px-4 py-2 bg-white border border-neutral-200 rounded-lg text-neutral-900 placeholder:text-neutral-400
+           focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all
+           dark:bg-neutral-200 dark:border-neutral-300 dark:text-white dark:placeholder:text-neutral-500;
   }
 }
 

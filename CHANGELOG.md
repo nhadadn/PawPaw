@@ -5,6 +5,19 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto se adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2026-01-26
+
+### 🐛 Fixed (Correcciones y Mejoras Técnicas)
+- **Accesibilidad (A11y):**
+  - Resolución masiva de violaciones de accesibilidad en todo el frontend para cumplir estándares (WCAG).
+  - Correcciones en etiquetas ARIA, contrastes y navegación por teclado.
+- **CI/CD & Tests:**
+  - Desbloqueo del pipeline de integración continua (CI).
+  - Resolución de advertencias en la configuración de `vitest` y `react-router`.
+  - Fix en `ConfirmationStep` para manejar items indefinidos que causaban fallos en tests.
+- **Estabilidad:**
+  - Correcciones generales para asegurar la estabilidad del frontend y backend en entornos de prueba.
+
 ## [2.2.0] - 2026-01-25
 
 ### 🚀 Added

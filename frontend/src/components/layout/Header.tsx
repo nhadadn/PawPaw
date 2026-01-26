@@ -45,19 +45,19 @@ export function Header() {
         >
           <Link
             to="/"
-            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
           >
             Inicio
           </Link>
           <Link
             to="/products"
-            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
           >
             Productos
           </Link>
           <Link
             to="/about"
-            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
           >
             Nosotros
           </Link>
@@ -70,7 +70,7 @@ export function Header() {
               type="search"
               aria-label="Buscar productos"
               placeholder="BUSCAR..."
-              className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
+              className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-neutral-50 dark:bg-neutral-800 dark:text-white dark:border-neutral-700 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -89,7 +89,7 @@ export function Header() {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-neutral-50 dark:text-neutral-900 hover:text-accent"
+            className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-neutral-50 hover:text-accent"
             aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
           >
             {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
@@ -101,7 +101,7 @@ export function Header() {
             aria-label={`Carrito de compras con ${totalItems()} artículos`}
             className="relative p-3 hover:bg-neutral-900 rounded-full transition-colors group"
           >
-            <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-900 group-hover:text-accent transition-colors" />
+            <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-50 group-hover:text-accent transition-colors" />
             {totalItems() > 0 && (
               <span className="absolute top-0 right-0 bg-accent text-neutral-50 dark:text-neutral-900 text-[11px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
                 {totalItems()}
@@ -119,7 +119,7 @@ export function Header() {
                     variant: 'ghost',
                     size: 'sm',
                     className:
-                      'gap-2 text-neutral-50 dark:text-neutral-900 hover:text-accent hover:bg-neutral-900 font-medium',
+                      'gap-2 text-neutral-50 dark:text-neutral-900 hover:text-accent hover:bg-neutral-900 dark:hover:bg-neutral-200 font-medium',
                   })}
                 >
                   <User className="w-5 h-5" />
@@ -164,7 +164,7 @@ export function Header() {
             placeholder="BUSCAR PRODUCTOS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-600 focus:border-accent"
+            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-800 dark:text-white dark:border-neutral-700 placeholder:text-neutral-600 dark:placeholder:text-neutral-500 focus:border-accent"
           />
           <button
             type="submit"

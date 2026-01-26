@@ -5,7 +5,7 @@ describe('Accessibility Tests', () => {
       values: ['wcag2a', 'wcag2aa', 'section508'],
     },
     rules: {
-      'color-contrast': { enabled: false }, // TODO: Fix contrast issues in design system
+      'color-contrast': { enabled: true },
     },
   };
 

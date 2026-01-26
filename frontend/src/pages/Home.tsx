@@ -136,7 +136,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
@@ -149,7 +149,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Compra Segura
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
@@ -162,7 +162,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -266,7 +266,9 @@ export function Home() {
                 aria-label="Correo electrónico"
                 type="email"
                 placeholder="tu@email.com"
-                className="flex-1 px-6 py-4 rounded-xl border border-neutral-800 bg-neutral-900 text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all"
+                className="flex-1 h-14 rounded-full px-6 bg-white/10 border border-white/20 text-white placeholder:text-neutral-400 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Button
                 size="xl"

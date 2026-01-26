@@ -1,0 +1,848 @@
+[
+  {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "description": "Ensure ARIA attributes are not prohibited for an element's role",
+    "nodes": 1,
+    "target": [
+      "div[aria-label=\"5 de 5 estrellas\"]"
+    ]
+  },
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 8,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
+      ".hover\\:bg-neutral-100",
+      ".py-4"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ]
+  }
+][
+  {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "description": "Ensure ARIA attributes are not prohibited for an element's role",
+    "nodes": 1,
+    "target": [
+      "div[aria-label=\"5 de 5 estrellas\"]"
+    ]
+  },
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 6,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:bg-neutral-100",
+      ".py-4",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "description": "Ensure ARIA attributes are not prohibited for an element's role",
+    "nodes": 1,
+    "target": [
+      "div[aria-label=\"5 de 5 estrellas\"]"
+    ]
+  },
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 6,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:bg-neutral-100",
+      ".py-4",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "aria-prohibited-attr",
+    "impact": "serious",
+    "description": "Ensure ARIA attributes are not prohibited for an element's role",
+    "nodes": 1,
+    "target": [
+      "div[aria-label=\"5 de 5 estrellas\"]"
+    ]
+  },
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 6,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:bg-neutral-100",
+      ".py-4",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 6,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:bg-neutral-100",
+      ".py-4",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 6,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:bg-neutral-100",
+      ".py-4",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r5\\:"
+    ]
+  }
+][
+  {
+    "id": "scrollable-region-focusable",
+    "impact": "serious",
+    "description": "Ensure elements that have scrollable content are accessible by keyboard",
+    "nodes": 2,
+    "target": [
+      [
+        "vite-error-overlay",
+        ".frame"
+      ],
+      [
+        "vite-error-overlay",
+        ".stack"
+      ]
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 18,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-500",
+      ".hover\\:bg-neutral-100",
+      ".text-xl.text-neutral-400",
+      ".py-4",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      ".block.w-fit[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".mb-6.leading-relaxed.text-sm",
+      ".text-neutral-500 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 13,
+    "target": [
+      "h1",
+      ".bg-primary",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 18,
+    "target": [
+      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
+      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
+      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
+      ".hover\\:bg-neutral-100",
+      ".text-xl.text-neutral-400",
+      ".py-4",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      ".block.w-fit[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".mb-6.leading-relaxed.text-sm",
+      ".text-neutral-500 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 16,
+    "target": [
+      "label[for=\":r7:\"]",
+      "label[for=\":r9:\"]",
+      ".bg-primary",
+      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(1)",
+      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(2)",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 18,
+    "target": [
+      ".dark\\:bg-neutral-900.p-8.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".dark\\:bg-neutral-900.p-8.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-200.rounded-2xl > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
+      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
+      ".hover\\:bg-neutral-100",
+      ".text-xl.text-neutral-400",
+      ".py-4",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      ".block.w-fit[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".mb-6.leading-relaxed.text-sm",
+      ".text-neutral-500 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 16,
+    "target": [
+      "label[for=\":r7:\"]",
+      "label[for=\":r9:\"]",
+      ".bg-primary",
+      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(1)",
+      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(2)",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 18,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
+      ".hover\\:bg-neutral-100",
+      ".text-xl.text-neutral-400",
+      ".py-4",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      ".block.w-fit[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".mb-6.leading-relaxed.text-sm",
+      ".text-neutral-500 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 13,
+    "target": [
+      "h1",
+      ".bg-primary",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 18,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
+      ".hover\\:bg-neutral-100",
+      ".text-xl.text-neutral-400",
+      ".py-4",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      ".block.w-fit[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".mb-6.leading-relaxed.text-sm",
+      ".text-neutral-500 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 13,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 15,
+    "target": [
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      ".bg-primary",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 11,
+    "target": [
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 16,
+    "target": [
+      "#\\:r1\\:",
+      "h1",
+      "#\\:r7\\:",
+      "#\\:r9\\:",
+      ".bg-primary",
+      ".max-w-xs",
+      ".w-fit.block[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      ".leading-relaxed.mb-6",
+      ".pt-8 > p"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 12,
+    "target": [
+      "#\\:r1\\:",
+      ".max-w-xs",
+      ".block.w-fit[href$=\"products\"]",
+      "a[href=\"/products?category=ropas\"]",
+      "a[href=\"/products?category=gorras\"]",
+      "a[href=\"/products?category=jerseys\"]",
+      "a[href$=\"faq\"]",
+      "a[href$=\"shipping\"]",
+      "a[href$=\"terms\"]",
+      "a[href$=\"contact\"]",
+      "div:nth-child(4) > .leading-relaxed",
+      ".pt-8 > p"
+    ]
+  }
+]
