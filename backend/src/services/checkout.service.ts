@@ -456,6 +456,25 @@ export class CheckoutService {
     return { message: 'Reservation cancelled' };
   }
 
+  async getReservation(userId: string | null, reservationId: string) {
+    const rawReservation = await redis.get(`reservation:${reservationId}`);
+    if (!rawReservation) {
+      throw new CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found or expired');
+    }
+    const reservation = JSON.parse(rawReservation);
+
+    if (userId && reservation.user_id !== userId) {
+      throw new CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+    }
+
+    // If anonymous, ensure reservation is for a guest
+    if (!userId && !reservation.user_id.startsWith('guest:')) {
+      throw new CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation requires authentication');
+    }
+
+    return reservation;
+  }
+
   async getStatus(userId: string | null, reservationId: string) {
     const rawReservation = await redis.get(`reservation:${reservationId}`);
     if (!rawReservation) {

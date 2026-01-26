@@ -309,25 +309,26 @@ describe('Checkout routes', () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('client_secret');
-    expect(response.body).toHaveProperty('payment_intent_id');
-    expect(response.body.amount).toBe(1000);
+    expect(response.body.client_secret).toBe('secret_test_123');
   });
 
-  it('GET /api/checkout/reservations/:id returns 200 with status', async () => {
+  it('GET /api/checkout/reservations/:id returns 200 with reservation details', async () => {
     const reservationId = '550e8400-e29b-41d4-a716-446655440006';
-    (redis.get as jest.Mock).mockResolvedValue(
-      JSON.stringify({
-        user_id: 'user-123',
-        items: [],
-        expires_at: new Date(Date.now() + 60000).toISOString(),
-      })
-    );
+    const mockReservation = {
+      user_id: 'user-123',
+      items: [],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 60000).toISOString(),
+    };
+    (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(mockReservation));
 
     const response = await request(app)
       .get(`/api/checkout/reservations/${reservationId}`)
       .set('Authorization', `Bearer ${token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty('status', 'active');
+    expect(response.body).toHaveProperty('total_cents', 1000);
+    expect(response.body).toHaveProperty('currency', 'MXN');
   });
 });

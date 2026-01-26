@@ -116,6 +116,18 @@ export class CheckoutController {
     }
   };
 
+  getReservation = async (req: Request, res: Response) => {
+    try {
+      const params = StatusParamsSchema.parse(req.params);
+      const userId = req.user?.id || null;
+
+      const result = await this.service.getReservation(userId, params.reservation_id);
+      return res.status(200).json(result);
+    } catch (error) {
+      this.handleError(res, error);
+    }
+  };
+
   private handleError(res: Response, error: unknown) {
     if (error instanceof z.ZodError) {
       logger.error('Checkout Validation Error:', JSON.stringify(error.errors, null, 2));

@@ -151,6 +151,6 @@ router.post('/confirm', optionalAuthMiddleware, idempotencyMiddleware, controlle
 
 router.post('/cancel', optionalAuthMiddleware, controller.cancel);
 router.get('/status/:reservation_id', optionalAuthMiddleware, controller.status);
-router.get('/reservations/:reservation_id', optionalAuthMiddleware, controller.status);
+router.get('/reservations/:reservation_id', optionalAuthMiddleware, controller.getReservation);
 
 export default router;
