@@ -127,7 +127,9 @@ const createApp = () => {
     const uploadDir = process.env.UPLOAD_DIR || path_1.default.join(process.cwd(), 'uploads');
     app.use('/uploads', express_1.default.static(uploadDir));
     logger_1.default.info(`Serving static files from: ${uploadDir}`);
-    app.use((0, morgan_1.default)('dev'));
+    if (process.env.NODE_ENV !== 'test') {
+        app.use((0, morgan_1.default)('dev'));
+    }
     app.use('/api/docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
     // Root endpoint for health checks
     app.get('/', (_req, res) => {

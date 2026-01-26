@@ -142,4 +142,5 @@ router.post('/create-payment-intent', auth_middleware_1.optionalAuthMiddleware, 
 router.post('/confirm', auth_middleware_1.optionalAuthMiddleware, idempotency_middleware_1.idempotencyMiddleware, controller.confirm);
 router.post('/cancel', auth_middleware_1.optionalAuthMiddleware, controller.cancel);
 router.get('/status/:reservation_id', auth_middleware_1.optionalAuthMiddleware, controller.status);
+router.get('/reservations/:reservation_id', auth_middleware_1.optionalAuthMiddleware, controller.getReservation);
 exports.default = router;

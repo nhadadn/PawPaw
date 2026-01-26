@@ -5,11 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importDefault(require("winston"));
 const logger = winston_1.default.createLogger({
-    level: process.env.LOG_LEVEL || 'info',
+    level: process.env.NODE_ENV === 'test' ? 'warn' : process.env.LOG_LEVEL || 'info',
     format: winston_1.default.format.combine(winston_1.default.format.timestamp(), winston_1.default.format.json()),
     defaultMeta: { service: 'checkout-service' },
     transports: [
         new winston_1.default.transports.Console({
+            silent: process.env.NODE_ENV === 'test',
             format: winston_1.default.format.combine(winston_1.default.format.colorize(), winston_1.default.format.simple()),
         }),
     ],

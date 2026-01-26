@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ioredis_1 = __importDefault(require("ioredis"));
+const logger_1 = __importDefault(require("./logger"));
 class MockRedis {
     constructor() {
         this.store = new Map();
@@ -170,5 +171,31 @@ if (useRealRedis && !process.env.REDIS_URL) {
     throw new Error('REDIS_URL is required when Redis is enabled');
 }
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-const redis = useRealRedis ? new ioredis_1.default(redisUrl) : new MockRedis();
+const options = {
+    retryStrategy(times) {
+        const delay = Math.min(times * 100, 3000);
+        logger_1.default.warn(`[Redis] Connection retry attempt ${times}. Delaying ${delay}ms`);
+        return delay;
+    },
+    maxRetriesPerRequest: 3,
+    connectTimeout: 10000, // 10s connection timeout
+    enableReadyCheck: true,
+    showFriendlyErrorStack: process.env.NODE_ENV !== 'production',
+};
+const redis = useRealRedis ? new ioredis_1.default(redisUrl, options) : new MockRedis();
+if (useRealRedis) {
+    redis.on('error', (err) => {
+        // Only log connection errors if we are NOT in test mode (to avoid noise)
+        // OR if it's a critical failure not expected by tests
+        if (process.env.NODE_ENV !== 'test') {
+            logger_1.default.error('[Redis] Client Error:', err);
+        }
+    });
+    redis.on('connect', () => {
+        logger_1.default.info('[Redis] Client Connected');
+    });
+    redis.on('ready', () => {
+        logger_1.default.info('[Redis] Client Ready');
+    });
+}
 exports.default = redis;

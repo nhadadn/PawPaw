@@ -6,27 +6,41 @@ Este documento registra los cambios, mejoras y actualizaciones técnicas del pro
 
 ## v2.2.0: Product Experience & UI Enhancements
 **Fecha:** 25 de Enero, 2026
-**Enfoque:** Experiencia de Producto, Navegación Visual, Accesibilidad.
+**Enfoque:** Experiencia de Producto, Design System "Urbana Premium", Navegación Visual.
 
-### 1. Nuevos Componentes UI
+### 1. Design System: "Urbana Premium"
+Se ha implementado una nueva identidad visual basada en variables CSS para facilitar el theming dinámico:
+*   **Tipografía:**
+    *   **Display:** `Space Grotesk` para títulos y encabezados de impacto.
+    *   **Body:** `Inter` para legibilidad óptima en textos largos y UI.
+*   **Paleta de Colores Semántica:**
+    *   Uso extensivo de variables CSS (`--color-primary`, `--color-surface`, etc.) definidos en `index.css`.
+    *   Soporte nativo para opacidad mediante `rgb(var(...) / <alpha>)`.
+    *   Transiciones suaves de color (`duration-300`) en modo oscuro.
+
+### 2. Nuevos Componentes UI
 Se han introducido componentes interactivos para mejorar la visualización de productos:
 
 #### A. Sistema de Zoom y Galería
 *   **`ZoomImage`:**
-    *   **Desktop:** Efecto de lente ("lens zoom") al pasar el cursor, permitiendo inspección detallada de texturas.
-    *   **Mobile:** Modalidad "Tap-to-expand" para dispositivos táctiles.
+    *   **Desktop:** Efecto de lente ("lens zoom") al pasar el cursor.
+    *   **Mobile:** Modalidad "Tap-to-expand".
 *   **`Lightbox`:**
-    *   Visor a pantalla completa con fondo desenfocado (backdrop blur).
+    *   Visor a pantalla completa con fondo desenfocado.
     *   Navegación por teclado (`ArrowLeft`, `ArrowRight`, `Escape`).
-    *   Soporte para gestos táctiles (Swipe) en móviles.
 *   **`ProductGallery`:**
     *   Integración de miniaturas con scroll automático.
-    *   Navegación dual: Flechas para desktop, indicadores de puntos para mobile.
+    *   Navegación dual: Flechas (desktop) / Dots (mobile).
 
-### 2. Mejoras de Accesibilidad
+### 3. Checkout Experience 2.0
+Mejoras significativas en la UX del proceso de compra (`CheckoutPage.tsx`):
+*   **Sincronización de Estado:** El paso actual se refleja en la URL (`?step=1`) permitiendo navegación nativa del navegador.
+*   **Validación de Pasos:** Guardas de navegación que impiden saltar a pagos/confirmación sin los datos previos requeridos.
+*   **Progress Bar:** Indicador visual responsivo con estados: Activo (Primary), Completado (Success/Check) y Pendiente.
+
+### 4. Mejoras de Accesibilidad
 *   Implementación de etiquetas ARIA en controles de galería.
 *   Gestión de foco en modales (Lightbox).
-*   Soporte de teclado robusto para navegación de imágenes.
 
 ---
 

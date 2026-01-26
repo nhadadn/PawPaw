@@ -202,6 +202,42 @@ describe('CheckoutService', () => {
     });
   });
 
+  describe('createPaymentIntent', () => {
+    const userId = 'user-123';
+    const reservationId = 'res-123';
+
+    // Create a date that is only 5 seconds from now
+    const nearExpiryDate = new Date(Date.now() + 5000).toISOString();
+
+    const mockReservation = {
+      reservation_id: reservationId,
+      user_id: userId,
+      total_cents: 2000,
+      currency: 'MXN',
+      items: [],
+      expires_at: nearExpiryDate,
+    };
+
+    it('should maintain REDIS_PERSISTENCE_TTL when updating reservation with PI', async () => {
+      (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(mockReservation));
+
+      (stripe.paymentIntents.create as jest.Mock).mockResolvedValue({
+        id: 'pi_new',
+        client_secret: 'secret_new',
+      });
+
+      await service.createPaymentIntent(userId, reservationId);
+
+      // Verify redis.set was called with 'EX', 86400 (not 5)
+      expect(redis.set).toHaveBeenCalledWith(
+        `reservation:${reservationId}`,
+        expect.stringContaining('pi_new'),
+        'EX',
+        86400
+      );
+    });
+  });
+
   describe('confirm', () => {
     const userId = 'user-123';
     const reservationId = 'res-123';

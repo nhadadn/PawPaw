@@ -94,6 +94,17 @@ class CheckoutController {
                 this.handleError(res, error);
             }
         };
+        this.getReservation = async (req, res) => {
+            try {
+                const params = StatusParamsSchema.parse(req.params);
+                const userId = req.user?.id || null;
+                const result = await this.service.getReservation(userId, params.reservation_id);
+                return res.status(200).json(result);
+            }
+            catch (error) {
+                this.handleError(res, error);
+            }
+        };
         this.service = new checkout_service_1.CheckoutService();
     }
     handleError(res, error) {

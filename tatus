@@ -1,0 +1,155 @@
+[33mcommit 6590a2e23e28d9388bad44771c9882b87682dbac[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 14:50:08 2026 -0600
+
+    fix(tests): update redis mocks and add teardown to fix ci/cd resource leaks
+
+M	backend/src/integration/admin.integration.test.ts
+M	backend/src/integration/checkout.integration.test.ts
+M	backend/src/integration/errorHandler.integration.test.ts
+M	backend/src/middleware/rateLimit.middleware.test.ts
+M	backend/src/services/admin.service.test.ts
+M	backend/src/services/cache.service.test.ts
+M	backend/src/services/shop.service.integration.test.ts
+
+[33mcommit a91dad9bcb01c3f68b2c06791c2d64066328fc5d[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 13:39:23 2026 -0600
+
+    fix: mock redis and prisma in integration tests to prevent ci timeouts
+
+M	backend/src/integration/admin.integration.test.ts
+M	backend/src/integration/images.integration.test.ts
+
+[33mcommit 98c0d1bb6c95d7b99662ba136168e9bec2441dec[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 13:25:01 2026 -0600
+
+    fix: ci tests failures and harden checkout service
+
+M	backend/src/integration/checkout.integration.test.ts
+M	backend/src/services/__tests__/checkout.service.test.ts
+M	backend/src/services/checkout.service.ts
+
+[33mcommit 714152981347076f7a22ebfbf106370e1ba20f77[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 13:00:20 2026 -0600
+
+    feat: redesign UI with URBANA PREMIUM palette, improve UX, and update checkout flow
+
+A	backend/WEBSOCKET_DOCS.md
+M	backend/dist/index.js
+M	backend/dist/repositories/checkout.repository.js
+M	backend/dist/scheduler/expiration.scheduler.js
+M	backend/dist/services/checkout.service.js
+M	backend/node_modules/.package-lock.json
+M	backend/package-lock.json
+M	backend/package.json
+M	backend/src/index.ts
+M	backend/src/repositories/checkout.repository.ts
+M	backend/src/scheduler/expiration.scheduler.ts
+M	backend/src/services/checkout.service.ts
+A	backend/src/websocket/inventory.socket.test.ts
+A	backend/src/websocket/inventory.socket.ts
+M	docs/CHECKOUT_ARCHITECTURE.md
+M	docs/IMAGE_MANAGEMENT.md
+A	docs/RELEASE_NOTES_v2.1.2.md
+A	frontend/CHANGELOG.md
+M	frontend/package-lock.json
+M	frontend/package.json
+M	frontend/src/__tests__/features/cart/CartDrawer.test.tsx
+M	frontend/src/components/features/cart/CartDrawer.tsx
+M	frontend/src/components/features/cart/CartItem.tsx
+M	frontend/src/components/features/cart/CartSummary.tsx
+M	frontend/src/components/features/products/ProductCard.tsx
+M	frontend/src/components/features/products/ProductFilters.tsx
+M	frontend/src/components/features/products/ProductGallery.tsx
+M	frontend/src/components/features/products/ProductGrid.tsx
+M	frontend/src/components/layout/Footer.tsx
+M	frontend/src/components/layout/Header.tsx
+M	frontend/src/components/ui/Alert.tsx
+M	frontend/src/components/ui/Badge.tsx
+M	frontend/src/components/ui/Button.tsx
+M	frontend/src/components/ui/Card.tsx
+M	frontend/src/components/ui/Input.tsx
+M	frontend/src/components/ui/Modal.tsx
+M	frontend/src/components/ui/Spinner.tsx
+M	frontend/src/components/ui/Timer.tsx
+A	frontend/src/hooks/useStockUpdates.ts
+M	frontend/src/index.css
+A	frontend/src/lib/socket.ts
+M	frontend/src/main.tsx
+M	frontend/src/pages/Cart.tsx
+M	frontend/src/pages/Home.tsx
+M	frontend/src/pages/ProductDetail.tsx
+M	frontend/src/pages/Products.tsx
+M	frontend/tailwind.config.js
+M	frontend/vitest.config.ts
+
+[33mcommit eb91b054ccef4dcb60aa5dfa6c1ce04fd9152aa3[m
+Merge: 27dba15 b27901f
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 11:09:23 2026 -0600
+
+    merge: fix/ci-test-failures into main (frontend features)
+
+[33mcommit b27901f10f3c7df39849978e179f55c093e26840[m[33m ([m[1;32mfix/ci-test-failures[m[33m)[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 10:42:42 2026 -0600
+
+    feat(frontend): add ZoomImage, Lightbox and ProductGallery components
+
+M	frontend/src/components/features/products/ProductCard.tsx
+A	frontend/src/components/features/products/ProductGallery.test.tsx
+A	frontend/src/components/features/products/ProductGallery.tsx
+A	frontend/src/components/ui/Lightbox.test.tsx
+A	frontend/src/components/ui/Lightbox.tsx
+A	frontend/src/components/ui/ZoomImage.test.tsx
+A	frontend/src/components/ui/ZoomImage.tsx
+M	frontend/src/pages/ProductDetail.tsx
+
+[33mcommit 27dba15286438763137a9e0aeb09de177ea0ca07[m
+Merge: bc72d87 698070f
+Author: nhadadn <nadir.hadad.navarrete@gmail.com>
+Date:   Sun Jan 25 02:08:58 2026 -0600
+
+    Merge pull request #3 from nhadadn/fix/ci-test-failures
+    
+    fix: resolve ReferenceError in ReservationStep, fix persistence tests…
+
+[33mcommit 698070f8bd2f3ac28af6d9d996119c3fc286580e[m[33m ([m[1;31morigin/fix/ci-test-failures[m[33m)[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 02:06:53 2026 -0600
+
+    fix: resolve ReferenceError in ReservationStep, fix persistence tests, and correct type error in ProductDetail
+
+M	frontend/src/__tests__/features/checkout/CheckoutPersistence.test.tsx
+M	frontend/src/features/checkout/ReservationStep.tsx
+M	frontend/src/pages/ProductDetail.tsx
+
+[33mcommit bc72d87cb23e74b21dd88d86eab435fcff827642[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 01:48:01 2026 -0600
+
+    Add caching layer for products, categories to reduce DB load by 90%
+
+M	CHANGELOG.md
+M	backend/src/services/admin.service.ts
+A	backend/src/services/cache.service.test.ts
+A	backend/src/services/cache.service.ts
+A	backend/src/services/shop.service.integration.test.ts
+M	backend/src/services/shop.service.ts
+
+[33mcommit 9c5e7522ab8ae2f45efe7fed7b87e5c6b43c404c[m
+Author: CANAAM-0001\nadir <nadir.nacaam@protonmail.me>
+Date:   Sun Jan 25 01:36:23 2026 -0600
+
+    fix: category image upload, checkout stock validation, and error handling
+
+M	backend/src/controllers/admin.controller.ts
+M	frontend/src/components/features/cart/CartSummary.tsx
+M	frontend/src/features/checkout/ReservationStep.tsx
+M	frontend/src/hooks/useCheckout.ts
+M	frontend/src/pages/ProductDetail.tsx
+M	frontend/src/stores/cartStore.ts
+M	frontend/src/types/checkout.ts

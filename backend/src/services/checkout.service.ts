@@ -7,6 +7,7 @@ import { CheckoutError } from '../utils/errors';
 import logger from '../lib/logger';
 
 const RESERVATION_TTL = 600; // 10 minutes
+const REDIS_PERSISTENCE_TTL = 86400; // 24 hours
 
 import { Prisma, InventoryChangeType, OrderStatus } from '@prisma/client';
 
@@ -201,13 +202,13 @@ export class CheckoutService {
 
         // If PI already exists, we need to persist the claim NOW because we might return early
         if (reservation.payment_intent_id && reservation.client_secret) {
-          const ttl = Math.max(
-            0,
-            Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000)
+          // Keep the 24h TTL for persistence, do not downgrade to remaining reservation time
+          await redis.set(
+            `reservation:${reservationId}`,
+            JSON.stringify(reservation),
+            'EX',
+            REDIS_PERSISTENCE_TTL
           );
-          if (ttl > 0) {
-            await redis.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
-          }
         }
       } else {
         throw new CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
@@ -266,14 +267,14 @@ export class CheckoutService {
     reservation.payment_intent_id = paymentIntentId;
 
     // Calculate remaining TTL
-    const ttl = Math.max(
-      0,
-      Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000)
+    // FIX: Use REDIS_PERSISTENCE_TTL to ensure data survives for confirmation and recovery
+    // even if the stock reservation expires.
+    await redis.set(
+      `reservation:${reservationId}`,
+      JSON.stringify(reservation),
+      'EX',
+      REDIS_PERSISTENCE_TTL
     );
-
-    if (ttl > 0) {
-      await redis.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
-    }
 
     return {
       client_secret: clientSecret,

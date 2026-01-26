@@ -12,6 +12,7 @@ const checkout_repository_1 = require("../repositories/checkout.repository");
 const errors_1 = require("../utils/errors");
 const logger_1 = __importDefault(require("../lib/logger"));
 const RESERVATION_TTL = 600; // 10 minutes
+const REDIS_PERSISTENCE_TTL = 86400; // 24 hours
 const client_1 = require("@prisma/client");
 const inventory_socket_1 = require("../websocket/inventory.socket");
 class CheckoutService {
@@ -151,10 +152,8 @@ class CheckoutService {
                 reservation.user_id = userId;
                 // If PI already exists, we need to persist the claim NOW because we might return early
                 if (reservation.payment_intent_id && reservation.client_secret) {
-                    const ttl = Math.max(0, Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000));
-                    if (ttl > 0) {
-                        await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
-                    }
+                    // Keep the 24h TTL for persistence, do not downgrade to remaining reservation time
+                    await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', REDIS_PERSISTENCE_TTL);
                 }
             }
             else {
@@ -210,10 +209,9 @@ class CheckoutService {
         reservation.client_secret = clientSecret;
         reservation.payment_intent_id = paymentIntentId;
         // Calculate remaining TTL
-        const ttl = Math.max(0, Math.floor((new Date(reservation.expires_at).getTime() - Date.now()) / 1000));
-        if (ttl > 0) {
-            await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', ttl);
-        }
+        // FIX: Use REDIS_PERSISTENCE_TTL to ensure data survives for confirmation and recovery
+        // even if the stock reservation expires.
+        await redis_1.default.set(`reservation:${reservationId}`, JSON.stringify(reservation), 'EX', REDIS_PERSISTENCE_TTL);
         return {
             client_secret: clientSecret,
             payment_intent_id: paymentIntentId,
@@ -332,6 +330,10 @@ class CheckoutService {
         const executeTransaction = async (trx) => {
             for (const item of reservation.items) {
                 const updatedVariant = await this.repo.releaseReservedStock(trx, item.product_variant_id, item.quantity);
+                if (!updatedVariant) {
+                    logger_1.default.warn(`Failed to release stock for variant ${item.product_variant_id}: Variant not found`);
+                    continue;
+                }
                 // Emit real-time stock update
                 const available = updatedVariant.initialStock - updatedVariant.reservedStock;
                 (0, inventory_socket_1.emitStockUpdate)(Number(updatedVariant.productId), available);
@@ -353,6 +355,21 @@ class CheckoutService {
         await redis_1.default.del(`reservation:user:${reservation.user_id}`);
         await redis_1.default.zrem('reservations:by_expiry', reservationId);
         return { message: 'Reservation cancelled' };
+    }
+    async getReservation(userId, reservationId) {
+        const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
+        if (!rawReservation) {
+            throw new errors_1.CheckoutError('RESERVATION_NOT_FOUND', 'Reservation not found or expired');
+        }
+        const reservation = JSON.parse(rawReservation);
+        if (userId && reservation.user_id !== userId) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation belongs to another user');
+        }
+        // If anonymous, ensure reservation is for a guest
+        if (!userId && !reservation.user_id.startsWith('guest:')) {
+            throw new errors_1.CheckoutError('RESERVATION_USER_MISMATCH', 'Reservation requires authentication');
+        }
+        return reservation;
     }
     async getStatus(userId, reservationId) {
         const rawReservation = await redis_1.default.get(`reservation:${reservationId}`);
