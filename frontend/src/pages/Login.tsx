@@ -56,7 +56,7 @@ export function Login() {
             Entrar
           </Button>
 
-          <div className="text-center text-sm text-neutral-800 dark:text-neutral-300">
+          <div className="text-center text-sm text-neutral-800 dark:text-neutral-700">
             <p>Demo Credentials:</p>
             <p>user@example.com / password</p>
           </div>

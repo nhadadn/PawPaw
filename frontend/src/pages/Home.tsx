@@ -98,7 +98,7 @@ export function Home() {
                 className={buttonVariants({
                   size: 'xl',
                   className:
-                    'w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white border-none shadow-lg shadow-accent/20',
+                    'w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white dark:text-white border-none shadow-lg shadow-accent/20',
                 })}
               >
                 Ver Colección
