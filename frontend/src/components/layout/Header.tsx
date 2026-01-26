@@ -28,12 +28,12 @@ export function Header() {
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black text-neutral-50 dark:text-neutral-900 transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black text-white transition-colors duration-300">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link
           to="/"
-          className="text-3xl font-display font-black tracking-tighter text-neutral-50 dark:text-neutral-900 shrink-0 hover:scale-105 transition-transform"
+          className="text-3xl font-display font-black tracking-tighter text-white shrink-0 hover:scale-105 transition-transform"
         >
           PAW PAW
         </Link>
@@ -45,19 +45,19 @@ export function Header() {
         >
           <Link
             to="/"
-            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-600 transition-colors tracking-wide uppercase"
           >
             Inicio
           </Link>
           <Link
             to="/products"
-            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-600 transition-colors tracking-wide uppercase"
           >
             Productos
           </Link>
           <Link
             to="/about"
-            className="text-white hover:text-neutral-300 dark:hover:text-neutral-400 transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 dark:hover:text-neutral-600 transition-colors tracking-wide uppercase"
           >
             Nosotros
           </Link>
@@ -70,14 +70,14 @@ export function Header() {
               type="search"
               aria-label="Buscar productos"
               placeholder="BUSCAR..."
-              className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-neutral-50 dark:bg-neutral-800 dark:text-white dark:border-neutral-700 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
+              className="w-full h-11 pl-4 pr-12 bg-neutral-900 border-neutral-800 text-white dark:bg-neutral-100 dark:text-white dark:border-neutral-700 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
               type="submit"
               aria-label="Buscar"
-              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 hover:text-accent transition-colors"
+              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 dark:text-neutral-500 hover:text-accent transition-colors"
             >
               <Search className="w-5 h-5" />
             </button>

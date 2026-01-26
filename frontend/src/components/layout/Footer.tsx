@@ -5,7 +5,7 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-black text-neutral-400 dark:text-neutral-500 pt-20 pb-10 border-t border-neutral-900 transition-colors">
+    <footer className="bg-black text-neutral-300 dark:text-neutral-700 pt-20 pb-10 border-t border-neutral-900 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
@@ -81,9 +81,7 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-neutral-50 dark:text-white mb-6 uppercase tracking-wider text-sm">
-              Ayuda
-            </h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Ayuda</h4>
             <ul className="space-y-4 text-sm font-medium">
               <li>
                 <Link to="/faq" className="hover:text-accent transition-colors block w-fit">

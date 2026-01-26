@@ -70,11 +70,11 @@ export function Home() {
                 <span className="text-white text-xs font-bold uppercase tracking-wider">
                   +10k Clientes
                 </span>
-                <div className="flex text-accent" role="img" aria-label="5 de 5 estrellas">
+                <span className="flex text-accent" role="img" aria-label="5 de 5 estrellas">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <Star key={i} className="w-3 h-3 fill-current" aria-hidden="true" />
                   ))}
-                </div>
+                </span>
               </div>
             </div>
 
@@ -129,41 +129,41 @@ export function Home() {
       {/* Features */}
       <section className="container mx-auto px-4 -mt-20 relative z-30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Compra Segura
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
               <Clock className="w-8 h-8" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>

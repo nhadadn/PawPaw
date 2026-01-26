@@ -245,7 +245,7 @@ const ProductCardComponent = ({
                 {formatCurrency(displayPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-neutral-400 dark:text-neutral-500 line-through font-medium">
+                <span className="text-xs text-neutral-600 dark:text-neutral-500 line-through font-medium">
                   {formatCurrency(product.price)}
                 </span>
               )}
@@ -261,13 +261,13 @@ const ProductCardComponent = ({
                       'w-3.5 h-3.5',
                       (product.averageRating || 4.5) >= star
                         ? 'fill-yellow-400 text-yellow-400'
-                        : 'fill-neutral-200 text-neutral-200 dark:fill-neutral-800 dark:text-neutral-800'
+                        : 'fill-neutral-300 text-neutral-300 dark:fill-neutral-600 dark:text-neutral-600'
                     )}
                   />
                 ))}
               </div>
               {product.totalReviews && (
-                <span className="text-[10px] font-medium text-neutral-400 dark:text-neutral-500">
+                <span className="text-[10px] font-medium text-neutral-600 dark:text-neutral-500">
                   ({product.totalReviews})
                 </span>
               )}
@@ -285,14 +285,16 @@ const ProductCardComponent = ({
                     'w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border transition-all',
                     selectedSize === size
                       ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white'
-                      : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:border-neutral-600'
+                      : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-500 dark:hover:text-white dark:hover:border-neutral-600'
                   )}
                 >
                   {size}
                 </button>
               ))}
               {sizes.length > 5 && (
-                <span className="text-xs text-neutral-400 self-center pl-1">+</span>
+                <span className="text-xs text-neutral-600 dark:text-neutral-500 self-center pl-1">
+                  +
+                </span>
               )}
             </div>
           )}
