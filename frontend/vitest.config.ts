@@ -9,10 +9,5 @@ export default defineConfig({
     globals: true,
     setupFiles: './src/test/setup.ts',
     pool: 'forks',
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
   },
 });

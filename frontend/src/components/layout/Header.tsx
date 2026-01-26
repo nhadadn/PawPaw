@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useCartStore } from '../../stores/cartStore';
 import { useAuthStore } from '../../stores/authStore';
 import { useTheme } from '../../providers/ThemeProvider';
-import { Button } from '../ui/Button';
+import { Button, buttonVariants } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Badge } from '../ui/Badge';
 
@@ -68,6 +68,7 @@ export function Header() {
           <form onSubmit={handleSearch} className="w-full relative group">
             <Input
               type="search"
+              aria-label="Buscar productos"
               placeholder="BUSCAR..."
               className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
               value={searchQuery}
@@ -75,7 +76,7 @@ export function Header() {
             />
             <button
               type="submit"
-              aria-label="Buscar productos"
+              aria-label="Buscar"
               className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 hover:text-accent transition-colors"
             >
               <Search className="w-5 h-5" />
@@ -112,25 +113,29 @@ export function Header() {
           <div className="hidden md:flex items-center gap-2">
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
-                <Link to="/profile">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-2 text-neutral-50 dark:text-neutral-900 hover:text-accent hover:bg-neutral-900 font-medium"
-                  >
-                    <User className="w-5 h-5" />
-                    <span className="max-w-[100px] truncate">{user?.name || 'Perfil'}</span>
-                  </Button>
+                <Link
+                  to="/profile"
+                  className={buttonVariants({
+                    variant: 'ghost',
+                    size: 'sm',
+                    className:
+                      'gap-2 text-neutral-50 dark:text-neutral-900 hover:text-accent hover:bg-neutral-900 font-medium',
+                  })}
+                >
+                  <User className="w-5 h-5" />
+                  <span className="max-w-[100px] truncate">{user?.name || 'Perfil'}</span>
                 </Link>
               </div>
             ) : (
-              <Button
-                size="sm"
-                onClick={() => navigate('/login')}
-                className="bg-white text-black hover:bg-neutral-200 font-bold px-6"
+              <Link
+                to="/login"
+                className={buttonVariants({
+                  size: 'sm',
+                  className: 'bg-white text-black hover:bg-neutral-200 font-bold px-6',
+                })}
               >
                 LOGIN
-              </Button>
+              </Link>
             )}
           </div>
 
@@ -155,12 +160,17 @@ export function Header() {
         <form onSubmit={handleSearch} className="relative mb-8">
           <Input
             type="search"
+            aria-label="Buscar productos"
             placeholder="BUSCAR PRODUCTOS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-600 focus:border-accent"
           />
-          <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 p-2">
+          <button
+            type="submit"
+            aria-label="Buscar"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-2"
+          >
             <Search className="w-6 h-6 text-neutral-400" />
           </button>
         </form>

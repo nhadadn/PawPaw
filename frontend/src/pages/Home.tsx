@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, ShoppingBag, Package, Shield, Clock, ChevronDown, Star } from 'lucide-react';
-import { Button } from '../components/ui/Button';
+import { Button, buttonVariants } from '../components/ui/Button';
 import { ProductGrid } from '../components/features/products/ProductGrid';
 import { useProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
@@ -92,23 +92,27 @@ export function Home() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 pt-8">
-              <Link to="/products">
-                <Button
-                  size="xl"
-                  className="w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white border-none shadow-lg shadow-accent/20"
-                >
-                  Ver Colección
-                  <ArrowRight className="w-6 h-6 ml-2" />
-                </Button>
+              <Link
+                to="/products"
+                className={buttonVariants({
+                  size: 'xl',
+                  className:
+                    'w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white border-none shadow-lg shadow-accent/20',
+                })}
+              >
+                Ver Colección
+                <ArrowRight className="w-6 h-6 ml-2" />
               </Link>
-              <Link to="/products?category=ropas">
-                <Button
-                  size="xl"
-                  variant="outline"
-                  className="w-full sm:w-auto min-w-[200px] text-lg text-white border-white/20 hover:bg-white hover:text-black dark:hover:text-black hover:border-white backdrop-blur-sm"
-                >
-                  Explorar Ropa
-                </Button>
+              <Link
+                to="/products?category=ropas"
+                className={buttonVariants({
+                  size: 'xl',
+                  variant: 'outline',
+                  className:
+                    'w-full sm:w-auto min-w-[200px] text-lg text-white border-white/20 hover:bg-white hover:text-black dark:hover:text-black hover:border-white backdrop-blur-sm',
+                })}
+              >
+                Explorar Ropa
               </Link>
             </div>
           </div>
@@ -132,7 +136,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
@@ -145,7 +149,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Compra Segura
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
@@ -158,7 +162,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -177,11 +181,12 @@ export function Home() {
               Descubre las piezas más codiciadas de nuestra colección esta semana.
             </p>
           </div>
-          <Link to="/products">
-            <Button variant="ghost" size="lg" className="group text-lg">
-              Ver todo el catálogo
-              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
+          <Link
+            to="/products"
+            className={buttonVariants({ variant: 'ghost', size: 'lg', className: 'group text-lg' })}
+          >
+            Ver todo el catálogo
+            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
