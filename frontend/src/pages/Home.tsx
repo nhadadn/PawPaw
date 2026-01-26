@@ -5,11 +5,12 @@ import { ProductGrid } from '../components/features/products/ProductGrid';
 import { useProducts } from '../hooks/useProducts';
 import { useCategories } from '../hooks/useCategories';
 import { getImageUrl } from '../lib/utils';
-// import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export function Home() {
   const { data: products, isLoading, error } = useProducts();
   const { data: categories, isLoading: isLoadingCategories } = useCategories();
+  const [email, setEmail] = useState('');
   const featuredProducts = products?.slice(0, 4) || [];
 
   // Countdown Timer Logic (Next Drop in 24h for demo)
