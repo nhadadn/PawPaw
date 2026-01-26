@@ -104,29 +104,35 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
             </h3>
             <div className="border border-neutral-100 dark:border-neutral-800 rounded-xl overflow-hidden">
               <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-                {order.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-800/50 transition-colors"
-                  >
-                    <div className="flex items-center gap-4">
+                {order.items && order.items.length > 0 ? (
+                  order.items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-800/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="font-medium text-neutral-900 dark:text-white">
+                          {item.name}{' '}
+                          <span className="text-neutral-400 dark:text-neutral-500 font-normal text-sm ml-1">
+                            x{item.quantity}
+                          </span>
+                        </div>
+                      </div>
                       <div className="font-medium text-neutral-900 dark:text-white">
-                        {item.name}{' '}
-                        <span className="text-neutral-400 dark:text-neutral-500 font-normal text-sm ml-1">
-                          x{item.quantity}
-                        </span>
+                        ${((item.price * item.quantity) / 100).toFixed(2)}
                       </div>
                     </div>
-                    <div className="font-medium text-neutral-900 dark:text-white">
-                      ${((item.price * item.quantity) / 100).toFixed(2)}
-                    </div>
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-neutral-500 dark:text-neutral-400">
+                    No hay detalles de artículos disponibles para esta orden.
                   </div>
-                ))}
+                )}
               </div>
               <div className="p-4 bg-neutral-50 dark:bg-neutral-900 flex justify-between items-center border-t border-neutral-100 dark:border-neutral-800">
                 <span className="font-bold text-neutral-900 dark:text-white">Total Pagado</span>
                 <span className="font-bold text-xl text-primary">
-                  {formatCurrency(order.total_amount)}
+                  {formatCurrency(order.total_amount || 0)}
                 </span>
               </div>
             </div>
