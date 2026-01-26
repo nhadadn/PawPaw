@@ -1,13 +1,5 @@
 import { Link } from 'react-router-dom';
-import {
-  ArrowRight,
-  ShoppingBag,
-  Truck,
-  ShieldCheck,
-  Clock,
-  ChevronDown,
-  Star,
-} from 'lucide-react';
+import { ArrowRight, ShoppingBag, Package, Shield, Clock, ChevronDown, Star } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { ProductGrid } from '../components/features/products/ProductGrid';
 import { useProducts } from '../hooks/useProducts';
@@ -77,9 +69,9 @@ export function Home() {
                 <span className="text-white text-xs font-bold uppercase tracking-wider">
                   +10k Clientes
                 </span>
-                <div className="flex text-accent">
+                <div className="flex text-accent" aria-label="5 de 5 estrellas">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <Star key={i} className="w-3 h-3 fill-current" />
+                    <Star key={i} className="w-3 h-3 fill-current" aria-hidden="true" />
                   ))}
                 </div>
               </div>
@@ -113,7 +105,7 @@ export function Home() {
                 <Button
                   size="xl"
                   variant="outline"
-                  className="w-full sm:w-auto min-w-[200px] text-lg text-white border-white/20 hover:bg-white hover:text-black hover:border-white backdrop-blur-sm"
+                  className="w-full sm:w-auto min-w-[200px] text-lg text-white border-white/20 hover:bg-white hover:text-black dark:hover:text-black hover:border-white backdrop-blur-sm"
                 >
                   Explorar Ropa
                 </Button>
@@ -123,7 +115,7 @@ export function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce flex flex-col items-center text-neutral-500 gap-2">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce flex flex-col items-center text-neutral-400 gap-2">
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Scroll Down</span>
           <ChevronDown className="w-5 h-5" />
         </div>
@@ -134,27 +126,27 @@ export function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
             <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
-              <Truck className="w-8 h-8" />
+              <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
-                Envío Rápido
+                Envíos Globales
               </h3>
-              <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                Envíos a todo el país en 24/48h con seguimiento en tiempo real.
+              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
           </div>
           <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
             <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
-              <ShieldCheck className="w-8 h-8" />
+              <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
-                Pago Seguro
+                Compra Segura
               </h3>
-              <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                Transacciones 100% encriptadas y protegidas con SSL.
+              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
           </div>
@@ -166,7 +158,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-500 dark:text-neutral-400 leading-relaxed">
+              <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -181,7 +173,7 @@ export function Home() {
             <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white">
               Destacados
             </h2>
-            <p className="text-lg text-neutral-500 dark:text-neutral-400 max-w-md">
+            <p className="text-lg text-neutral-900 dark:text-neutral-500 max-w-md">
               Descubre las piezas más codiciadas de nuestra colección esta semana.
             </p>
           </div>

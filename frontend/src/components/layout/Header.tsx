@@ -39,22 +39,25 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+        <nav
+          aria-label="Navegación principal"
+          className="hidden md:flex items-center gap-8 text-sm font-medium"
+        >
           <Link
             to="/"
-            className="text-neutral-300 hover:text-accent transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
           >
             Inicio
           </Link>
           <Link
             to="/products"
-            className="text-neutral-300 hover:text-accent transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
           >
             Productos
           </Link>
           <Link
             to="/about"
-            className="text-neutral-300 hover:text-accent transition-colors tracking-wide uppercase"
+            className="text-white hover:text-neutral-300 transition-colors tracking-wide uppercase"
           >
             Nosotros
           </Link>
@@ -72,7 +75,7 @@ export function Header() {
             />
             <button
               type="submit"
-              aria-label="Buscar"
+              aria-label="Buscar productos"
               className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 hover:text-accent transition-colors"
             >
               <Search className="w-5 h-5" />
@@ -86,7 +89,7 @@ export function Header() {
           <button
             onClick={toggleTheme}
             className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-neutral-50 dark:text-neutral-900 hover:text-accent"
-            aria-label="Cambiar tema"
+            aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
           >
             {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
           </button>
@@ -94,7 +97,7 @@ export function Header() {
           {/* Cart */}
           <button
             onClick={openDrawer}
-            aria-label="Abrir carrito de compras"
+            aria-label={`Carrito de compras con ${totalItems()} artículos`}
             className="relative p-3 hover:bg-neutral-900 rounded-full transition-colors group"
           >
             <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-900 group-hover:text-accent transition-colors" />

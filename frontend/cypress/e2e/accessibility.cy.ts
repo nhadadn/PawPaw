@@ -13,8 +13,13 @@ describe('Accessibility Tests', () => {
         impact,
         description,
         nodes: nodes.length,
+        target: nodes.map((node) => node.target).flat(),
       }));
       cy.task('table', violationData);
+      cy.task('log', JSON.stringify(violationData, null, 2));
+      cy.writeFile('accessibility-violations.json', JSON.stringify(violationData, null, 2), {
+        flag: 'a+',
+      });
     });
   };
 

@@ -23,36 +23,40 @@ export function Login() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
-      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg border border-neutral-200">
-        <h1 className="text-3xl font-bold font-display text-center mb-8">Iniciar Sesión</h1>
-        
+      <div className="w-full max-w-md p-8 bg-white dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-800">
+        <h1 className="text-3xl font-bold font-display text-center mb-8 text-neutral-900 dark:text-white">
+          Iniciar Sesión
+        </h1>
+
         {error && (
           <div className="mb-6">
-            <Alert variant="error" title="Error">{error}</Alert>
+            <Alert variant="error" title="Error">
+              {error}
+            </Alert>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input 
-            label="Email" 
-            type="email" 
-            value={email} 
+          <Input
+            label="Email"
+            type="email"
+            value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             required
           />
-          <Input 
-            label="Contraseña" 
-            type="password" 
-            value={password} 
+          <Input
+            label="Contraseña"
+            type="password"
+            value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             required
           />
-          
+
           <Button type="submit" className="w-full" size="lg" isLoading={isLoading}>
             Entrar
           </Button>
 
-          <div className="text-center text-sm text-neutral-500">
+          <div className="text-center text-sm text-neutral-800 dark:text-neutral-300">
             <p>Demo Credentials:</p>
             <p>user@example.com / password</p>
           </div>

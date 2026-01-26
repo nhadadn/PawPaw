@@ -94,6 +94,7 @@ export function ReservationStep() {
 
   // Persist form data to store on change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/incompatible-library
     const subscription = watch((value) => {
       setFormData(value as ReservationForm);
     });

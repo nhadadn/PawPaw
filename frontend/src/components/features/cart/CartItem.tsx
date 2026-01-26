@@ -63,7 +63,7 @@ export function CartItem({ item, onUpdateQuantity, onRemove, className }: CartIt
           {/* Remove */}
           <button
             onClick={() => onRemove(item.id)}
-            className="text-neutral-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all p-3 rounded-xl"
+            className="text-neutral-500 hover:text-red-500 hover:bg-red-50 dark:text-neutral-400 dark:hover:bg-red-900/20 transition-all p-3 rounded-xl"
             aria-label="Eliminar producto"
           >
             <Trash2 className="w-5 h-5" />

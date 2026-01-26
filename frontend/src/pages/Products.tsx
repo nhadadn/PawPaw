@@ -102,11 +102,13 @@ export function Products() {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 mb-8 font-medium">
-        <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
+      <div className="flex items-center text-sm text-neutral-700 dark:text-neutral-400 mb-8 font-medium">
+        <Link to="/" className="hover:text-neutral-900 dark:hover:text-white transition-colors">
           Inicio
         </Link>
-        <span className="mx-3 text-neutral-300">/</span>
+        <span className="mx-3 text-neutral-400" aria-hidden="true">
+          /
+        </span>
         <span className="font-bold text-neutral-900 dark:text-white">Productos</span>
       </div>
 
@@ -147,7 +149,7 @@ export function Products() {
         <div className="flex-1 space-y-8">
           {/* Header & Sort */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#141414] p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
-            <p className="text-sm text-neutral-500 font-medium">
+            <p className="text-sm text-neutral-600 font-medium">
               Mostrando{' '}
               <span className="font-bold text-neutral-900 dark:text-white">
                 {filteredProducts.length}
@@ -158,7 +160,8 @@ export function Products() {
             <div className="flex items-center gap-3">
               <span className="text-sm font-medium text-neutral-600">Ordenar por:</span>
               <select
-                className="text-sm border-none bg-transparent font-bold focus:ring-0 cursor-pointer text-neutral-900 dark:text-white pr-8 py-1"
+                aria-label="Ordenar productos"
+                className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-neutral-900 dark:text-white pr-8 py-1"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
               >

@@ -91,9 +91,9 @@ export function ProductDetail() {
         <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
           Inicio
         </Link>
-        <span className="mx-3 text-neutral-300">/</span>
+        <span className="mx-2 text-neutral-300 dark:text-neutral-600">/</span>
         <Link to="/products" className="hover:text-black dark:hover:text-white transition-colors">
-          Productos
+          Catálogo
         </Link>
         <span className="mx-3 text-neutral-300">/</span>
         <span className="font-bold text-neutral-900 dark:text-white line-clamp-1">
@@ -143,7 +143,10 @@ export function ProductDetail() {
                   <label className="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wide">
                     Selecciona Talla
                   </label>
-                  <button className="text-xs text-neutral-500 hover:text-black dark:hover:text-white underline">
+                  <button
+                    type="button"
+                    className="text-xs text-neutral-500 hover:text-black dark:hover:text-white underline"
+                  >
                     Guía de tallas
                   </button>
                 </div>

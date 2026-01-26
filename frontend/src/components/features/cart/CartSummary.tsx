@@ -50,7 +50,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
             {formatCurrency(finalTotal)}
           </span>
         </div>
-        <p className="text-xs text-neutral-500 dark:text-neutral-500 text-right">
+        <p className="text-xs text-neutral-800 dark:text-neutral-400 text-right">
           Impuestos incluidos
         </p>
       </div>
@@ -85,7 +85,11 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
           Código Promocional
         </label>
         <div className="flex gap-2">
-          <Input placeholder="PAWPAW2024" className="bg-white dark:bg-neutral-800 h-11" />
+          <Input
+            placeholder="PAWPAW2024"
+            className="bg-white dark:bg-neutral-800 h-11"
+            aria-label="Ingresar código promocional"
+          />
           <Button
             variant="outline"
             className="h-11 px-6 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
