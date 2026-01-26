@@ -182,6 +182,7 @@ function PaymentForm({ reservationId }: { reservationId: string }) {
             onSuccess: (data) => {
               setConfirmedOrder(data);
               setStep('confirmation');
+              setIsProcessing(false);
             },
             onError: (err) => {
               const error = err as AxiosError<ApiError>;
@@ -190,9 +191,23 @@ function PaymentForm({ reservationId }: { reservationId: string }) {
             },
           }
         );
+      } else {
+        // Handle other statuses (processing, requires_action, etc.)
+        // For now, if it's not succeeded immediately and no error was thrown,
+        // it might be processing.
+        if (paymentIntent && paymentIntent.status === 'processing') {
+          setErrorMessage('El pago se está procesando. Te notificaremos cuando se complete.');
+          // Optionally redirect to a pending status page
+        } else {
+          setErrorMessage(
+            `El estado del pago es: ${paymentIntent?.status}. Por favor contacta soporte.`
+          );
+        }
+        setIsProcessing(false);
       }
-    } catch {
-      setErrorMessage('Ocurrió un error inesperado');
+    } catch (err) {
+      console.error('Payment Error:', err);
+      setErrorMessage('Ocurrió un error inesperado durante el pago.');
       setIsProcessing(false);
     }
   };

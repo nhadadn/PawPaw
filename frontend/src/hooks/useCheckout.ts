@@ -105,16 +105,18 @@ export const useCheckoutCreatePaymentIntent = () => {
 };
 
 export const useCheckoutConfirm = () => {
-  const clearCheckout = useCheckoutStore((state) => state.clearCheckout);
+  // const clearCheckout = useCheckoutStore((state) => state.clearCheckout);
 
   return useMutation({
     mutationFn: async (payload: ConfirmPayload) => {
       const { data } = await apiClient.post<Order>('/api/checkout/confirm', payload);
       return data;
     },
-    onSuccess: () => {
+    // Don't clear checkout here, as we need the confirmedOrder state for the confirmation step.
+    // Cleanup should happen when leaving the confirmation page or starting a new flow.
+    /* onSuccess: () => {
       clearCheckout();
-    },
+    }, */
   });
 };
 
