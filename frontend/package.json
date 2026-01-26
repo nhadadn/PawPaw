@@ -9,6 +9,8 @@
     "lint": "eslint .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -40,6 +42,8 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^4.0.18",
     "autoprefixer": "^10.4.23",
+    "axe-core": "^4.11.1",
+    "cypress": "^15.9.0",
     "cypress-axe": "^1.7.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
