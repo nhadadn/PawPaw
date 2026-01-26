@@ -9,7 +9,7 @@ import logger from '../lib/logger';
 const RESERVATION_TTL = 600; // 10 minutes
 const REDIS_PERSISTENCE_TTL = 86400; // 24 hours
 
-import { Prisma, InventoryChangeType, OrderStatus } from '@prisma/client';
+import { Prisma, InventoryChangeType } from '@prisma/client';
 
 import { emitStockUpdate } from '../websocket/inventory.socket';
 
@@ -391,10 +391,23 @@ export class CheckoutService {
     await redis.zrem('reservations:by_expiry', reservationId);
 
     return {
-      order_id: order.id.toString(),
-      order_number: order.id.toString(), // Assuming ID is order number for now
-      status: OrderStatus.PAID,
-      total_cents: order.totalCents,
+      id: order.id.toString(),
+      order_number: order.id.toString(),
+      status: 'paid', // Frontend expects lowercase 'paid' based on type definition? No, type says 'paid' | 'pending'...
+      // But OrderStatus enum is usually uppercase. Let's check frontend type again.
+      // Frontend type: status: 'pending' | 'paid' | 'cancelled' | 'shipped';
+      // Backend OrderStatus: PAID.
+      // So I should convert to lowercase.
+      total_amount: order.totalCents / 100, // Convert to main currency unit
+      created_at: order.createdAt.toISOString(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: order.items.map((item: any) => ({
+        id: item.id.toString(),
+        product_variant_id: item.productVariantId.toString(),
+        quantity: item.quantity,
+        price: item.unitPriceCents,
+        name: item.productVariant.product.name,
+      })),
     };
   }
 

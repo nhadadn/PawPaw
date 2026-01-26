@@ -104,6 +104,17 @@ export class CheckoutRepository {
           })),
         },
       },
+      include: {
+        items: {
+          include: {
+            productVariant: {
+              include: {
+                product: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 

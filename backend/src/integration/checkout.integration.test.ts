@@ -41,9 +41,9 @@ jest.mock('../websocket/inventory.socket', () => ({
 }));
 
 jest.mock('../middleware/rateLimit.middleware', () => ({
-  globalLimiter: (req: any, res: any, next: any) => next(),
-  authLimiter: (req: any, res: any, next: any) => next(),
-  checkoutLimiter: (req: any, res: any, next: any) => next(),
+  globalLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
+  authLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
+  checkoutLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
 }));
 
 jest.mock('../repositories/checkout.repository', () => ({

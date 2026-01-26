@@ -62,6 +62,17 @@ class CheckoutRepository {
                     })),
                 },
             },
+            include: {
+                items: {
+                    include: {
+                        productVariant: {
+                            include: {
+                                product: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
     }
     async releaseReservedStock(tx, variantId, quantity) {

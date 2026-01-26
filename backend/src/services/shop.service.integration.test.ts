@@ -1,4 +1,5 @@
 import { ShopService } from './shop.service';
+import { Prisma } from '@prisma/client';
 import { ShopRepository } from '../repositories/shop.repository';
 import redis from '../lib/redis';
 
@@ -45,15 +46,47 @@ describe('ShopService Integration (Cache)', () => {
   });
 
   describe('getProducts', () => {
-    const mockProducts = [
+    const mockProducts: Prisma.ProductGetPayload<{
+      include: { category: true; variants: true; images: true };
+    }>[] = [
       {
         id: BigInt(1),
         name: 'Test Product',
         slug: 'test-product',
+        description: null,
+        imageUrl: null,
+        categoryId: BigInt(2),
         priceCents: 1000,
-        variants: [{ id: BigInt(10), productId: BigInt(1), initialStock: 10, reservedStock: 0 }],
+        currency: 'MXN',
+        isActive: true,
+        isDrop: false,
+        dropDate: null,
+        maxPerCustomer: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        variants: [
+          {
+            id: BigInt(10),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            productId: BigInt(1),
+            sku: 'SKU-10',
+            size: null,
+            color: null,
+            initialStock: 10,
+            reservedStock: 0,
+          },
+        ],
         images: [],
-        category: { name: 'Test Cat' },
+        category: {
+          id: BigInt(2),
+          name: 'Test Cat',
+          slug: 'test-cat',
+          description: null,
+          imageUrl: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       },
     ];
 
@@ -61,7 +94,7 @@ describe('ShopService Integration (Cache)', () => {
       const cachedData = [{ id: '1', name: 'Cached Product' }];
       (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(cachedData));
 
-      const result = await service.getProducts(10, 0);
+      const result = (await service.getProducts(10, 0)) as unknown as Array<{ id: string }>;
 
       expect(result).toEqual(cachedData);
       expect(redis.get).toHaveBeenCalledWith(expect.stringContaining('products:list'));
@@ -70,9 +103,9 @@ describe('ShopService Integration (Cache)', () => {
 
     it('should fetch from DB and cache result if not in cache (Cache MISS)', async () => {
       (redis.get as jest.Mock).mockResolvedValue(null);
-      repoMock.findAllProducts.mockResolvedValue(mockProducts as any);
+      repoMock.findAllProducts.mockResolvedValue(mockProducts);
 
-      const result = await service.getProducts(10, 0);
+      const result = (await service.getProducts(10, 0)) as unknown as Array<{ id: string }>;
 
       expect(result).toHaveLength(1);
       expect(result[0].id).toBe('1');
@@ -86,9 +119,9 @@ describe('ShopService Integration (Cache)', () => {
 
     it('should fallback to DB if Redis fails', async () => {
       (redis.get as jest.Mock).mockRejectedValue(new Error('Redis connection failed'));
-      repoMock.findAllProducts.mockResolvedValue(mockProducts as any);
+      repoMock.findAllProducts.mockResolvedValue(mockProducts);
 
-      const result = await service.getProducts(10, 0);
+      const result = (await service.getProducts(10, 0)) as unknown as Array<{ id: string }>;
 
       expect(result).toHaveLength(1);
       expect(result[0].id).toBe('1');

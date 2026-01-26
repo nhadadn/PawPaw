@@ -174,7 +174,7 @@ export class WebhookService {
         tx // <--- Pass tx
       );
 
-      logger.info('Order created via webhook', { orderId: result.order_id });
+      logger.info('Order created via webhook', { orderId: result.id });
     } catch (error: unknown) {
       if (error instanceof CheckoutError && error.code === 'RESERVATION_NOT_FOUND') {
         logger.error(

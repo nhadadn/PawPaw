@@ -261,13 +261,30 @@ describe('CheckoutService', () => {
         status: 'succeeded',
       });
 
-      mockRepoInstance.createOrder.mockResolvedValue({ id: BigInt(100), totalCents: 2000 });
+      mockRepoInstance.createOrder.mockResolvedValue({
+        id: BigInt(100),
+        totalCents: 2000,
+        createdAt: new Date(),
+        items: [
+          {
+            id: BigInt(1),
+            productVariantId: BigInt(1),
+            quantity: 2,
+            unitPriceCents: 1000,
+            productVariant: {
+              product: {
+                name: 'Test Product',
+              },
+            },
+          },
+        ],
+      });
       mockRepoInstance.confirmStockDeduction.mockResolvedValue(undefined);
       mockRepoInstance.createInventoryLog.mockResolvedValue(undefined);
 
       const result = await service.confirm(userId, reservationId, paymentIntentId);
 
-      expect(result.status).toBe('PAID');
+      expect(result.status).toBe('paid');
       expect(mockRepoInstance.createOrder).toHaveBeenCalled();
       expect(mockRepoInstance.confirmStockDeduction).toHaveBeenCalled();
       expect(redis.del).toHaveBeenCalled();

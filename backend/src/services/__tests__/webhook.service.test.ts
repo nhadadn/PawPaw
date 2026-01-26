@@ -107,10 +107,12 @@ describe('WebhookService', () => {
     it('should create order from reservation if order does not exist', async () => {
       (prisma.order.findFirst as jest.Mock).mockResolvedValue(null);
       mockCheckoutService.confirm.mockResolvedValue({
-        order_id: '1',
+        id: '1',
         order_number: '1',
-        status: OrderStatus.PAID,
-        total_cents: 1000,
+        status: 'paid',
+        total_amount: 10,
+        items: [],
+        created_at: new Date().toISOString(),
       });
 
       await service.handleEvent(mockEvent);

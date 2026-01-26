@@ -29,12 +29,12 @@ export class CacheService {
    * @param key Cache key
    * @returns Parsed value or null
    */
-  async get(key: string): Promise<any | null> {
+  async get<T>(key: string): Promise<T | null> {
     try {
       const data = await redis.get(key);
       if (data) {
         logger.info(`[Cache] HIT: ${key}`);
-        return JSON.parse(data);
+        return JSON.parse(data) as T;
       }
       logger.info(`[Cache] MISS: ${key}`);
       return null;
@@ -50,7 +50,7 @@ export class CacheService {
    * @param value Value to store
    * @param ttl Time to live in seconds (default: 300)
    */
-  async set(key: string, value: any, ttl: number = 300): Promise<void> {
+  async set<T>(key: string, value: T, ttl: number = 300): Promise<void> {
     try {
       await redis.setex(key, ttl, JSON.stringify(value));
       logger.info(`[Cache] SET: ${key} (TTL: ${ttl}s)`);

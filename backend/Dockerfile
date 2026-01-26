@@ -20,7 +20,7 @@ RUN npx prisma generate
 RUN npm run build
 
 # --- Production Stage ---
-FROM node:20-alpine
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
@@ -40,6 +40,6 @@ USER expressjs
 EXPOSE 4000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:4000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+  CMD node -e "require('http').get('http://localhost:4000/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)}")
 
 CMD ["node", "dist/index.js"]
