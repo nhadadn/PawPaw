@@ -131,7 +131,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-500">
+        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-400 dark:text-neutral-600">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

@@ -137,7 +137,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
@@ -150,7 +150,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Compra Segura
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
@@ -163,7 +163,7 @@ export function Home() {
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-500 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -178,7 +178,7 @@ export function Home() {
             <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white">
               Destacados
             </h2>
-            <p className="text-lg text-neutral-900 dark:text-neutral-500 max-w-md">
+            <p className="text-lg text-neutral-900 dark:text-neutral-600 max-w-md">
               Descubre las piezas más codiciadas de nuestra colección esta semana.
             </p>
           </div>
@@ -259,7 +259,7 @@ export function Home() {
             <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight">
               ÚNETE AL CLUB PAW PAW
             </h2>
-            <p className="text-xl text-neutral-400">
+            <p className="text-xl text-neutral-300 dark:text-neutral-700">
               Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto pt-4">
@@ -267,7 +267,7 @@ export function Home() {
                 aria-label="Correo electrónico"
                 type="email"
                 placeholder="tu@email.com"
-                className="flex-1 h-14 rounded-full px-6 bg-white/10 border border-white/20 text-white placeholder:text-neutral-400 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+                className="flex-1 h-14 rounded-full px-6 bg-white/10 border border-white/20 text-white placeholder:text-neutral-300 dark:placeholder:text-neutral-700 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />

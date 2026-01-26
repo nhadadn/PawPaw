@@ -22,7 +22,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-white hover:bg-primary-hover shadow-md hover:shadow-lg border border-transparent dark:text-white',
+    'bg-primary text-white hover:bg-primary-hover shadow-md hover:shadow-lg border border-transparent dark:text-black',
   secondary:
     'bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300 dark:bg-neutral-200 dark:text-white dark:border-neutral-300 dark:hover:bg-neutral-300 shadow-sm',
   accent:
@@ -30,7 +30,7 @@ const variants: Record<ButtonVariant, string> = {
   outline:
     'bg-transparent border-2 border-neutral-200 text-neutral-900 hover:bg-neutral-50 hover:border-neutral-300 dark:border-neutral-600 dark:text-white dark:hover:bg-neutral-200 dark:hover:text-white',
   ghost:
-    'bg-transparent text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-200 dark:hover:text-white',
+    'bg-transparent text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 dark:text-white dark:hover:bg-neutral-200 dark:hover:text-white',
   danger: 'bg-error text-white hover:bg-error/90 shadow-sm border border-transparent',
   success: 'bg-success text-white hover:bg-success/90 shadow-sm border border-transparent',
 };
