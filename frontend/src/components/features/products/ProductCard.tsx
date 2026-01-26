@@ -168,7 +168,7 @@ const ProductCardComponent = ({
                   'p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10',
                   isWishlistActive
                     ? 'text-accent fill-accent'
-                    : 'text-neutral-600 dark:text-neutral-300 hover:text-accent dark:hover:text-accent'
+                    : 'text-neutral-600 hover:text-accent dark:hover:text-accent'
                 )}
                 aria-label="Añadir a lista de deseos"
               >
@@ -178,7 +178,7 @@ const ProductCardComponent = ({
             {showQuickView && (
               <button
                 onClick={handleQuickView}
-                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
+                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
                 aria-label="Vista rápida"
               >
                 <Eye className="w-4 h-4" />
@@ -187,7 +187,7 @@ const ProductCardComponent = ({
             {showGallery && galleryImages.length > 0 && (
               <button
                 onClick={handleGalleryOpen}
-                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 dark:text-neutral-300 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
+                className="p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm text-neutral-600 transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10 hover:text-accent dark:hover:text-accent"
                 aria-label="Ver galería"
               >
                 <Images className="w-4 h-4" />

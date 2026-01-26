@@ -31,7 +31,7 @@ export function ProductFilters({
             className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
               selectedCategory === null
                 ? 'bg-black text-white font-bold dark:bg-white dark:text-black shadow-md transform scale-[1.02]'
-                : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
+                : 'text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-white'
             }`}
           >
             Todas
@@ -43,7 +43,7 @@ export function ProductFilters({
               className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
                 selectedCategory === cat.slug
                   ? 'bg-black text-white font-bold dark:bg-white dark:text-black shadow-md transform scale-[1.02]'
-                  : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white'
+                  : 'text-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-white'
               }`}
             >
               {cat.name}

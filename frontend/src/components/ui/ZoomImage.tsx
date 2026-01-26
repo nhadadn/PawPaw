@@ -146,6 +146,7 @@ export function ZoomImage({ src, alt, className }: ZoomImageProps) {
             <button
               onClick={closeMobile}
               className="absolute top-4 right-4 p-2 bg-white/10 rounded-full text-white hover:bg-white/20 z-50"
+              aria-label="Cerrar zoom"
             >
               <X className="w-6 h-6" />
             </button>
@@ -163,6 +164,7 @@ export function ZoomImage({ src, alt, className }: ZoomImageProps) {
               <button
                 onClick={() => setMobileScale((s) => Math.max(1, s - 0.5))}
                 className="p-3 bg-white/10 rounded-full text-white hover:bg-white/20"
+                aria-label="Zoom Out"
               >
                 <ZoomOut className="w-6 h-6" />
               </button>
@@ -172,6 +174,7 @@ export function ZoomImage({ src, alt, className }: ZoomImageProps) {
               <button
                 onClick={() => setMobileScale((s) => Math.min(3, s + 0.5))}
                 className="p-3 bg-white/10 rounded-full text-white hover:bg-white/20"
+                aria-label="Zoom In"
               >
                 <ZoomIn className="w-6 h-6" />
               </button>

@@ -35,7 +35,7 @@ export function ProductGrid({ products, isLoading, error }: ProductGridProps) {
         <h3 className="text-xl font-display font-bold text-neutral-900 dark:text-white mb-2">
           No se encontraron productos
         </h3>
-        <p className="text-neutral-500 dark:text-neutral-400 max-w-md">
+        <p className="text-neutral-500 max-w-md">
           Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.
         </p>
       </div>

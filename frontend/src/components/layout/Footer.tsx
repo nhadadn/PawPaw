@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-display font-black tracking-tighter text-white">
+            <h3 className="text-3xl font-display font-black tracking-tighter text-neutral-50 dark:text-neutral-900">
               PAW PAW
             </h3>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -20,21 +20,21 @@ export function Footer() {
               <a
                 href="#"
                 aria-label="Instagram"
-                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-neutral-900 hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Instagram className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Twitter"
-                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-neutral-900 hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Twitter className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Facebook"
-                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-neutral-900 hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Facebook className="w-6 h-6" />
               </a>
@@ -43,7 +43,9 @@ export function Footer() {
 
           {/* Links */}
           <div>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Explorar</h4>
+            <h4 className="font-bold text-neutral-50 dark:text-neutral-900 mb-6 uppercase tracking-wider text-sm">
+              Explorar
+            </h4>
             <ul className="space-y-4 text-sm font-medium">
               <li>
                 <Link to="/products" className="hover:text-accent transition-colors block w-fit">
@@ -79,7 +81,9 @@ export function Footer() {
 
           {/* Support */}
           <div>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">Ayuda</h4>
+            <h4 className="font-bold text-neutral-50 dark:text-neutral-900 mb-6 uppercase tracking-wider text-sm">
+              Ayuda
+            </h4>
             <ul className="space-y-4 text-sm font-medium">
               <li>
                 <Link to="/faq" className="hover:text-accent transition-colors block w-fit">
@@ -106,7 +110,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">
+            <h4 className="font-bold text-neutral-50 dark:text-neutral-900 mb-6 uppercase tracking-wider text-sm">
               Newsletter
             </h4>
             <p className="text-sm leading-relaxed mb-6">
@@ -116,7 +120,7 @@ export function Footer() {
               <Input
                 aria-label="Correo electrónico"
                 placeholder="TU@EMAIL.COM"
-                className="bg-neutral-900 border-neutral-800 text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
+                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
               />
               <Button
                 size="icon"

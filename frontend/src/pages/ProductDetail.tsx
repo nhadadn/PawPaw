@@ -87,7 +87,7 @@ export function ProductDetail() {
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400 mb-8 font-medium">
+      <div className="flex items-center text-sm text-neutral-500 mb-8 font-medium">
         <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
           Inicio
         </Link>
@@ -130,7 +130,7 @@ export function ProductDetail() {
             </div>
           </div>
 
-          <p className="text-lg text-neutral-600 dark:text-neutral-300 leading-relaxed font-light">
+          <p className="text-lg text-neutral-600 leading-relaxed font-light">
             {product.description ||
               'Este es un producto exclusivo de la colección Paw Paw Urban. Diseñado para ofrecer estilo y comodidad sin compromisos. Fabricado con materiales de alta calidad para asegurar durabilidad y un look impecable.'}
           </p>

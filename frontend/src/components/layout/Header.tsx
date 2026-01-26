@@ -28,12 +28,12 @@ export function Header() {
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black text-white transition-colors duration-300">
+    <header className="sticky top-0 z-50 w-full border-b border-neutral-800 bg-black text-neutral-50 dark:text-neutral-900 transition-colors duration-300">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link
           to="/"
-          className="text-3xl font-display font-black tracking-tighter text-white shrink-0 hover:scale-105 transition-transform"
+          className="text-3xl font-display font-black tracking-tighter text-neutral-50 dark:text-neutral-900 shrink-0 hover:scale-105 transition-transform"
         >
           PAW PAW
         </Link>
@@ -66,7 +66,7 @@ export function Header() {
             <Input
               type="search"
               placeholder="BUSCAR..."
-              className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
+              className="w-full h-11 pl-4 pr-12 bg-neutral-900/50 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -85,7 +85,7 @@ export function Header() {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-white hover:text-accent"
+            className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-neutral-50 dark:text-neutral-900 hover:text-accent"
             aria-label="Cambiar tema"
           >
             {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
@@ -97,9 +97,9 @@ export function Header() {
             aria-label="Abrir carrito de compras"
             className="relative p-3 hover:bg-neutral-900 rounded-full transition-colors group"
           >
-            <ShoppingCart className="w-6 h-6 text-white group-hover:text-accent transition-colors" />
+            <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-900 group-hover:text-accent transition-colors" />
             {totalItems() > 0 && (
-              <span className="absolute top-0 right-0 bg-accent text-white text-[11px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
+              <span className="absolute top-0 right-0 bg-accent text-neutral-50 dark:text-neutral-900 text-[11px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
                 {totalItems()}
               </span>
             )}
@@ -113,7 +113,7 @@ export function Header() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="gap-2 text-white hover:text-accent hover:bg-neutral-900 font-medium"
+                    className="gap-2 text-neutral-50 dark:text-neutral-900 hover:text-accent hover:bg-neutral-900 font-medium"
                   >
                     <User className="w-5 h-5" />
                     <span className="max-w-[100px] truncate">{user?.name || 'Perfil'}</span>
@@ -155,7 +155,7 @@ export function Header() {
             placeholder="BUSCAR PRODUCTOS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-white placeholder:text-neutral-600 focus:border-accent"
+            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:text-neutral-900 placeholder:text-neutral-600 focus:border-accent"
           />
           <button type="submit" className="absolute right-4 top-1/2 -translate-y-1/2 p-2">
             <Search className="w-6 h-6 text-neutral-400" />
@@ -166,7 +166,7 @@ export function Header() {
           <Link
             to="/"
             onClick={() => setIsMenuOpen(false)}
-            className="flex items-center justify-between p-4 text-2xl font-bold text-white hover:text-accent border-b border-neutral-900 transition-colors"
+            className="flex items-center justify-between p-4 text-2xl font-bold text-neutral-50 dark:text-neutral-900 hover:text-accent border-b border-neutral-900 transition-colors"
           >
             INICIO
             <span className="text-neutral-800">→</span>
@@ -174,7 +174,7 @@ export function Header() {
           <Link
             to="/products"
             onClick={() => setIsMenuOpen(false)}
-            className="flex items-center justify-between p-4 text-2xl font-bold text-white hover:text-accent border-b border-neutral-900 transition-colors"
+            className="flex items-center justify-between p-4 text-2xl font-bold text-neutral-50 dark:text-neutral-900 hover:text-accent border-b border-neutral-900 transition-colors"
           >
             PRODUCTOS
             <span className="text-neutral-800">→</span>
@@ -182,7 +182,7 @@ export function Header() {
           <Link
             to="/cart"
             onClick={() => setIsMenuOpen(false)}
-            className="flex items-center justify-between p-4 text-2xl font-bold text-white hover:text-accent border-b border-neutral-900 transition-colors"
+            className="flex items-center justify-between p-4 text-2xl font-bold text-neutral-50 dark:text-neutral-900 hover:text-accent border-b border-neutral-900 transition-colors"
           >
             CARRITO
             <Badge variant="destructive" className="ml-2 text-lg px-3 py-1">
@@ -230,7 +230,7 @@ export function Header() {
                   navigate('/register');
                   setIsMenuOpen(false);
                 }}
-                className="w-full h-14 text-lg font-bold border-neutral-800 text-white hover:bg-neutral-900"
+                className="w-full h-14 text-lg font-bold border-neutral-800 text-neutral-50 dark:text-neutral-900 hover:bg-neutral-900"
               >
                 REGISTRARSE
               </Button>
