@@ -4,6 +4,7 @@ import { ReservationStep } from './ReservationStep';
 import { PaymentStep } from './PaymentStep';
 import { ConfirmationStep } from './ConfirmationStep';
 import { useCheckoutStore } from '../../stores/checkoutStore';
+import { Button } from '../../components/ui/Button';
 import { Check } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -124,10 +125,10 @@ export function CheckoutPage() {
             {/* Fallback/Loading states could be handled here if reservation is missing for payment step */}
             {step === 'payment' && !reservation && (
               <div className="text-center py-12">
-                <p className="text-neutral-500 dark:text-neutral-400">
-                  No se encontró información de la reserva. Volviendo al inicio...
+                <p className="text-neutral-500 dark:text-neutral-400 mb-4">
+                  No se encontró información de la reserva.
                 </p>
-                {/* Logic to redirect or reset could go here, handled by store usually */}
+                <Button onClick={() => setStep('reservation')}>Volver al inicio</Button>
               </div>
             )}
           </div>

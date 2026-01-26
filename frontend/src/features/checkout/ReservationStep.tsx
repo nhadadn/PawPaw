@@ -30,7 +30,7 @@ const reservationSchema = z.object({
 type ReservationForm = z.infer<typeof reservationSchema>;
 
 export function ReservationStep() {
-  const { items, totalPrice } = useCartStore();
+  const { items, totalPrice, removeItem } = useCartStore();
   const { setStep, setReservation, setClientSecret, reservation, formData, setFormData } =
     useCheckoutStore();
   const [expirationError, setExpirationError] = useState(false);
@@ -42,6 +42,24 @@ export function ReservationStep() {
   } = useCheckoutCreatePaymentIntent();
 
   const error = reserveError || paymentError;
+
+  // Extract invalid variant ID from error message if present
+  // Backend returns: "Variant {id} not found"
+  const errorMessage =
+    error instanceof Error ? error.message : 'Ocurrió un error al procesar tu solicitud';
+  // Check if it's an axios error with response data
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const apiErrorMessage = (error as any)?.response?.data?.message || errorMessage;
+
+  const variantNotFoundMatch = apiErrorMessage?.match(/Variant (\d+) not found/);
+  const invalidVariantId = variantNotFoundMatch ? variantNotFoundMatch[1] : null;
+
+  const handleRemoveInvalidItem = () => {
+    if (invalidVariantId) {
+      removeItem(invalidVariantId);
+      // Force reload or just let the UI update since items comes from store
+    }
+  };
 
   // Validate existing reservation
   const { isExpired } = useValidateReservation(reservation?.id ?? null);
@@ -133,9 +151,20 @@ export function ReservationStep() {
       <div className="lg:col-span-2 space-y-6">
         {(reserveError || paymentError) && (
           <Alert variant="error" title="Error">
-            {reserveError?.message ||
-              paymentError?.message ||
-              'Ocurrió un error al procesar tu solicitud.'}
+            <div className="flex flex-col gap-3">
+              <p>{apiErrorMessage}</p>
+              {invalidVariantId && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleRemoveInvalidItem}
+                  className="w-fit bg-white hover:bg-neutral-100 text-neutral-900 border-neutral-200"
+                  type="button"
+                >
+                  Eliminar producto no disponible del carrito
+                </Button>
+              )}
+            </div>
           </Alert>
         )}
 
