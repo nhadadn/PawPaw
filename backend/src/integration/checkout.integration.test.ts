@@ -331,4 +331,46 @@ describe('Checkout routes', () => {
     expect(response.body).toHaveProperty('total_cents', 1000);
     expect(response.body).toHaveProperty('currency', 'MXN');
   });
+
+  it('GET /api/checkout/reservations/:id returns 404 when reservation not found', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440006';
+    (redis.get as jest.Mock).mockResolvedValue(null);
+
+    const response = await request(app)
+      .get(`/api/checkout/reservations/${reservationId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error', 'RESERVATION_NOT_FOUND');
+  });
+
+  it('GET /api/checkout/reservations/:id returns 403 when user mismatch', async () => {
+    const reservationId = '550e8400-e29b-41d4-a716-446655440006';
+    const mockReservation = {
+      user_id: 'other-user-123',
+      items: [],
+      total_cents: 1000,
+      currency: 'MXN',
+      expires_at: new Date(Date.now() + 60000).toISOString(),
+    };
+    (redis.get as jest.Mock).mockResolvedValue(JSON.stringify(mockReservation));
+
+    const response = await request(app)
+      .get(`/api/checkout/reservations/${reservationId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(403);
+    expect(response.body).toHaveProperty('error', 'RESERVATION_USER_MISMATCH');
+  });
+
+  it('GET /api/checkout/reservations/:id returns 400 for invalid UUID', async () => {
+    const invalidId = 'invalid-uuid';
+
+    const response = await request(app)
+      .get(`/api/checkout/reservations/${invalidId}`)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(response.status).toBe(400);
+    expect(response.body.details[0]).toHaveProperty('message', 'Invalid uuid');
+  });
 });
