@@ -18,7 +18,7 @@ export function Cart() {
           <h1 className="text-4xl font-display font-bold text-neutral-900 dark:text-white">
             Tu carrito está vacío
           </h1>
-          <p className="text-lg text-neutral-500 dark:text-neutral-400 max-w-md mx-auto">
+          <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-md mx-auto">
             Parece que aún no has agregado nada. Explora nuestra colección y encuentra tu estilo.
           </p>
         </div>

@@ -168,7 +168,7 @@ const ProductCardComponent = ({
                   'p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/10',
                   isWishlistActive
                     ? 'text-accent fill-accent'
-                    : 'text-neutral-600 hover:text-accent dark:hover:text-accent'
+                    : 'text-neutral-600 hover:text-accent dark:text-neutral-100 dark:hover:text-accent'
                 )}
                 aria-label="Añadir a lista de deseos"
               >
@@ -245,7 +245,7 @@ const ProductCardComponent = ({
                 {formatCurrency(displayPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-neutral-600 dark:text-neutral-500 line-through font-medium">
+                <span className="text-xs text-neutral-600 dark:text-neutral-400 line-through font-medium">
                   {formatCurrency(product.price)}
                 </span>
               )}
@@ -267,7 +267,7 @@ const ProductCardComponent = ({
                 ))}
               </div>
               {product.totalReviews && (
-                <span className="text-[10px] font-medium text-neutral-600 dark:text-neutral-500">
+                <span className="text-[10px] font-medium text-neutral-600 dark:text-neutral-400">
                   ({product.totalReviews})
                 </span>
               )}
@@ -285,14 +285,14 @@ const ProductCardComponent = ({
                     'w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border transition-all',
                     selectedSize === size
                       ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white'
-                      : 'border-neutral-200 text-neutral-600 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-500 dark:hover:text-white dark:hover:border-neutral-600'
+                      : 'border-neutral-200 text-neutral-700 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:border-neutral-600'
                   )}
                 >
                   {size}
                 </button>
               ))}
               {sizes.length > 5 && (
-                <span className="text-xs text-neutral-600 dark:text-neutral-500 self-center pl-1">
+                <span className="text-xs text-neutral-600 dark:text-neutral-400 self-center pl-1">
                   +
                 </span>
               )}

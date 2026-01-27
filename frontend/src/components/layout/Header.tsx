@@ -70,14 +70,14 @@ export function Header() {
               type="search"
               aria-label="Buscar productos"
               placeholder="BUSCAR..."
-              className="w-full h-11 pl-4 pr-12 bg-neutral-900 border-neutral-800 text-white dark:bg-neutral-100 dark:text-white dark:border-neutral-700 placeholder:text-neutral-400 dark:placeholder:text-neutral-600 focus:border-accent focus:ring-accent/20 rounded-full transition-all"
+              className="w-full h-11 pl-4 pr-12 !bg-neutral-900 !border-white !text-white dark:!bg-neutral-800 dark:!text-white dark:!border-white placeholder:text-white placeholder:opacity-100 dark:placeholder:text-white dark:placeholder:opacity-100 focus:border-accent !focus-visible:ring-white !focus-visible:ring-2 rounded-full transition-all"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
               type="submit"
               aria-label="Buscar"
-              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 dark:text-neutral-500 hover:text-accent transition-colors"
+              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 dark:text-neutral-300 hover:text-accent transition-colors"
             >
               <Search className="w-5 h-5" />
             </button>

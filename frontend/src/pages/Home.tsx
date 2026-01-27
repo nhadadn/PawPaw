@@ -33,7 +33,7 @@ export function Home() {
   */
 
   return (
-    <div className="space-y-0 pb-20 bg-background transition-colors duration-300">
+    <div className="space-y-0 pb-20 bg-white dark:bg-black">
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex flex-col justify-center overflow-hidden bg-black">
         {/* Background Image with Overlay */}
@@ -86,7 +86,7 @@ export function Home() {
               </span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-neutral-400 max-w-2xl font-light leading-relaxed">
+            <p className="text-lg md:text-2xl text-neutral-100 max-w-2xl font-light leading-relaxed">
               Redefine tu identidad con la colección más exclusiva de streetwear. Calidad premium
               para quienes se atreven a destacar.
             </p>
@@ -120,7 +120,7 @@ export function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce flex flex-col items-center text-neutral-400 gap-2">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce flex flex-col items-center text-neutral-200 gap-2">
           <span className="text-[10px] font-bold tracking-[0.2em] uppercase">Scroll Down</span>
           <ChevronDown className="w-5 h-5" />
         </div>
@@ -129,41 +129,41 @@ export function Home() {
       {/* Features */}
       <section className="container mx-auto px-4 -mt-20 relative z-30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Compra Segura
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-100 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-200 rounded-xl text-black dark:text-white">
+          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
               <Clock className="w-8 h-8" />
             </div>
             <div>
               <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-600 leading-relaxed">
+              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -178,7 +178,7 @@ export function Home() {
             <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white">
               Destacados
             </h2>
-            <p className="text-lg text-neutral-900 dark:text-neutral-600 max-w-md">
+            <p className="text-lg text-neutral-900 dark:text-white max-w-md">
               Descubre las piezas más codiciadas de nuestra colección esta semana.
             </p>
           </div>
@@ -203,7 +203,7 @@ export function Home() {
             <h2 className="text-4xl md:text-6xl font-display font-black tracking-tight">
               EXPLORA POR CATEGORÍA
             </h2>
-            <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+            <p className="text-neutral-200 text-lg max-w-2xl mx-auto">
               Encuentra exactamente lo que buscas en nuestras colecciones curadas.
             </p>
           </div>
@@ -214,7 +214,7 @@ export function Home() {
                 <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-white"></div>
               </div>
             ) : categories?.length === 0 ? (
-              <div className="col-span-full text-center text-neutral-500">
+              <div className="col-span-full text-center text-neutral-600 dark:text-neutral-300">
                 No hay categorías disponibles
               </div>
             ) : (
@@ -256,10 +256,10 @@ export function Home() {
 
           <div className="relative z-10 space-y-8 max-w-2xl mx-auto">
             <ShoppingBag className="w-16 h-16 mx-auto text-accent mb-4" />
-            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-white">
               ÚNETE AL CLUB PAW PAW
             </h2>
-            <p className="text-xl text-neutral-300 dark:text-neutral-700">
+            <p className="text-xl text-neutral-100">
               Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto pt-4">
@@ -267,7 +267,7 @@ export function Home() {
                 aria-label="Correo electrónico"
                 type="email"
                 placeholder="tu@email.com"
-                className="flex-1 h-14 rounded-full px-6 bg-white/10 border border-white/20 text-white placeholder:text-neutral-300 dark:placeholder:text-neutral-700 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
+                className="flex-1 h-14 rounded-full px-6 bg-white/10 border border-white/20 text-white placeholder:text-neutral-400 focus:outline-none focus:border-accent focus:bg-white/20 transition-all"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -278,7 +278,7 @@ export function Home() {
                 Suscribirse
               </Button>
             </div>
-            <p className="text-xs text-neutral-600 mt-4">
+            <p className="text-xs text-neutral-100 mt-4">
               Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.
             </p>
           </div>

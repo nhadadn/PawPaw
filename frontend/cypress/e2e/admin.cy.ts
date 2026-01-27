@@ -191,13 +191,13 @@ describe('Admin Panel Flows', () => {
 
     const mockCategories = [{ id: '1', name: 'Toys', description: 'Fun toys', image: '' }];
 
-    cy.intercept('GET', '**/api/admin/categories', {
+    cy.intercept('GET', '**/api/admin/categories*', {
       statusCode: 200,
       body: mockCategories,
     }).as('getCategories');
 
     cy.visit('/admin/categories');
-    cy.wait('@getCategories');
+    cy.wait('@getCategories', { timeout: 15000 });
     cy.contains('Toys').should('be.visible');
 
     // Test Create

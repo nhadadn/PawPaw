@@ -16,14 +16,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
       warning:
         'bg-warning-bg text-yellow-800 border-warning/20 dark:bg-warning/10 dark:text-warning dark:border-warning/20',
       error:
-        'bg-error-bg text-error border-error/20 dark:bg-error/10 dark:text-error dark:border-error/20',
+        'bg-red-50 text-red-900 border-red-200 dark:bg-red-900/10 dark:text-red-200 dark:border-red-900/20',
     };
 
     const icons = {
       info: <Info className="h-5 w-5 text-info" />,
       success: <CheckCircle2 className="h-5 w-5 text-success" />,
       warning: <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-warning" />,
-      error: <XCircle className="h-5 w-5 text-error" />,
+      error: <XCircle className="h-5 w-5 text-red-600 dark:text-red-400" />,
     };
 
     return (
@@ -40,7 +40,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         <div className="flex-shrink-0 mt-0.5">{icons[variant]}</div>
         <div className="flex-1">
           {title && <h5 className="font-bold leading-none tracking-tight mb-1">{title}</h5>}
-          <div className="text-sm opacity-90">{children}</div>
+          <div className="text-sm">{children}</div>
         </div>
       </div>
     );

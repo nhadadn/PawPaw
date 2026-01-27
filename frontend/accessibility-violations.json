@@ -1,27 +1,124 @@
 [
   {
-    "id": "aria-prohibited-attr",
+    "id": "color-contrast",
     "impact": "serious",
-    "description": "Ensure ARIA attributes are not prohibited for an element's role",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      ".space-y-4 > .md\\:text-5xl",
+      ".dark\\:text-neutral-400",
+      ".space-y-8.z-10.max-w-2xl > .md\\:text-5xl"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
     "nodes": 1,
     "target": [
-      "div[aria-label=\"5 de 5 estrellas\"]"
+      ".space-y-8.z-10.max-w-2xl > .md\\:text-5xl"
     ]
-  },
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      ".space-y-8.z-10.max-w-2xl > .md\\:text-5xl"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 5,
+    "target": [
+      ".dark\\:text-neutral-400",
+      ".hover\\:bg-neutral-100",
+      ".opacity-90",
+      ".text-neutral-300.text-xl",
+      ".text-neutral-500"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 5,
+    "target": [
+      ".dark\\:text-neutral-300",
+      ".hover\\:bg-neutral-100",
+      ".opacity-90",
+      ".text-neutral-300.text-xl",
+      ".text-neutral-500"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      ".text-neutral-700 > .text-neutral-900",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      ".opacity-90"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 4,
+    "target": [
+      ".hover\\:text-neutral-900",
+      ".text-neutral-700 > .text-neutral-900",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3"
+    ]
+  }
+][
   {
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
     "nodes": 8,
     "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .dark\\:text-neutral-400.text-neutral-600.leading-relaxed",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-300",
       ".hover\\:bg-neutral-100",
-      ".py-4"
+      ".opacity-90",
+      ".text-neutral-300.text-xl",
+      ".text-neutral-500"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-300 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<div class=\"text-sm opacity-90\">Network Error</div>",
+      "<p class=\"text-xl text-neutral-300\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-500 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -29,11 +126,24 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 3,
+    "nodes": 7,
     "target": [
       ".hover\\:text-neutral-900",
+      ".text-neutral-700 > .text-neutral-900",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3",
       "#\\:r7\\:",
-      "#\\:r9\\:"
+      "#\\:r9\\:",
+      ".hover\\:border-red-500"
+    ],
+    "html": [
+      "<a class=\"hover:text-neutral-900 dark:hover:text-white transition-colors\" href=\"/\">Inicio</a>",
+      "<span class=\"font-bold text-neutral-900 dark:text-white\">Productos</span>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Categorías</h3>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Precio</h3>",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">",
+      "<button class=\"inline-flex items-ce...\">"
     ]
   }
 ][
@@ -41,35 +151,26 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 3,
+    "nodes": 8,
     "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:"
-    ]
-  }
-][
-  {
-    "id": "aria-prohibited-attr",
-    "impact": "serious",
-    "description": "Ensure ARIA attributes are not prohibited for an element's role",
-    "nodes": 1,
-    "target": [
-      "div[aria-label=\"5 de 5 estrellas\"]"
-    ]
-  },
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 6,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-300",
       ".hover\\:bg-neutral-100",
-      ".py-4",
-      "#\\:r5\\:"
+      ".flex-1 > .text-sm",
+      ".text-neutral-200",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-300 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<div class=\"text-sm\">Network Error</div>",
+      "<p class=\"text-xl text-neutral-200\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-400 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -77,59 +178,24 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
+    "nodes": 7,
     "target": [
-      ".hover\\:text-neutral-900",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "aria-prohibited-attr",
-    "impact": "serious",
-    "description": "Ensure ARIA attributes are not prohibited for an element's role",
-    "nodes": 1,
-    "target": [
-      "div[aria-label=\"5 de 5 estrellas\"]"
-    ]
-  },
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 6,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-300",
       ".hover\\:bg-neutral-100",
-      ".py-4",
-      "#\\:r5\\:"
+      ".text-neutral-200",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-300 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-xl text-neutral-200\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-400 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -137,211 +203,14 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      ".hover\\:text-neutral-900",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "aria-prohibited-attr",
-    "impact": "serious",
-    "description": "Ensure ARIA attributes are not prohibited for an element's role",
-    "nodes": 1,
-    "target": [
-      "div[aria-label=\"5 de 5 estrellas\"]"
-    ]
-  },
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 6,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".hover\\:bg-neutral-100",
-      ".py-4",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      ".hover\\:text-neutral-900",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 6,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".hover\\:bg-neutral-100",
-      ".py-4",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 6,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".hover\\:bg-neutral-100",
-      ".py-4",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      ".hover\\:text-neutral-900",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 4,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 1,
-    "target": [
-      "#\\:r5\\:"
-    ]
-  }
-][
-  {
-    "id": "scrollable-region-focusable",
-    "impact": "serious",
-    "description": "Ensure elements that have scrollable content are accessible by keyboard",
     "nodes": 2,
     "target": [
-      [
-        "vite-error-overlay",
-        ".frame"
-      ],
-      [
-        "vite-error-overlay",
-        ".stack"
-      ]
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
     ]
   }
 ][
@@ -349,26 +218,26 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 18,
+    "nodes": 8,
     "target": [
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".dark\\:text-neutral-500",
+      ".dark\\:text-neutral-300",
       ".hover\\:bg-neutral-100",
-      ".text-xl.text-neutral-400",
-      ".py-4",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      ".block.w-fit[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".mb-6.leading-relaxed.text-sm",
-      ".text-neutral-500 > p"
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-200",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-300 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-200\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-400 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -376,133 +245,16 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 13,
+    "nodes": 3,
     "target": [
       "h1",
-      ".bg-primary",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 18,
-    "target": [
-      ".p-8.rounded-2xl.shadow-xl:nth-child(1) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(2) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
-      ".p-8.rounded-2xl.shadow-xl:nth-child(3) > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
-      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
-      ".hover\\:bg-neutral-100",
-      ".text-xl.text-neutral-400",
-      ".py-4",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      ".block.w-fit[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".mb-6.leading-relaxed.text-sm",
-      ".text-neutral-500 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 16,
-    "target": [
       "label[for=\":r7:\"]",
-      "label[for=\":r9:\"]",
-      ".bg-primary",
-      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(1)",
-      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(2)",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
+      "label[for=\":r9:\"]"
+    ],
+    "html": [
+      "<h1 class=\"text-3xl font-bold font-display text-center mb-8 text-neutral-900 dark:text-white\">Iniciar Sesión</h1>",
+      "<label for=\":r7:\" class=\"text-sm font-bold text-neutral-700 dark:text-neutral-800 block\">Email</label>",
+      "<label for=\":r9:\" class=\"text-sm font-bold text-neutral-700 dark:text-neutral-800 block\">Contraseña</label>"
     ]
   }
 ][
@@ -510,19 +262,24 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
+    "nodes": 7,
     "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-300",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-200",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-300 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-xl text-neutral-200\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-400 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -530,26 +287,81 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 18,
+    "nodes": 2,
     "target": [
-      ".dark\\:bg-neutral-900.p-8.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".dark\\:bg-neutral-900.p-8.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.dark\\:bg-neutral-200.rounded-2xl > div:nth-child(2) > .text-neutral-700.dark\\:text-neutral-400.leading-relaxed",
-      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
-      ".hover\\:bg-neutral-100",
-      ".text-xl.text-neutral-400",
-      ".py-4",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      ".block.w-fit[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".mb-6.leading-relaxed.text-sm",
-      ".text-neutral-500 > p"
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 8,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -559,7 +371,10 @@
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
     "nodes": 1,
     "target": [
-      ".pt-8 > p"
+      "h1"
+    ],
+    "html": [
+      "<h1 class=\"text-3xl font-bold font-display text-center mb-8 text-neutral-900 dark:text-white\">Iniciar Sesión</h1>"
     ]
   }
 ][
@@ -567,226 +382,26 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 16,
-    "target": [
-      "label[for=\":r7:\"]",
-      "label[for=\":r9:\"]",
-      ".bg-primary",
-      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(1)",
-      ".text-center.text-neutral-800.dark\\:text-neutral-300 > p:nth-child(2)",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 18,
+    "nodes": 8,
     "target": [
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
       ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
-      ".hover\\:bg-neutral-100",
-      ".text-xl.text-neutral-400",
-      ".py-4",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      ".block.w-fit[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".mb-6.leading-relaxed.text-sm",
-      ".text-neutral-500 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 13,
-    "target": [
-      "h1",
-      ".bg-primary",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 18,
-    "target": [
-      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
-      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
-      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
-      ".dark\\:text-neutral-500.max-w-md.text-neutral-900",
-      ".hover\\:bg-neutral-100",
-      ".text-xl.text-neutral-400",
-      ".py-4",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      ".block.w-fit[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".mb-6.leading-relaxed.text-sm",
-      ".text-neutral-500 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 13,
-    "target": [
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 15,
-    "target": [
-      "h1",
-      "#\\:r7\\:",
-      "#\\:r9\\:",
-      ".bg-primary",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
-    ]
-  }
-][
-  {
-    "id": "color-contrast",
-    "impact": "serious",
-    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 11,
-    "target": [
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
     ]
   }
 ][
@@ -796,7 +411,10 @@
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
     "nodes": 1,
     "target": [
-      ".pt-8 > p"
+      "h1"
+    ],
+    "html": [
+      "<h1 class=\"text-3xl font-bold font-display text-center mb-8 text-black dark:text-white\">Iniciar Sesión</h1>"
     ]
   }
 ][
@@ -804,24 +422,22 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 16,
+    "nodes": 6,
     "target": [
-      "#\\:r1\\:",
-      "h1",
+      ".hover\\:text-neutral-900",
+      "span:nth-child(3)",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3",
       "#\\:r7\\:",
-      "#\\:r9\\:",
-      ".bg-primary",
-      ".max-w-xs",
-      ".w-fit.block[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      ".leading-relaxed.mb-6",
-      ".pt-8 > p"
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<a class=\"hover:text-neutral-900 dark:hover:text-white transition-colors\" href=\"/\">Inicio</a>",
+      "<span class=\"font-bold text-neutral-900 dark:text-white\">Productos</span>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Categorías</h3>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Precio</h3>",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
     ]
   }
 ][
@@ -829,20 +445,805 @@
     "id": "color-contrast",
     "impact": "serious",
     "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
-    "nodes": 12,
+    "nodes": 1,
+    "target": [
+      "h1"
+    ],
+    "html": [
+      "<h1 class=\"text-4xl font-display font-bold text-neutral-900 dark:text-white\">Tu carrito está vacío</h1>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 8,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 8,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 5,
+    "target": [
+      ".hover\\:text-neutral-900",
+      "span:nth-child(3)",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3",
+      ".hover\\:border-red-600"
+    ],
+    "html": [
+      "<a class=\"hover:text-neutral-900 dark:hover:text-white transition-colors\" href=\"/\">Inicio</a>",
+      "<span class=\"font-bold text-neutral-900 dark:text-white\">Productos</span>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Categorías</h3>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Precio</h3>",
+      "<button class=\"inline-flex items-ce...\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".dark\\:text-neutral-200",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<p class=\"text-lg text-neutral-900 dark:text-neutral-200 max-w-md\">Descubre las piezas más codiciadas de nuestra colección esta semana.</p>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(1) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(2) > div:nth-child(2) > .mb-2",
+      ".p-8.dark\\:bg-neutral-900.rounded-2xl:nth-child(3) > div:nth-child(2) > .mb-2",
+      ".hover\\:text-neutral-900",
+      ".text-neutral-500.max-w-md.dark\\:text-neutral-400",
+      ".text-neutral-100",
+      ".mt-4"
+    ],
+    "html": [
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Envíos Globales</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Compra Segura</h3>",
+      "<h3 class=\"font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white\">Soporte 24/7</h3>",
+      "<a class=\"inline-flex items-ce...\" href=\"/products\">",
+      "<p class=\"text-neutral-500 dark:text-neutral-400 max-w-md\">Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.</p>",
+      "<p class=\"text-xl text-neutral-100\">Recibe acceso anticipado a drops exclusivos, ofertas secretas y contenido curado.</p>",
+      "<p class=\"text-xs text-neutral-300 mt-4\">Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.</p>"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 2,
+    "target": [
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
     "target": [
       "#\\:r1\\:",
-      ".max-w-xs",
-      ".block.w-fit[href$=\"products\"]",
-      "a[href=\"/products?category=ropas\"]",
-      "a[href=\"/products?category=gorras\"]",
-      "a[href=\"/products?category=jerseys\"]",
-      "a[href$=\"faq\"]",
-      "a[href$=\"shipping\"]",
-      "a[href$=\"terms\"]",
-      "a[href$=\"contact\"]",
-      "div:nth-child(4) > .leading-relaxed",
-      ".pt-8 > p"
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 7,
+    "target": [
+      "#\\:r1\\:",
+      ".hover\\:text-neutral-900",
+      "span:nth-child(3)",
+      ".space-y-4:nth-child(1) > h3",
+      ".space-y-4:nth-child(2) > h3",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<a class=\"hover:text-neutral-900 dark:hover:text-white transition-colors\" href=\"/\">Inicio</a>",
+      "<span class=\"font-bold text-neutral-900 dark:text-white\">Productos</span>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Categorías</h3>",
+      "<h3 class=\"font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight\">Precio</h3>",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 px-4 p...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Min\" value=\"\">",
+      "<input id=\":r9:\" type=\"number\" class=\"flex rounded-lg bord...\" placeholder=\"Max\" value=\"100000\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 3,
+    "target": [
+      "#\\:r1\\:",
+      "#\\:r7\\:",
+      "#\\:r9\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">",
+      "<input id=\":r7:\" type=\"email\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">",
+      "<input id=\":r9:\" type=\"password\" class=\"flex h-12 w-full rou...\" required=\"\" value=\"\">"
+    ]
+  }
+][
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "nodes": 1,
+    "target": [
+      "#\\:r1\\:"
+    ],
+    "html": [
+      "<input id=\":r1:\" type=\"search\" class=\"flex border-2 border...\" aria-label=\"Buscar productos\" placeholder=\"BUSCAR...\" value=\"\">"
     ]
   }
 ]

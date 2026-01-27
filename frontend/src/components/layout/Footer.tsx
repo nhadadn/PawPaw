@@ -5,7 +5,7 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-black text-neutral-300 dark:text-neutral-700 pt-20 pb-10 border-t border-neutral-900 transition-colors">
+    <footer className="bg-black text-neutral-200 dark:text-neutral-700 pt-20 pb-10 border-t border-neutral-900 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
@@ -20,21 +20,21 @@ export function Footer() {
               <a
                 href="#"
                 aria-label="Instagram"
-                className="text-neutral-50 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Instagram className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Twitter"
-                className="text-neutral-50 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Twitter className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Facebook"
-                className="text-neutral-50 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-neutral-50 dark:text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Facebook className="w-6 h-6" />
               </a>
@@ -131,7 +131,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-400 dark:text-neutral-600">
+        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-200 dark:text-neutral-300">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

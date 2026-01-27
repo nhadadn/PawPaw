@@ -149,7 +149,7 @@ export function Products() {
         <div className="flex-1 space-y-8">
           {/* Header & Sort */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#141414] p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
-            <p className="text-sm text-neutral-600 font-medium">
+            <p className="text-sm text-neutral-700 dark:text-neutral-300 font-medium">
               Mostrando{' '}
               <span className="font-bold text-neutral-900 dark:text-white">
                 {filteredProducts.length}
@@ -158,7 +158,9 @@ export function Products() {
             </p>
 
             <div className="flex items-center gap-3">
-              <span className="text-sm font-medium text-neutral-600">Ordenar por:</span>
+              <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                Ordenar por:
+              </span>
               <select
                 aria-label="Ordenar productos"
                 className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-neutral-900 dark:text-white pr-8 py-1"
