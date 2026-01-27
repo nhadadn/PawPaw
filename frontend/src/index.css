@@ -65,7 +65,7 @@
     --color-neutral-950: 10 10 10;    /* #0A0A0A */
 
     /* Backgrounds & Surfaces */
-    --color-background: 255 255 255;  /* #FFFFFF */
+    --color-background: 247 250 252;  /* #F7FAFC */
     --color-surface: 255 255 255;     /* #FFFFFF */
     --color-surface-muted: 247 250 252; /* #F7FAFC */
     --color-border: 226 232 240;      /* #E2E8F0 */
@@ -102,10 +102,12 @@
 
   body {
     @apply bg-background text-neutral-800 dark:text-neutral-900 antialiased font-sans transition-colors duration-300;
+    background-image: radial-gradient(1000px 600px at 10% 0%, rgba(0,0,0,0.03), rgba(0,0,0,0) 60%), radial-gradient(800px 500px at 90% 100%, rgba(0,0,0,0.03), rgba(0,0,0,0) 60%);
+    background-repeat: no-repeat;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold text-neutral-900 dark:text-white;
+    @apply font-display font-bold text-neutral-900 dark:text-neutral-100;
   }
   h1 { @apply text-4xl md:text-5xl leading-tight tracking-tight; }
   h2 { @apply text-3xl md:text-4xl leading-snug; }
@@ -126,11 +128,11 @@
     @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-hover focus:ring-primary border border-transparent shadow-md hover:shadow-lg dark:text-white;
+    @apply bg-primary text-white hover:bg-primary-hover focus:ring-primary border border-transparent shadow-md hover:shadow-lg dark:text-neutral-100;
   }
   .btn-secondary {
     @apply bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 focus:ring-neutral-200 
-           dark:bg-neutral-200 dark:text-white dark:border-neutral-300 dark:hover:bg-neutral-300;
+           dark:bg-neutral-200 dark:text-neutral-100 dark:border-neutral-300 dark:hover:bg-neutral-300;
   }
   
   .btn-accent {
@@ -138,11 +140,11 @@
   }
   .btn-outline {
     @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white 
-           dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black;
+           dark:border-neutral-100 dark:text-neutral-100 dark:hover:bg-neutral-100 dark:hover:text-black;
   }
   .btn-ghost {
     @apply bg-transparent text-neutral-700 hover:bg-neutral-100 
-           dark:text-neutral-300 dark:hover:bg-neutral-200 dark:hover:text-white;
+           dark:text-neutral-300 dark:hover:bg-neutral-200 dark:hover:text-neutral-100;
   }
   
   .card {
@@ -152,7 +154,31 @@
   .input {
     @apply w-full px-4 py-2 bg-white border border-neutral-200 rounded-lg text-neutral-900 placeholder:text-neutral-400
            focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all
-           dark:bg-neutral-200 dark:border-neutral-300 dark:text-white dark:placeholder:text-neutral-500;
+           dark:bg-neutral-200 dark:border-neutral-300 dark:text-neutral-100 dark:placeholder:text-neutral-500;
+  }
+}
+
+@layer utilities {
+  .auto-contrast {
+    --on-bg: rgb(23 25 35);
+    --on-bg-hover: rgb(0 0 0);
+    color: var(--on-bg);
+  }
+  .auto-contrast h1,
+  .auto-contrast h2,
+  .auto-contrast h3,
+  .auto-contrast h4,
+  .auto-contrast h5,
+  .auto-contrast h6,
+  .auto-contrast p,
+  .auto-contrast span,
+  .auto-contrast li,
+  .auto-contrast label,
+  .auto-contrast a {
+    color: var(--on-bg);
+  }
+  .text-on-bg {
+    color: var(--on-bg);
   }
 }
 

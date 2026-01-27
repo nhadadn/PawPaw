@@ -37,7 +37,7 @@ export function Modal({ isOpen, onClose, children, title }: ModalProps) {
         aria-modal="true"
       >
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <h3 className="font-display font-bold text-xl text-neutral-900 dark:text-white">
+          <h3 className="font-display font-bold text-xl text-neutral-900 dark:text-neutral-100">
             {title}
           </h3>
           <button

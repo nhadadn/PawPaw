@@ -286,7 +286,9 @@ export function ReservationStep() {
                     className="w-4 h-4 text-primary"
                   />
                   <div>
-                    <p className="font-medium text-neutral-900 dark:text-white">Envío Estándar</p>
+                    <p className="font-medium text-neutral-900 dark:text-neutral-100">
+                      Envío Estándar
+                    </p>
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">
                       3-5 días hábiles
                     </p>
@@ -311,13 +313,15 @@ export function ReservationStep() {
                     className="w-4 h-4 text-primary"
                   />
                   <div>
-                    <p className="font-medium text-neutral-900 dark:text-white">Envío Express</p>
+                    <p className="font-medium text-neutral-900 dark:text-neutral-100">
+                      Envío Express
+                    </p>
                     <p className="text-sm text-neutral-500 dark:text-neutral-400">
                       1-2 días hábiles
                     </p>
                   </div>
                 </div>
-                <span className="font-medium text-neutral-900 dark:text-white">
+                <span className="font-medium text-neutral-900 dark:text-neutral-100">
                   {formatCurrency(15000)}
                 </span>
               </label>
@@ -365,7 +369,7 @@ export function ReservationStep() {
               <div className="border-t border-neutral-100 dark:border-neutral-800 pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-neutral-600 dark:text-neutral-400">Subtotal</span>
-                  <span className="font-medium text-neutral-900 dark:text-white">
+                  <span className="font-medium text-neutral-900 dark:text-neutral-100">
                     {formatCurrency(totalPrice())}
                   </span>
                 </div>
@@ -375,14 +379,16 @@ export function ReservationStep() {
                     className={
                       shippingCost === 0
                         ? 'text-success font-medium'
-                        : 'font-medium text-neutral-900 dark:text-white'
+                        : 'font-medium text-neutral-900 dark:text-neutral-100'
                     }
                   >
                     {shippingCost === 0 ? 'Gratis' : formatCurrency(shippingCost)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t border-neutral-100 dark:border-neutral-800">
-                  <span className="font-bold text-lg text-neutral-900 dark:text-white">Total</span>
+                  <span className="font-bold text-lg text-neutral-900 dark:text-neutral-100">
+                    Total
+                  </span>
                   <span className="font-bold text-lg text-primary">{formatCurrency(total)}</span>
                 </div>
               </div>

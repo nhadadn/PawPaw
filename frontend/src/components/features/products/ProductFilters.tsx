@@ -22,7 +22,7 @@ export function ProductFilters({
     <div className="space-y-8">
       {/* Categories */}
       <div className="space-y-4">
-        <h3 className="font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight">
+        <h3 className="font-display font-bold text-lg text-black dark:text-neutral-100 uppercase tracking-tight">
           Categorías
         </h3>
         <div className="space-y-1">
@@ -54,7 +54,7 @@ export function ProductFilters({
 
       {/* Price */}
       <div className="space-y-4">
-        <h3 className="font-display font-bold text-lg text-black dark:text-white uppercase tracking-tight">
+        <h3 className="font-display font-bold text-lg text-black dark:text-neutral-100 uppercase tracking-tight">
           Precio
         </h3>
         <div className="flex items-center gap-2">

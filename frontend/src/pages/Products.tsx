@@ -213,7 +213,7 @@ export function Products() {
             {!isLoading && filteredProducts.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
                 <Button
-                  className="h-14 px-8 text-lg font-bold bg-white dark:bg-black text-black dark:text-white border-2 border-neutral-200 dark:border-neutral-800 hover:border-black dark:hover:border-white hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all rounded-xl"
+                  className="h-14 px-8 text-lg font-bold bg-white dark:bg-black text-black dark:text-neutral-100 border-2 border-neutral-200 dark:border-neutral-800 hover:border-black dark:hover:border-white hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-all rounded-xl"
                   variant="outline"
                   size="xl"
                   onClick={clearFilters}

@@ -228,7 +228,7 @@ const ProductCardComponent = ({
             to={`/products/${product.id}`}
             className="group-hover:text-accent transition-colors"
           >
-            <h3 className="font-display font-bold text-neutral-900 dark:text-white text-lg leading-tight line-clamp-2">
+            <h3 className="font-display font-bold text-neutral-900 dark:text-neutral-100 text-lg leading-tight line-clamp-2">
               {product.name}
             </h3>
           </Link>

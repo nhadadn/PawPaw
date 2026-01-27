@@ -30,7 +30,7 @@ export function CartItem({ item, onUpdateQuantity, onRemove, className }: CartIt
         <div className="space-y-2">
           <Link
             to={`/products/${item.id}`}
-            className="font-bold text-lg text-neutral-900 dark:text-white hover:text-accent dark:hover:text-accent transition-colors line-clamp-2"
+            className="font-bold text-lg text-neutral-900 dark:text-neutral-100 hover:text-accent dark:hover:text-accent transition-colors line-clamp-2"
           >
             {item.name}
           </Link>
@@ -48,7 +48,7 @@ export function CartItem({ item, onUpdateQuantity, onRemove, className }: CartIt
             >
               <Minus className="w-4 h-4" />
             </button>
-            <span className="w-12 text-center text-base font-bold text-neutral-900 dark:text-white">
+            <span className="w-12 text-center text-base font-bold text-neutral-900 dark:text-neutral-100">
               {item.quantity}
             </span>
             <button

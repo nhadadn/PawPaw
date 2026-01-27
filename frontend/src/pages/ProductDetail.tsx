@@ -140,7 +140,7 @@ export function ProductDetail() {
             {showSizes && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wide">
+                  <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wide">
                     Selecciona Talla
                   </label>
                   <button
@@ -170,7 +170,7 @@ export function ProductDetail() {
 
             {/* Quantity */}
             <div className="space-y-4">
-              <label className="text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wide">
+              <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wide">
                 Cantidad
               </label>
               <div className="flex items-center gap-6">
@@ -181,7 +181,7 @@ export function ProductDetail() {
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-bold text-lg text-neutral-900 dark:text-white">
+                  <span className="w-12 text-center font-bold text-lg text-neutral-900 dark:text-neutral-100">
                     {quantity}
                   </span>
                   <button
@@ -211,7 +211,7 @@ export function ProductDetail() {
             <Button
               size="xl"
               variant="outline"
-              className="px-6 h-16 border-2 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 hover:border-accent hover:text-accent transition-colors"
+              className="px-6 h-16 border-2 dark:border-neutral-700 dark:text-neutral-100 dark:hover:bg-neutral-800 hover:border-accent hover:text-accent transition-colors"
             >
               <Star className="w-6 h-6" />
             </Button>

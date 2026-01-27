@@ -47,7 +47,7 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-success/10 mb-4 shadow-sm">
           <CheckCircle2 className="w-10 h-10 text-success" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-white tracking-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight">
           ¡Gracias por tu compra!
         </h1>
         <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto">
@@ -62,7 +62,7 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
             <p className="text-sm text-neutral-500 dark:text-neutral-400 uppercase tracking-wider font-semibold">
               Número de Orden
             </p>
-            <p className="text-xl font-mono font-bold text-neutral-900 dark:text-white">
+            <p className="text-xl font-mono font-bold text-neutral-900 dark:text-neutral-100">
               #{order.order_number}
             </p>
           </div>
@@ -84,7 +84,7 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
               <Truck className="w-8 h-8" />
             </div>
             <div className="text-center md:text-left space-y-1 flex-1">
-              <p className="font-semibold text-neutral-900 dark:text-white text-lg">
+              <p className="font-semibold text-neutral-900 dark:text-neutral-100 text-lg">
                 Estimación de Entrega
               </p>
               <p className="text-neutral-600 dark:text-neutral-300 font-medium">
@@ -98,7 +98,7 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
 
           {/* Order Summary (Simplified) */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2 text-neutral-900 dark:text-white">
+            <h3 className="font-semibold text-lg flex items-center gap-2 text-neutral-900 dark:text-neutral-100">
               <ShoppingBag className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
               Resumen del Pedido
             </h3>
@@ -130,7 +130,9 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
                 )}
               </div>
               <div className="p-4 bg-neutral-50 dark:bg-neutral-900 flex justify-between items-center border-t border-neutral-100 dark:border-neutral-800">
-                <span className="font-bold text-neutral-900 dark:text-white">Total Pagado</span>
+                <span className="font-bold text-neutral-900 dark:text-neutral-100">
+                  Total Pagado
+                </span>
                 <span className="font-bold text-xl text-primary">
                   {formatCurrency(order.total_amount || 0)}
                 </span>

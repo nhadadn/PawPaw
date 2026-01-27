@@ -15,7 +15,7 @@ export function Cart() {
           <ShoppingBag className="w-10 h-10" aria-hidden="true" />
         </div>
         <div className="space-y-2">
-          <h1 className="text-4xl font-display font-bold text-neutral-900 dark:text-white">
+          <h1 className="text-4xl font-display font-bold text-neutral-900 dark:text-neutral-100">
             Tu carrito está vacío
           </h1>
           <p className="text-lg text-neutral-700 dark:text-neutral-300 max-w-md mx-auto">
@@ -36,7 +36,7 @@ export function Cart() {
 
   return (
     <div className="container mx-auto px-4 py-12 animate-fade-in">
-      <h1 className="text-4xl font-display font-bold mb-8 text-neutral-900 dark:text-white">
+      <h1 className="text-4xl font-display font-bold mb-8 text-neutral-900 dark:text-neutral-100">
         Tu Carrito
       </h1>
 

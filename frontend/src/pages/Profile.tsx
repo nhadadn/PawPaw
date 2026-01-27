@@ -170,7 +170,7 @@ export function Profile() {
             onClick={() => setActiveTab('overview')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               activeTab === 'overview'
-                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-neutral-100'
                 : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
@@ -181,7 +181,7 @@ export function Profile() {
             onClick={() => setActiveTab('orders')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               activeTab === 'orders'
-                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-neutral-100'
                 : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >
@@ -192,7 +192,7 @@ export function Profile() {
             onClick={() => setActiveTab('settings')}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
               activeTab === 'settings'
-                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-white'
+                ? 'bg-neutral-900 text-white dark:bg-neutral-200 dark:text-neutral-100'
                 : 'text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800'
             }`}
           >

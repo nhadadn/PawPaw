@@ -98,7 +98,7 @@ export function Home() {
                 className={buttonVariants({
                   size: 'xl',
                   className:
-                    'w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white dark:text-white border-none shadow-lg shadow-accent/20',
+                    'w-full sm:w-auto min-w-[200px] text-lg font-bold bg-accent hover:bg-accent-hover text-white dark:text-neutral-100 border-none shadow-lg shadow-accent/20',
                 })}
               >
                 Ver Colección
@@ -134,7 +134,7 @@ export function Home() {
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
+              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-neutral-100">
                 Envíos Globales
               </h3>
               <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
@@ -143,11 +143,11 @@ export function Home() {
             </div>
           </div>
           <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-neutral-100">
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-white">
+              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-neutral-100">
                 Compra Segura
               </h3>
               <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
@@ -156,7 +156,7 @@ export function Home() {
             </div>
           </div>
           <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-white">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-neutral-100">
               <Clock className="w-8 h-8" />
             </div>
             <div>

@@ -26,7 +26,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
   return (
     <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 space-y-6 sticky top-24 border border-transparent dark:border-neutral-800 transition-colors">
-      <h2 className="text-xl font-bold font-display text-neutral-900 dark:text-white">
+      <h2 className="text-xl font-bold font-display text-neutral-900 dark:text-neutral-100">
         Resumen del Pedido
       </h2>
 
@@ -45,8 +45,8 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
       <div className="border-t border-neutral-200 dark:border-neutral-800 pt-4">
         <div className="flex justify-between items-end mb-1">
-          <span className="font-bold text-lg text-neutral-900 dark:text-white">Total</span>
-          <span className="font-bold text-3xl text-neutral-900 dark:text-white">
+          <span className="font-bold text-lg text-neutral-900 dark:text-neutral-100">Total</span>
+          <span className="font-bold text-3xl text-neutral-900 dark:text-neutral-100">
             {formatCurrency(finalTotal)}
           </span>
         </div>
@@ -81,7 +81,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
       {/* Promo Code */}
       <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
-        <label className="text-sm font-bold text-neutral-900 dark:text-white">
+        <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
           Código Promocional
         </label>
         <div className="flex gap-2">
@@ -92,7 +92,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
           />
           <Button
             variant="outline"
-            className="h-11 px-6 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="h-11 px-6 dark:text-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Aplicar
           </Button>

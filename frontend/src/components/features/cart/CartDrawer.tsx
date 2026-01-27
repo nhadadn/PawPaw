@@ -185,8 +185,8 @@ export function CartDrawer() {
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-neutral-100 dark:border-neutral-800 bg-white dark:bg-[#141414]">
-          <div className="flex items-center gap-3 text-neutral-900 dark:text-white">
-            <ShoppingBag className="w-6 h-6 text-primary dark:text-white" />
+          <div className="flex items-center gap-3 text-neutral-900 dark:text-neutral-100">
+            <ShoppingBag className="w-6 h-6 text-primary dark:text-neutral-100" />
             <h2 className="text-xl font-display font-bold tracking-tight">
               Tu Carrito ({items.length})
             </h2>
@@ -208,7 +208,7 @@ export function CartDrawer() {
                 <ShoppingBag className="w-10 h-10 text-neutral-400" />
               </div>
               <div className="space-y-2">
-                <p className="text-xl font-bold text-neutral-900 dark:text-white">
+                <p className="text-xl font-bold text-neutral-900 dark:text-neutral-100">
                   Tu carrito está vacío
                 </p>
                 <p className="text-neutral-500 dark:text-neutral-400 max-w-[200px] mx-auto">
@@ -242,7 +242,7 @@ export function CartDrawer() {
                 <span>Subtotal</span>
                 <span>{formatCurrency(totalPrice())}</span>
               </div>
-              <div className="flex items-center justify-between text-2xl font-display font-bold text-neutral-900 dark:text-white">
+              <div className="flex items-center justify-between text-2xl font-display font-bold text-neutral-900 dark:text-neutral-100">
                 <span>Total</span>
                 <span>{formatCurrency(totalPrice())}</span>
               </div>
