@@ -96,7 +96,7 @@ export function ProductDetail() {
           Catálogo
         </Link>
         <span className="mx-3 text-neutral-300">/</span>
-        <span className="font-bold text-neutral-900 dark:text-white line-clamp-1">
+        <span className="font-bold text-neutral-900 dark:text-neutral-100 line-clamp-1">
           {product.name}
         </span>
       </div>
@@ -114,7 +114,7 @@ export function ProductDetail() {
             >
               {product.category}
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-white mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-neutral-100 mb-4 leading-tight">
               {product.name}
             </h1>
             <div className="flex items-center gap-4">

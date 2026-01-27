@@ -99,7 +99,7 @@ export function Header() {
           <button
             onClick={openDrawer}
             aria-label={`Carrito de compras con ${totalItems()} artículos`}
-            className="relative p-3 hover:bg-neutral-900 rounded-full transition-colors group"
+            className="relative p-3 hover:bg-white/10 rounded-full transition-colors group"
           >
             <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-50 group-hover:text-accent transition-colors" />
             {totalItems() > 0 && (
@@ -164,7 +164,7 @@ export function Header() {
             placeholder="BUSCAR PRODUCTOS..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-800 dark:text-white dark:border-neutral-700 placeholder:text-neutral-600 dark:placeholder:text-neutral-500 focus:border-accent"
+            className="w-full h-14 text-lg bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-800 dark:text-neutral-100 dark:border-neutral-700 placeholder:text-neutral-600 dark:placeholder:text-neutral-500 focus:border-accent"
           />
           <button
             type="submit"

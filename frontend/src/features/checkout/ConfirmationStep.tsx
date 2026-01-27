@@ -111,14 +111,14 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
                       className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-800/50 transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="font-medium text-neutral-900 dark:text-white">
+                        <div className="font-medium text-neutral-900 dark:text-neutral-100">
                           {item.name}{' '}
                           <span className="text-neutral-400 dark:text-neutral-500 font-normal text-sm ml-1">
                             x{item.quantity}
                           </span>
                         </div>
                       </div>
-                      <div className="font-medium text-neutral-900 dark:text-white">
+                      <div className="font-medium text-neutral-900 dark:text-neutral-100">
                         ${((item.price * item.quantity) / 100).toFixed(2)}
                       </div>
                     </div>

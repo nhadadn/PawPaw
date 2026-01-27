@@ -239,7 +239,7 @@ const ProductCardComponent = ({
               <span
                 className={cn(
                   'font-bold text-lg',
-                  hasDiscount ? 'text-accent' : 'text-neutral-900 dark:text-white'
+                  hasDiscount ? 'text-accent' : 'text-neutral-900 dark:text-neutral-100'
                 )}
               >
                 {formatCurrency(displayPrice)}
