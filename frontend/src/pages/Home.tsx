@@ -134,7 +134,7 @@ export function Home() {
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
                 Envíos Globales
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -142,12 +142,12 @@ export function Home() {
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-text-primary">
+          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-yellow-900/30 hover:-translate-y-1 transition-transform duration-300 group">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-900 rounded-xl text-text-primary dark:text-yellow-400 group-hover:bg-yellow-400/10 transition-colors">
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
                 Compra Segura
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -155,12 +155,12 @@ export function Home() {
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-text-primary">
+          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-yellow-900/30 hover:-translate-y-1 transition-transform duration-300 group">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-900 rounded-xl text-text-primary dark:text-yellow-400 group-hover:bg-yellow-400/10 transition-colors">
               <Clock className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
                 Soporte 24/7
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -175,7 +175,7 @@ export function Home() {
       <section className="container mx-auto px-4 py-20 space-y-12">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-neutral-200 dark:border-neutral-800 pb-8">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-text-primary">
+            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-text-primary dark:text-white">
               Destacados
             </h2>
             <p className="text-lg text-text-secondary max-w-md">

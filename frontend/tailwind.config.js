@@ -70,7 +70,7 @@ export default {
         },
         text: {
           primary: 'rgb(var(--color-neutral-900) / <alpha-value>)',
-          secondary: 'rgb(var(--color-neutral-600) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
         },
         surface: {
           DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',
