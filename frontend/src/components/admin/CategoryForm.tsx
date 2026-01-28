@@ -69,6 +69,7 @@ export function CategoryForm({ initialData, onSubmit, onCancel, isLoading }: Cat
           name="description"
           value={formData.description}
           onChange={handleChange}
+          disabled={isLoading}
           className="flex min-h-[80px] w-full rounded-lg border-2 border-neutral-200 dark:border-neutral-800 bg-background-surface px-4 py-2 text-base ring-offset-background-surface placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary text-text-primary"
         />
       </div>

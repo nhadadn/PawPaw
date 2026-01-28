@@ -32,10 +32,10 @@ export function ProductGrid({ products, isLoading, error }: ProductGridProps) {
         <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center mb-6">
           <span className="text-4xl">🔍</span>
         </div>
-        <h3 className="text-xl font-display font-bold text-neutral-900 dark:text-neutral-100 mb-2">
+        <h3 className="text-xl font-display font-bold text-text-primary mb-2">
           No se encontraron productos
         </h3>
-        <p className="text-neutral-600 dark:text-neutral-300 max-w-md">
+        <p className="text-text-secondary max-w-md">
           Intenta ajustar tus filtros o búsqueda para encontrar lo que buscas.
         </p>
       </div>

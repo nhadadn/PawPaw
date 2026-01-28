@@ -36,7 +36,7 @@ export function MetricsCard({ title, value, icon: Icon, trend, className }: Metr
         </div>
       </div>
       {trend && (
-        <div className="bg-neutral-50 dark:bg-neutral-900 px-5 py-3 border-t border-neutral-200 dark:border-neutral-800">
+        <div className="bg-neutral-50 dark:bg-neutral-100 px-5 py-3 border-t border-neutral-200 dark:border-neutral-800">
           <div className="text-sm">
             <span className={cn('font-medium', trend.isPositive ? 'text-success' : 'text-error')}>
               {trend.isPositive ? '+' : '-'}

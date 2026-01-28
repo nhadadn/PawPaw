@@ -37,7 +37,7 @@ export function DataTable<T>({
   return (
     <div className="overflow-x-auto bg-background-surface rounded-lg shadow border border-neutral-200 dark:border-neutral-800">
       <table className="min-w-full divide-y divide-neutral-200 dark:divide-neutral-800">
-        <thead className="bg-neutral-50 dark:bg-neutral-900">
+        <thead className="bg-neutral-50 dark:bg-neutral-100">
           <tr>
             {columns.map((col, index) => (
               <th
