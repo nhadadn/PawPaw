@@ -28,10 +28,10 @@ const variants: Record<ButtonVariant, string> = {
   accent:
     'bg-accent text-white hover:bg-accent-hover shadow-md hover:shadow-glow hover:shadow-accent/20 border border-transparent',
   outline: cn(
-    'bg-transparent border-2 border-neutral-200 text-neutral-900 hover:bg-neutral-50 hover:border-neutral-300 dark:border-neutral-600 dark:text-neutral-100 dark:hover:bg-neutral-200 dark:hover:text-neutral-900'
+    'bg-transparent border-2 border-neutral-200 text-neutral-900 hover:bg-neutral-50 hover:border-neutral-300 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:hover:text-white'
   ),
   ghost: cn(
-    'bg-transparent text-neutral-700 hover:text-neutral-900 dark:text-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-100'
+    'bg-transparent text-neutral-700 hover:text-neutral-900 dark:text-white dark:hover:bg-neutral-800 dark:hover:text-white'
   ),
   danger: 'bg-error text-white hover:bg-error/90 shadow-sm border border-transparent',
   success: 'bg-success text-white hover:bg-success/90 shadow-sm border border-transparent',

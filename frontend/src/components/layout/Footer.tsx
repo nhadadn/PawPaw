@@ -5,12 +5,12 @@ import { Input } from '../ui/Input';
 
 export function Footer() {
   return (
-    <footer className="bg-black text-neutral-200 dark:text-neutral-700 pt-20 pb-10 border-t border-neutral-900 transition-colors">
+    <footer className="bg-black text-white pt-20 pb-10 border-t border-neutral-800 transition-colors">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-display font-black tracking-tighter text-neutral-50 dark:text-neutral-100">
+            <h3 className="text-3xl font-display font-black tracking-tighter text-white">
               PAW PAW
             </h3>
             <p className="text-sm leading-relaxed max-w-xs">
@@ -20,21 +20,21 @@ export function Footer() {
               <a
                 href="#"
                 aria-label="Instagram"
-                className="text-neutral-50 dark:text-neutral-100 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Instagram className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Twitter"
-                className="text-neutral-50 dark:text-neutral-100 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Twitter className="w-6 h-6" />
               </a>
               <a
                 href="#"
                 aria-label="Facebook"
-                className="text-neutral-50 dark:text-neutral-100 hover:text-accent transition-colors hover:scale-110 transform duration-200"
+                className="text-white hover:text-accent transition-colors hover:scale-110 transform duration-200"
               >
                 <Facebook className="w-6 h-6" />
               </a>
@@ -131,7 +131,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-neutral-900 pt-8 text-center text-sm text-neutral-200 dark:text-neutral-300">
+        <div className="border-t border-neutral-800 pt-8 text-center text-sm text-gray-400">
           <p>© {new Date().getFullYear()} Paw Paw Urban Show. Todos los derechos reservados.</p>
         </div>
       </div>

@@ -77,7 +77,7 @@ export function Header() {
             <button
               type="submit"
               aria-label="Buscar"
-              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 dark:text-neutral-300 hover:text-accent transition-colors"
+              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 text-neutral-400 hover:text-accent transition-colors"
             >
               <Search className="w-5 h-5" />
             </button>
@@ -101,9 +101,9 @@ export function Header() {
             aria-label={`Carrito de compras con ${totalItems()} artículos`}
             className="relative p-3 hover:bg-white/10 rounded-full transition-colors group"
           >
-            <ShoppingCart className="w-6 h-6 text-neutral-50 dark:text-neutral-50 group-hover:text-accent transition-colors" />
+            <ShoppingCart className="w-6 h-6 text-white group-hover:text-accent transition-colors" />
             {totalItems() > 0 && (
-              <span className="absolute top-0 right-0 bg-accent text-neutral-50 dark:text-neutral-900 text-[11px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
+              <span className="absolute top-0 right-0 bg-accent text-white text-[11px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
                 {totalItems()}
               </span>
             )}

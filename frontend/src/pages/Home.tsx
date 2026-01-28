@@ -86,7 +86,7 @@ export function Home() {
               </span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-neutral-100 max-w-2xl font-light leading-relaxed">
+            <p className="text-lg md:text-2xl text-gray-200 max-w-2xl font-light leading-relaxed">
               Redefine tu identidad con la colección más exclusiva de streetwear. Calidad premium
               para quienes se atreven a destacar.
             </p>
