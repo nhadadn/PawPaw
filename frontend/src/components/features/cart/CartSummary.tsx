@@ -75,7 +75,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
       {/* Promo Code */}
       <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
-        <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100">
+        <label className="text-sm font-bold text-neutral-900 dark:text-white">
           Código Promocional
         </label>
         <div className="flex gap-2">
@@ -86,7 +86,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
           />
           <Button
             variant="outline"
-            className="h-11 px-6 dark:text-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+            className="h-11 px-6 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800"
           >
             Aplicar
           </Button>

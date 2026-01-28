@@ -71,7 +71,7 @@ export function ProductGallery({ images, className }: ProductGalleryProps) {
                 e.stopPropagation();
                 handlePrev();
               }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-neutral-800 dark:text-neutral-100 shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-neutral-800 dark:text-white shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -81,7 +81,7 @@ export function ProductGallery({ images, className }: ProductGalleryProps) {
                 e.stopPropagation();
                 handleNext();
               }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-neutral-800 dark:text-neutral-100 shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200"
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black text-neutral-800 dark:text-white shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-200"
               aria-label="Next image"
             >
               <ChevronRight className="w-5 h-5" />

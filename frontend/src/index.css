@@ -74,30 +74,35 @@
   /* Dark Mode Support */
   .dark {
     /* Backgrounds - Deep Dark Blue/Gray */
-    --color-background: 10 14 23;     /* #0A0E17 (Much Darker) */
-    --color-surface: 23 29 41;        /* #171D29 */
+    --color-background: 3 7 18;       /* #030712 (Rich Black) */
+    --color-surface: 17 24 39;        /* #111827 */
     --color-surface-muted: 31 41 55;  /* #1F2937 */
     --color-border: 55 65 81;         /* #374151 */
     
-    /* Text Colors (Inverted Neutrals) */
+    /* Text Colors (High Contrast Metallic/Gold Theme) */
     --color-neutral-950: 255 255 255; /* #FFFFFF (Main Text) */
-    --color-neutral-900: 243 244 246; /* #F3F4F6 */
-    --color-neutral-800: 229 231 235; /* #E5E7EB */
-    --color-neutral-700: 209 213 219; /* #D1D5DB */
-    --color-neutral-600: 156 163 175; /* #9CA3AF */
-    --color-neutral-500: 107 114 128; /* #6B7280 */
-    --color-neutral-400: 75 85 99;    /* #4B5563 */
-    --color-neutral-300: 55 65 81;    /* #374151 */
-    --color-neutral-200: 31 41 55;    /* #1F2937 (Dark Surface) */
-    --color-neutral-100: 17 24 39;    /* #111827 */
-    --color-neutral-50: 3 7 18;       /* #030712 (Almost Black) */
+    --color-neutral-900: 248 250 252; /* #F8FAFC (Bright White/Silver) */
+    --color-neutral-800: 226 232 240; /* #E2E8F0 (Metallic Silver) */
+    --color-neutral-700: 203 213 225; /* #CBD5E1 (Light Silver) */
+    --color-neutral-600: 148 163 184; /* #94A3B8 (Metallic Gray) */
+    --color-neutral-500: 100 116 139; /* #64748B */
+    --color-neutral-400: 71 85 105;   /* #475569 */
+    --color-neutral-300: 51 65 85;    /* #334155 */
+    --color-neutral-200: 30 41 59;    /* #1E293B */
+    --color-neutral-100: 15 23 42;    /* #0F172A */
+    --color-neutral-50: 2 6 23;       /* #020617 */
     
-    /* Primary in Dark Mode - Keep Brand Color but adjusted for dark bg */
-    --color-primary: 255 107 53;      /* #FF6B35 (Original Brand Color) */
-    --color-primary-hover: 255 138 91; /* #FF8A5B (Lighter for hover) */
+    /* Primary in Dark Mode - Gold/Amber for Luxury/Streetwear Vibe */
+    --color-primary: 250 204 21;      /* #FACC15 (Gold/Yellow 400) */
+    --color-primary-hover: 234 179 8; /* #EAB308 (Darker Gold) */
     
-    --color-secondary: 31 41 55;      /* #1F2937 */
-    --color-secondary-hover: 55 65 81; /* #374151 */
+    /* Accent in Dark Mode - Gold to pop against Black */
+    --color-accent: 250 204 21;       /* #FACC15 (Gold) */
+    --color-accent-hover: 253 224 71; /* #FDE047 (Lighter Gold) */
+    --color-accent-light: 254 240 138; /* #FEF08A */
+    
+    --color-secondary: 30 41 59;      /* #1E293B */
+    --color-secondary-hover: 51 65 85; /* #334155 */
   }
 
   body {

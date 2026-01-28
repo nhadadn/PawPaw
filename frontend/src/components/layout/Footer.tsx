@@ -108,7 +108,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-bold text-neutral-50 dark:text-neutral-100 mb-6 uppercase tracking-wider text-sm">
+            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm">
               Newsletter
             </h4>
             <p className="text-sm leading-relaxed mb-6">
@@ -118,7 +118,7 @@ export function Footer() {
               <Input
                 aria-label="Correo electrónico"
                 placeholder="TU@EMAIL.COM"
-                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-200 dark:border-neutral-700 dark:text-neutral-100 placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
+                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-200 dark:border-neutral-700 dark:text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
               />
               <Button
                 size="icon"

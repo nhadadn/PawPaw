@@ -195,7 +195,7 @@ export function Home() {
       </section>
 
       {/* Categories */}
-      <section className="bg-neutral-950 py-32 text-white relative overflow-hidden">
+      <section className="bg-neutral-950 dark:bg-black py-32 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-neutral-800 via-neutral-950 to-neutral-950 opacity-50" />
 
         <div className="container mx-auto px-4 space-y-16 relative z-10">
