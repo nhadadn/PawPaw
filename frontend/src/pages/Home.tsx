@@ -134,7 +134,7 @@ export function Home() {
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-text-secondary">
                 Envíos Globales
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -147,7 +147,7 @@ export function Home() {
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-text-secondary">
                 Compra Segura
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -160,7 +160,7 @@ export function Home() {
               <Clock className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-white">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary dark:text-text-secondary">
                 Soporte 24/7
               </h3>
               <p className="text-text-secondary leading-relaxed">
@@ -175,7 +175,7 @@ export function Home() {
       <section className="container mx-auto px-4 py-20 space-y-12">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-neutral-200 dark:border-neutral-800 pb-8">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-text-primary dark:text-white">
+            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-text-primary dark:text-text-secondary">
               Destacados
             </h2>
             <p className="text-lg text-text-secondary max-w-md">

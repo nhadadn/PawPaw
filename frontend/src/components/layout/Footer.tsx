@@ -118,7 +118,7 @@ export function Footer() {
               <Input
                 aria-label="Correo electrónico"
                 placeholder="TU@EMAIL.COM"
-                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-200 dark:border-neutral-700 dark:text-white placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
+                className="bg-neutral-900 border-neutral-800 text-neutral-50 dark:bg-neutral-200 dark:border-neutral-700 dark:text-text-secondary placeholder:text-neutral-500 focus:border-accent focus:ring-accent/20 h-11"
               />
               <Button
                 size="icon"
