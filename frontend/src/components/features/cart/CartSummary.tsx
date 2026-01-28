@@ -75,7 +75,7 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
       {/* Promo Code */}
       <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
-        <label className="text-sm font-bold text-neutral-900 dark:text-white">
+        <label className="text-sm font-bold text-neutral-900 dark:text-text-secondary">
           Código Promocional
         </label>
         <div className="flex gap-2">

@@ -50,7 +50,7 @@ export function Timer({ expiresAt, onExpire, className }: TimerProps) {
     <div
       className={cn(
         'inline-flex items-center gap-2 font-mono font-bold text-lg',
-        timeLeft < 60 ? 'text-error animate-pulse' : 'text-neutral-900 dark:text-white',
+        timeLeft < 60 ? 'text-error animate-pulse' : 'text-neutral-900 dark:text-text-secondary',
         className
       )}
       role="timer"

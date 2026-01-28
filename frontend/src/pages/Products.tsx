@@ -177,25 +177,25 @@ export function Products() {
                 </span>
                 <select
                   aria-label="Ordenar productos"
-                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-text-primary dark:text-white pr-8 py-1"
+                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-text-primary dark:text-text-secondary pr-8 py-1"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
                 >
                   <option
                     value="relevance"
-                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                    className="bg-background-surface text-text-primary dark:text-text-secondary dark:bg-neutral-900"
                   >
                     Relevancia
                   </option>
                   <option
                     value="price-asc"
-                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                    className="bg-background-surface text-text-primary dark:text-text-secondary dark:bg-neutral-900"
                   >
                     Menor Precio
                   </option>
                   <option
                     value="price-desc"
-                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                    className="bg-background-surface text-text-primary dark:text-text-secondary dark:bg-neutral-900"
                   >
                     Mayor Precio
                   </option>

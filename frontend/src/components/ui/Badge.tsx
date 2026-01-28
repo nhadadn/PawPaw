@@ -11,7 +11,7 @@ function Badge({ className, variant = 'default', size = 'md', ...props }: BadgeP
     default: 'border-transparent bg-black text-white hover:bg-neutral-800',
     secondary: 'border-transparent bg-neutral-100 text-neutral-900 hover:bg-neutral-200',
     outline:
-      'text-neutral-900 border-neutral-200 hover:bg-neutral-100 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800',
+      'text-neutral-900 border-neutral-200 hover:bg-neutral-100 dark:text-text-secondary dark:border-neutral-700 dark:hover:bg-neutral-800',
     destructive: 'border-transparent bg-error text-white hover:bg-error/80',
     success: 'border-transparent bg-success text-white hover:bg-success/80',
     warning: 'border-transparent bg-warning text-black hover:bg-warning/80',

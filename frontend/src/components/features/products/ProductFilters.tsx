@@ -31,7 +31,7 @@ export function ProductFilters({
             className={`block w-full text-left text-sm px-3 py-2 rounded-lg transition-all ${
               selectedCategory === null
                 ? 'bg-black text-white font-bold dark:bg-white dark:text-black shadow-md transform scale-[1.02]'
-                : 'text-text-secondary dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-white'
+                : 'text-text-secondary dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-text-secondary'
             }`}
           >
             Todas
@@ -65,7 +65,7 @@ export function ProductFilters({
             value={priceRange.min || ''}
             onChange={(e) => onPriceChange(Number(e.target.value), priceRange.max)}
           />
-          <span className="text-text-secondary dark:text-white font-medium">-</span>
+          <span className="text-text-secondary dark:text-text-secondary font-medium">-</span>
           <Input
             type="number"
             placeholder="Max"
