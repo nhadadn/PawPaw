@@ -89,7 +89,7 @@ export function Header() {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-3 hover:bg-neutral-900 rounded-full transition-colors text-neutral-50 hover:text-accent"
+            className="p-3 hover:bg-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 rounded-full transition-colors text-white hover:text-accent"
             aria-label={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
           >
             {theme === 'dark' ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}

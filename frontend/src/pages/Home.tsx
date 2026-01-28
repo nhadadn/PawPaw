@@ -81,12 +81,12 @@ export function Home() {
             {/* Headlines */}
             <h1 className="text-5xl md:text-7xl lg:text-9xl font-display font-black tracking-tighter text-white leading-[0.9]">
               ESTILO <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-400 to-neutral-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 animate-rainbow bg-[length:200%_auto]">
                 URBANO
               </span>
             </h1>
 
-            <p className="text-lg md:text-2xl text-gray-200 max-w-2xl font-light leading-relaxed">
+            <p className="text-lg md:text-2xl text-white max-w-2xl font-light leading-relaxed">
               Redefine tu identidad con la colección más exclusiva de streetwear. Calidad premium
               para quienes se atreven a destacar.
             </p>
@@ -278,7 +278,7 @@ export function Home() {
                 Suscribirse
               </Button>
             </div>
-            <p className="text-xs text-neutral-100 mt-4">
+            <p className="text-xs text-white mt-4">
               Al suscribirte aceptas nuestros términos y condiciones. Sin spam, prometido.
             </p>
           </div>

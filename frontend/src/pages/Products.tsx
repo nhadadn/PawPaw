@@ -163,30 +163,46 @@ export function Products() {
           <div className="flex-1 space-y-8">
             {/* Header & Sort */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-background-surface p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
-              <p className="text-sm text-text-secondary font-medium">
+              <p className="text-sm text-text-secondary dark:text-neutral-300 font-medium">
                 Mostrando{' '}
-                <span className="font-bold text-text-primary">{filteredProducts.length}</span>{' '}
+                <span className="font-bold text-text-primary dark:text-white">
+                  {filteredProducts.length}
+                </span>{' '}
                 productos
               </p>
 
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-text-secondary">Ordenar por:</span>
+                <span className="text-sm font-medium text-text-secondary dark:text-neutral-300">
+                  Ordenar por:
+                </span>
                 <select
                   aria-label="Ordenar productos"
-                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-text-primary pr-8 py-1"
+                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-text-primary dark:text-white pr-8 py-1"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
                 >
-                  <option value="relevance" className="bg-background-surface text-text-primary">
+                  <option
+                    value="relevance"
+                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                  >
                     Relevancia
                   </option>
-                  <option value="price-asc" className="bg-background-surface text-text-primary">
+                  <option
+                    value="price-asc"
+                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                  >
                     Menor Precio
                   </option>
-                  <option value="price-desc" className="bg-background-surface text-text-primary">
+                  <option
+                    value="price-desc"
+                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                  >
                     Mayor Precio
                   </option>
-                  <option value="newest" className="bg-background-surface text-text-primary">
+                  <option
+                    value="newest"
+                    className="bg-background-surface text-text-primary dark:text-white dark:bg-neutral-900"
+                  >
                     Más Nuevos
                   </option>
                 </select>

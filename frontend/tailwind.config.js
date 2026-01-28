@@ -95,8 +95,13 @@ export default {
         'slide-up': 'slideUp 0.3s ease-out',
         'slide-in-right': 'slideInRight 0.3s ease-out',
         'spin-slow': 'spin 3s linear infinite',
+        'rainbow': 'rainbow 8s linear infinite',
       },
       keyframes: {
+        rainbow: {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '100% 50%' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
