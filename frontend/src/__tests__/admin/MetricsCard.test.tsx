@@ -5,13 +5,7 @@ import { describe, it, expect } from 'vitest';
 
 describe('MetricsCard', () => {
   it('renders title and value', () => {
-    render(
-      <MetricsCard
-        title="Total Sales"
-        value="$1,000"
-        icon={DollarSign}
-      />
-    );
+    render(<MetricsCard title="Total Sales" value="$1,000" icon={DollarSign} />);
 
     expect(screen.getByText('Total Sales')).toBeInTheDocument();
     expect(screen.getByText('$1,000')).toBeInTheDocument();
@@ -28,7 +22,7 @@ describe('MetricsCard', () => {
     );
 
     expect(screen.getByText('+10%')).toBeInTheDocument();
-    expect(screen.getByText('+10%')).toHaveClass('text-green-600');
+    expect(screen.getByText('+10%')).toHaveClass('text-success');
   });
 
   it('renders negative trend', () => {
@@ -42,6 +36,6 @@ describe('MetricsCard', () => {
     );
 
     expect(screen.getByText('-5%')).toBeInTheDocument();
-    expect(screen.getByText('-5%')).toHaveClass('text-red-600');
+    expect(screen.getByText('-5%')).toHaveClass('text-error');
   });
 });

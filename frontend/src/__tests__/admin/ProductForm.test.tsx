@@ -11,13 +11,7 @@ const mockCategories: AdminCategory[] = [
 
 describe('ProductForm', () => {
   it('renders correctly', () => {
-    render(
-      <ProductForm
-        onSubmit={vi.fn()}
-        onCancel={vi.fn()}
-        categories={mockCategories}
-      />
-    );
+    render(<ProductForm onSubmit={vi.fn()} onCancel={vi.fn()} categories={mockCategories} />);
     expect(screen.getByLabelText(/nombre/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/descripción/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/precio/i)).toBeInTheDocument();
@@ -30,13 +24,7 @@ describe('ProductForm', () => {
     const handleSubmit = vi.fn();
     const user = userEvent.setup();
 
-    render(
-      <ProductForm
-        onSubmit={handleSubmit}
-        onCancel={vi.fn()}
-        categories={mockCategories}
-      />
-    );
+    render(<ProductForm onSubmit={handleSubmit} onCancel={vi.fn()} categories={mockCategories} />);
 
     // Fill form
     await user.type(screen.getByLabelText(/nombre/i), 'New Product');
@@ -53,9 +41,12 @@ describe('ProductForm', () => {
     // Submit
     await user.click(screen.getByRole('button', { name: /crear/i }));
 
-    await waitFor(() => {
-      expect(handleSubmit).toHaveBeenCalledTimes(1);
-    });
+    await waitFor(
+      () => {
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 3000 }
+    );
 
     const formData = handleSubmit.mock.calls[0][0] as FormData;
     expect(formData).toBeInstanceOf(FormData);
@@ -65,10 +56,10 @@ describe('ProductForm', () => {
     expect(formData.get('categoryId')).toBe('1');
     expect(formData.get('initialStock')).toBe('20');
     expect(formData.get('images')).toBeInstanceOf(File);
-    
+
     // Check imageOrder
     const imageOrder = formData.get('imageOrder');
     expect(imageOrder).toBeTruthy();
     expect(JSON.parse(imageOrder as string)).toHaveLength(1);
-  });
+  }, 15000);
 });

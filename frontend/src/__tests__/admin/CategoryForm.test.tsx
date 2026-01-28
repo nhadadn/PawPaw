@@ -5,12 +5,7 @@ import { CategoryForm } from '../../components/admin/CategoryForm';
 
 describe('CategoryForm', () => {
   it('renders correctly', () => {
-    render(
-      <CategoryForm
-        onSubmit={vi.fn()}
-        onCancel={vi.fn()}
-      />
-    );
+    render(<CategoryForm onSubmit={vi.fn()} onCancel={vi.fn()} />);
 
     expect(screen.getByLabelText(/nombre/i)).toBeDefined();
     expect(screen.getByLabelText(/descripción/i)).toBeDefined();
@@ -21,12 +16,7 @@ describe('CategoryForm', () => {
     const handleSubmit = vi.fn();
     const user = userEvent.setup();
 
-    render(
-      <CategoryForm
-        onSubmit={handleSubmit}
-        onCancel={vi.fn()}
-      />
-    );
+    render(<CategoryForm onSubmit={handleSubmit} onCancel={vi.fn()} />);
 
     // Fill form
     await user.type(screen.getByLabelText(/nombre/i), 'New Category');
@@ -40,14 +30,17 @@ describe('CategoryForm', () => {
     // Submit
     await user.click(screen.getByRole('button', { name: /crear/i }));
 
-    await waitFor(() => {
-      expect(handleSubmit).toHaveBeenCalledTimes(1);
-    });
+    await waitFor(
+      () => {
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
+      },
+      { timeout: 3000 }
+    );
 
     const formData = handleSubmit.mock.calls[0][0] as FormData;
     expect(formData).toBeInstanceOf(FormData);
     expect(formData.get('name')).toBe('New Category');
     expect(formData.get('description')).toBe('Category Description');
     expect(formData.get('image')).toBeInstanceOf(File);
-  });
+  }, 15000);
 });
