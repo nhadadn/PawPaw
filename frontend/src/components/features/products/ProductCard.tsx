@@ -168,7 +168,7 @@ const ProductCardComponent = ({
                   'p-2.5 rounded-full bg-white/90 dark:bg-black/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-neutral-200/50 dark:border-white/20',
                   isWishlistActive
                     ? 'text-accent fill-accent'
-                    : 'text-neutral-600 hover:text-accent dark:text-whiwher:text-primary'
+                    : 'text-neutral-600 hover:text-accent dark:text-text-secondary dark:hover:text-primary'
                 )}
                 aria-label="Añadir a lista de deseos"
               >

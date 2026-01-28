@@ -173,6 +173,20 @@
 }
 
 @layer utilities {
+  /* Global Dark Mode Text Overrides to fix "black on black" */
+  .dark .text-neutral-900,
+  .dark .text-neutral-800,
+  .dark .text-neutral-700,
+  .dark .text-neutral-600 {
+    color: rgb(var(--color-text-secondary));
+  }
+  
+  .dark .text-black {
+    color: rgb(var(--color-text-secondary));
+  }
+}
+
+@layer utilities {
   .auto-contrast {
     --on-bg: rgb(23 25 35);
     --on-bg-hover: rgb(0 0 0);
