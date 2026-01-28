@@ -169,7 +169,7 @@ export function CartDrawer() {
       <div
         ref={drawerRef}
         className={cn(
-          'relative w-full sm:w-[450px] bg-white dark:bg-[#141414] h-full shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out border-l border-neutral-200 dark:border-neutral-800',
+          'relative w-full sm:w-[450px] bg-background-surface h-full shadow-2xl flex flex-col transform transition-transform duration-300 ease-in-out border-l border-neutral-200 dark:border-neutral-800',
           isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
         )}
         style={
@@ -184,16 +184,16 @@ export function CartDrawer() {
         onTouchEnd={handleTouchEnd}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-neutral-100 dark:border-neutral-800 bg-white dark:bg-[#141414]">
-          <div className="flex items-center gap-3 text-neutral-900 dark:text-neutral-100">
-            <ShoppingBag className="w-6 h-6 text-primary dark:text-neutral-100" />
+        <div className="flex items-center justify-between p-6 border-b border-neutral-200 dark:border-neutral-800 bg-background-surface">
+          <div className="flex items-center gap-3 text-text-primary">
+            <ShoppingBag className="w-6 h-6 text-primary" />
             <h2 className="text-xl font-display font-bold tracking-tight">
               Tu Carrito ({items.length})
             </h2>
           </div>
           <button
             onClick={closeDrawer}
-            className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors text-neutral-500 dark:text-neutral-400"
+            className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors text-text-secondary"
             aria-label="Cerrar carrito"
           >
             <X className="w-6 h-6" />
@@ -205,13 +205,11 @@ export function CartDrawer() {
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center space-y-6">
               <div className="w-20 h-20 bg-neutral-100 dark:bg-neutral-800 rounded-full flex items-center justify-center">
-                <ShoppingBag className="w-10 h-10 text-neutral-400" />
+                <ShoppingBag className="w-10 h-10 text-text-tertiary" />
               </div>
               <div className="space-y-2">
-                <p className="text-xl font-bold text-neutral-900 dark:text-neutral-100">
-                  Tu carrito está vacío
-                </p>
-                <p className="text-neutral-500 dark:text-neutral-400 max-w-[200px] mx-auto">
+                <p className="text-xl font-bold text-text-primary">Tu carrito está vacío</p>
+                <p className="text-text-secondary max-w-[200px] mx-auto">
                   ¡Explora nuestra colección y encuentra algo increíble!
                 </p>
               </div>
@@ -236,13 +234,13 @@ export function CartDrawer() {
 
         {/* Footer / Summary */}
         {items.length > 0 && (
-          <div className="p-6 border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-[#141414]">
+          <div className="p-6 border-t border-neutral-200 dark:border-neutral-800 bg-background-surface">
             <div className="space-y-4 mb-6">
-              <div className="flex items-center justify-between text-neutral-600 dark:text-neutral-400 font-medium">
+              <div className="flex items-center justify-between text-text-secondary font-medium">
                 <span>Subtotal</span>
                 <span>{formatCurrency(totalPrice())}</span>
               </div>
-              <div className="flex items-center justify-between text-2xl font-display font-bold text-neutral-900 dark:text-neutral-100">
+              <div className="flex items-center justify-between text-2xl font-display font-bold text-text-primary">
                 <span>Total</span>
                 <span>{formatCurrency(totalPrice())}</span>
               </div>
@@ -257,7 +255,7 @@ export function CartDrawer() {
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
 
-            <p className="text-xs text-center text-neutral-500 dark:text-neutral-500 mt-4 font-medium">
+            <p className="text-xs text-center text-text-tertiary mt-4 font-medium">
               Envío e impuestos calculados en el checkout
             </p>
           </div>

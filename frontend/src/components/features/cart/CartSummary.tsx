@@ -25,19 +25,17 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
   });
 
   return (
-    <div className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 space-y-6 sticky top-24 border border-transparent dark:border-neutral-800 transition-colors">
-      <h2 className="text-xl font-bold font-display text-neutral-900 dark:text-neutral-100">
-        Resumen del Pedido
-      </h2>
+    <div className="bg-background-surface rounded-xl p-6 space-y-6 sticky top-24 border border-neutral-200 dark:border-neutral-800 transition-colors shadow-sm">
+      <h2 className="text-xl font-bold font-display text-text-primary">Resumen del Pedido</h2>
 
       <div className="space-y-3 text-sm">
-        <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
+        <div className="flex justify-between text-text-secondary">
           <span>Subtotal ({itemCount} productos)</span>
           <span>{formatCurrency(total)}</span>
         </div>
-        <div className="flex justify-between text-neutral-600 dark:text-neutral-400">
+        <div className="flex justify-between text-text-secondary">
           <span>Envío estimado</span>
-          <span className={shipping === 0 ? 'text-green-600 dark:text-green-500 font-bold' : ''}>
+          <span className={shipping === 0 ? 'text-success font-bold' : ''}>
             {shipping === 0 ? 'Gratis' : formatCurrency(shipping)}
           </span>
         </div>
@@ -45,14 +43,10 @@ export function CartSummary({ total, itemCount }: CartSummaryProps) {
 
       <div className="border-t border-neutral-200 dark:border-neutral-800 pt-4">
         <div className="flex justify-between items-end mb-1">
-          <span className="font-bold text-lg text-neutral-900 dark:text-neutral-100">Total</span>
-          <span className="font-bold text-3xl text-neutral-900 dark:text-neutral-100">
-            {formatCurrency(finalTotal)}
-          </span>
+          <span className="font-bold text-lg text-text-primary">Total</span>
+          <span className="font-bold text-3xl text-text-primary">{formatCurrency(finalTotal)}</span>
         </div>
-        <p className="text-xs text-neutral-800 dark:text-neutral-400 text-right">
-          Impuestos incluidos
-        </p>
+        <p className="text-xs text-text-secondary text-right">Impuestos incluidos</p>
       </div>
 
       {hasStockIssues && (

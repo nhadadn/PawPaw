@@ -39,12 +39,16 @@ export function Profile() {
                 {orders.map((order) => (
                   <div
                     key={order.id}
-                    className="bg-white border border-neutral-200 rounded-xl p-6 hover:shadow-sm transition-shadow"
+                    className="bg-background-surface border border-neutral-200 dark:border-neutral-800 rounded-xl p-6 hover:shadow-sm transition-shadow"
                   >
                     <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
                       <div>
-                        <p className="font-bold text-lg">Pedido #{order.id.slice(0, 8)}</p>
-                        <p className="text-sm text-neutral-500">{formatDate(order.created_at)}</p>
+                        <p className="font-bold text-lg text-text-primary">
+                          Pedido #{order.id.slice(0, 8)}
+                        </p>
+                        <p className="text-sm text-text-secondary">
+                          {formatDate(order.created_at)}
+                        </p>
                       </div>
                       <Badge variant={order.status === 'pending' ? 'secondary' : 'default'}>
                         {order.status === 'pending'
@@ -64,9 +68,9 @@ export function Profile() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-10 bg-neutral-50 rounded-xl border border-neutral-200">
-                <Package className="w-12 h-12 mx-auto text-neutral-400 mb-4" />
-                <p className="text-neutral-600 mb-4">No tienes pedidos recientes.</p>
+              <div className="text-center py-10 bg-neutral-50 dark:bg-neutral-900/50 rounded-xl border border-neutral-200 dark:border-neutral-800">
+                <Package className="w-12 h-12 mx-auto text-text-secondary mb-4" />
+                <p className="text-text-secondary mb-4">No tienes pedidos recientes.</p>
                 <Button onClick={() => navigate('/products')}>Ir a comprar</Button>
               </div>
             )}
@@ -124,15 +128,15 @@ export function Profile() {
                   {orders?.length || 0} pedidos realizados
                 </p>
               </div>
-              <div className="bg-white p-6 rounded-xl border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700">
-                <MapPin className="w-8 h-8 text-neutral-700 dark:text-neutral-300 mb-4" />
-                <h3 className="font-bold text-lg mb-1">Direcciones</h3>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">Gestión de envíos</p>
+              <div className="bg-background-surface p-6 rounded-xl border border-neutral-200 dark:border-neutral-800">
+                <MapPin className="w-8 h-8 text-text-secondary mb-4" />
+                <h3 className="font-bold text-lg mb-1 text-text-primary">Direcciones</h3>
+                <p className="text-sm text-text-secondary">Gestión de envíos</p>
               </div>
-              <div className="bg-white p-6 rounded-xl border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700">
-                <User className="w-8 h-8 text-neutral-700 dark:text-neutral-300 mb-4" />
-                <h3 className="font-bold text-lg mb-1">Perfil</h3>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400">Datos personales</p>
+              <div className="bg-background-surface p-6 rounded-xl border border-neutral-200 dark:border-neutral-800">
+                <User className="w-8 h-8 text-text-secondary mb-4" />
+                <h3 className="font-bold text-lg mb-1 text-text-primary">Perfil</h3>
+                <p className="text-sm text-text-secondary">Datos personales</p>
               </div>
             </div>
 
@@ -140,16 +144,20 @@ export function Profile() {
             {orders && orders.length > 0 && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-lg">Último Pedido</h3>
+                  <h3 className="font-bold text-lg text-text-primary">Último Pedido</h3>
                   <Button variant="ghost" size="sm" onClick={() => setActiveTab('orders')}>
                     Ver todos
                   </Button>
                 </div>
-                <div className="bg-white border border-neutral-200 dark:bg-neutral-200 dark:border-neutral-700 rounded-xl p-6">
+                <div className="bg-background-surface border border-neutral-200 dark:border-neutral-800 rounded-xl p-6">
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="font-bold text-lg">#{orders[0].id.slice(0, 8)}</p>
-                      <p className="text-sm text-neutral-500">{formatDate(orders[0].created_at)}</p>
+                      <p className="font-bold text-lg text-text-primary">
+                        #{orders[0].id.slice(0, 8)}
+                      </p>
+                      <p className="text-sm text-text-secondary">
+                        {formatDate(orders[0].created_at)}
+                      </p>
                     </div>
                     <Badge>{orders[0].status}</Badge>
                   </div>

@@ -87,18 +87,16 @@ export function ProductDetail() {
   return (
     <div className="container mx-auto px-4 py-8 lg:py-12">
       {/* Breadcrumbs */}
-      <div className="flex items-center text-sm text-neutral-500 mb-8 font-medium">
-        <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">
+      <div className="flex items-center text-sm text-text-secondary mb-8 font-medium">
+        <Link to="/" className="hover:text-text-primary transition-colors">
           Inicio
         </Link>
         <span className="mx-2 text-neutral-300 dark:text-neutral-600">/</span>
-        <Link to="/products" className="hover:text-black dark:hover:text-white transition-colors">
+        <Link to="/products" className="hover:text-text-primary transition-colors">
           Catálogo
         </Link>
         <span className="mx-3 text-neutral-300">/</span>
-        <span className="font-bold text-neutral-900 dark:text-neutral-100 line-clamp-1">
-          {product.name}
-        </span>
+        <span className="font-bold text-text-primary line-clamp-1">{product.name}</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -110,27 +108,25 @@ export function ProductDetail() {
           <div>
             <Badge
               variant="secondary"
-              className="mb-4 dark:bg-neutral-800 dark:text-neutral-200 uppercase tracking-wider text-xs font-bold px-3 py-1"
+              className="mb-4 uppercase tracking-wider text-xs font-bold px-3 py-1"
             >
               {product.category}
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-neutral-100 mb-4 leading-tight">
+            <h1 className="text-3xl font-display font-black tracking-tight text-text-primary mb-4 leading-tight">
               {product.name}
             </h1>
             <div className="flex items-center gap-4">
-              <span className="text-3xl font-bold text-accent">
+              <span className="text-2xl font-bold text-accent-500">
                 {formatCurrency(product.price)}
               </span>
               <div className="flex items-center gap-1 text-yellow-500">
                 <Star className="w-4 h-4 fill-current" />
-                <span className="text-sm font-medium text-neutral-600 dark:text-neutral-400">
-                  4.8 (120 reviews)
-                </span>
+                <span className="text-sm font-medium text-text-secondary">4.8 (120 reviews)</span>
               </div>
             </div>
           </div>
 
-          <p className="text-lg text-neutral-600 leading-relaxed font-light">
+          <p className="text-lg text-text-secondary leading-relaxed font-light">
             {product.description ||
               'Este es un producto exclusivo de la colección Paw Paw Urban. Diseñado para ofrecer estilo y comodidad sin compromisos. Fabricado con materiales de alta calidad para asegurar durabilidad y un look impecable.'}
           </p>
@@ -140,12 +136,12 @@ export function ProductDetail() {
             {showSizes && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wide">
+                  <label className="text-sm font-bold text-text-primary uppercase tracking-wide">
                     Selecciona Talla
                   </label>
                   <button
                     type="button"
-                    className="text-xs text-neutral-500 hover:text-black dark:hover:text-white underline"
+                    className="text-xs text-text-secondary hover:text-text-primary underline"
                   >
                     Guía de tallas
                   </button>
@@ -157,8 +153,8 @@ export function ProductDetail() {
                       onClick={() => setSelectedSize(size)}
                       className={`w-14 h-14 rounded-xl flex items-center justify-center font-bold text-sm border-2 transition-all duration-200 ${
                         selectedSize === size
-                          ? 'border-black bg-black text-white dark:border-white dark:bg-white dark:text-black shadow-lg transform scale-105'
-                          : 'border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-black dark:hover:border-white'
+                          ? 'border-neutral-900 bg-neutral-900 text-white dark:border-neutral-100 dark:bg-neutral-100 dark:text-neutral-900 shadow-lg transform scale-105'
+                          : 'border-neutral-200 dark:border-neutral-700 text-text-secondary hover:border-neutral-900 dark:hover:border-neutral-100'
                       }`}
                     >
                       {size}
@@ -170,28 +166,28 @@ export function ProductDetail() {
 
             {/* Quantity */}
             <div className="space-y-4">
-              <label className="text-sm font-bold text-neutral-900 dark:text-neutral-100 uppercase tracking-wide">
+              <label className="text-sm font-bold text-text-primary uppercase tracking-wide">
                 Cantidad
               </label>
               <div className="flex items-center gap-6">
                 <div className="flex items-center border-2 border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden bg-white dark:bg-neutral-900">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
+                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-text-secondary transition-colors"
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-bold text-lg text-neutral-900 dark:text-neutral-100">
+                  <span className="w-12 text-center font-bold text-lg text-text-primary">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-400 transition-colors"
+                    className="p-4 hover:bg-neutral-100 dark:hover:bg-neutral-800 text-text-secondary transition-colors"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
                 </div>
-                <span className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">
+                <span className="text-sm text-text-secondary font-medium">
                   {product.stock} unidades disponibles
                 </span>
               </div>
@@ -202,7 +198,8 @@ export function ProductDetail() {
           <div className="flex gap-4 pt-8 border-t border-neutral-100 dark:border-neutral-800">
             <Button
               size="xl"
-              className="flex-1 h-16 text-lg font-bold bg-accent hover:bg-accent-hover text-white shadow-xl shadow-accent/20 border-none uppercase tracking-wide"
+              variant="primary"
+              className="flex-1 h-16 text-lg font-bold shadow-xl shadow-accent/20 uppercase tracking-wide"
               onClick={handleAddToCart}
             >
               <ShoppingBag className="w-6 h-6 mr-3" />
@@ -218,7 +215,7 @@ export function ProductDetail() {
           </div>
 
           {/* Benefits */}
-          <div className="grid grid-cols-2 gap-4 text-sm text-neutral-600 dark:text-neutral-400">
+          <div className="grid grid-cols-2 gap-4 text-sm text-text-secondary">
             <div className="flex items-center gap-2">
               <Truck className="w-5 h-5 text-primary" />
               <span>Envío gratis &gt; $999</span>

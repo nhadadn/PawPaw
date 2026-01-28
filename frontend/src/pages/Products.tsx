@@ -116,27 +116,27 @@ export function Products() {
       )}
       <div className="container mx-auto px-4 py-12 relative z-10">
         {/* Breadcrumbs */}
-        <div className="flex items-center text-sm text-neutral-700 dark:text-neutral-400 mb-8 font-medium">
-          <Link to="/" className="hover:text-neutral-900 dark:hover:text-white transition-colors">
+        <div className="flex items-center text-sm text-text-secondary mb-8 font-medium">
+          <Link to="/" className="hover:text-text-primary transition-colors">
             Inicio
           </Link>
           <span className="mx-3 text-neutral-400" aria-hidden="true">
             /
           </span>
-          <span className="font-bold text-neutral-900 dark:text-neutral-100">Productos</span>
+          <span className="font-bold text-text-primary">Productos</span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Mobile Filters Trigger */}
           <div className="lg:hidden flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-display font-black tracking-tight text-neutral-900 dark:text-neutral-100">
+            <h1 className="text-3xl font-display font-black tracking-tight text-text-primary">
               Catálogo
             </h1>
             <Button
               variant="primary"
               size="sm"
               onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
-              className="bg-black text-white dark:bg-white dark:text-black font-bold"
+              className="font-bold"
             >
               <Filter className="w-4 h-4 mr-2" />
               Filtros
@@ -162,47 +162,31 @@ export function Products() {
           {/* Main Content */}
           <div className="flex-1 space-y-8">
             {/* Header & Sort */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#141414] p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
-              <p className="text-sm text-neutral-700 dark:text-neutral-300 font-medium">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-background-surface p-5 rounded-xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
+              <p className="text-sm text-text-secondary font-medium">
                 Mostrando{' '}
-                <span className="font-bold text-neutral-900 dark:text-neutral-100">
-                  {filteredProducts.length}
-                </span>{' '}
+                <span className="font-bold text-text-primary">{filteredProducts.length}</span>{' '}
                 productos
               </p>
 
               <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Ordenar por:
-                </span>
+                <span className="text-sm font-medium text-text-secondary">Ordenar por:</span>
                 <select
                   aria-label="Ordenar productos"
-                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-neutral-900 dark:text-neutral-100 pr-8 py-1"
+                  className="text-sm border-none bg-transparent font-medium focus:ring-0 cursor-pointer text-text-primary pr-8 py-1"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
                 >
-                  <option
-                    value="relevance"
-                    className="dark:bg-neutral-900 text-black dark:text-neutral-100"
-                  >
+                  <option value="relevance" className="bg-background-surface text-text-primary">
                     Relevancia
                   </option>
-                  <option
-                    value="price-asc"
-                    className="dark:bg-neutral-900 text-black dark:text-neutral-100"
-                  >
+                  <option value="price-asc" className="bg-background-surface text-text-primary">
                     Menor Precio
                   </option>
-                  <option
-                    value="price-desc"
-                    className="dark:bg-neutral-900 text-black dark:text-neutral-100"
-                  >
+                  <option value="price-desc" className="bg-background-surface text-text-primary">
                     Mayor Precio
                   </option>
-                  <option
-                    value="newest"
-                    className="dark:bg-neutral-900 text-black dark:text-neutral-100"
-                  >
+                  <option value="newest" className="bg-background-surface text-text-primary">
                     Más Nuevos
                   </option>
                 </select>

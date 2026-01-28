@@ -3,6 +3,7 @@ import { Plus } from 'lucide-react';
 import { useAdminProducts } from '../../hooks/useAdminProducts';
 import { useAdminCategories } from '../../hooks/useAdminCategories';
 import { DataTable, type Column } from '../../components/admin/DataTable';
+import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Modal } from '../../components/ui/Modal';
 import { ProductForm } from '../../components/admin/ProductForm';
@@ -37,8 +38,8 @@ export function AdminProducts() {
             />
           </div>
           <div className="ml-4">
-            <div className="font-medium text-gray-900">{product.name}</div>
-            <div className="text-gray-500 text-xs truncate max-w-[200px]">
+            <div className="font-medium text-text-primary">{product.name}</div>
+            <div className="text-text-secondary text-xs truncate max-w-[200px]">
               {product.description}
             </div>
           </div>
@@ -61,17 +62,11 @@ export function AdminProducts() {
       header: 'Stock',
       accessorKey: 'stock',
       cell: (product) => (
-        <span
-          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-            product.stock > 10
-              ? 'bg-green-100 text-green-800'
-              : product.stock > 0
-                ? 'bg-yellow-100 text-yellow-800'
-                : 'bg-red-100 text-red-800'
-          }`}
+        <Badge
+          variant={product.stock > 10 ? 'success' : product.stock > 0 ? 'warning' : 'destructive'}
         >
           {product.stock}
-        </span>
+        </Badge>
       ),
     },
   ];
@@ -123,7 +118,7 @@ export function AdminProducts() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900">Productos</h1>
+        <h1 className="text-2xl font-semibold text-text-primary">Productos</h1>
         <Button onClick={handleCreate} leftIcon={<Plus className="h-4 w-4" />}>
           Nuevo Producto
         </Button>

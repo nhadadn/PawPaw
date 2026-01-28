@@ -52,9 +52,9 @@ export function CheckoutPage() {
   }, [step, setSearchParams]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 pb-12 transition-colors duration-300">
+    <div className="min-h-screen bg-background pb-12 transition-colors duration-300">
       {/* Progress Header */}
-      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 sticky top-16 z-30 shadow-sm transition-colors duration-300">
+      <div className="bg-background-surface border-b border-neutral-200 dark:border-neutral-800 sticky top-16 z-30 shadow-sm transition-colors duration-300">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-center max-w-2xl mx-auto">
             {steps.map((s, index) => {
@@ -71,7 +71,7 @@ export function CheckoutPage() {
                           ? 'bg-primary text-white'
                           : isCompleted
                             ? 'bg-success text-white'
-                            : 'bg-neutral-200 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400'
+                            : 'bg-neutral-200 dark:bg-neutral-800 text-text-secondary'
                       )}
                     >
                       {isCompleted ? <Check className="w-4 h-4" /> : s.number}
@@ -83,7 +83,7 @@ export function CheckoutPage() {
                           ? 'text-primary'
                           : isCompleted
                             ? 'text-success'
-                            : 'text-neutral-400 dark:text-neutral-500'
+                            : 'text-text-secondary'
                       )}
                     >
                       {s.label}
@@ -125,7 +125,7 @@ export function CheckoutPage() {
             {/* Fallback/Loading states could be handled here if reservation is missing for payment step */}
             {step === 'payment' && !reservation && (
               <div className="text-center py-12">
-                <p className="text-neutral-500 dark:text-neutral-400 mb-4">
+                <p className="text-text-secondary mb-4">
                   No se encontró información de la reserva.
                 </p>
                 <Button onClick={() => setStep('reservation')}>Volver al inicio</Button>

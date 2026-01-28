@@ -64,7 +64,14 @@ export default {
           900: 'rgb(var(--color-neutral-900) / <alpha-value>)',
           950: 'rgb(var(--color-neutral-950) / <alpha-value>)',
         },
-        background: 'rgb(var(--color-background) / <alpha-value>)',
+        background: {
+          DEFAULT: 'rgb(var(--color-background) / <alpha-value>)',
+          surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        },
+        text: {
+          primary: 'rgb(var(--color-neutral-900) / <alpha-value>)',
+          secondary: 'rgb(var(--color-neutral-600) / <alpha-value>)',
+        },
         surface: {
           DEFAULT: 'rgb(var(--color-surface) / <alpha-value>)',
           muted: 'rgb(var(--color-surface-muted) / <alpha-value>)',
@@ -74,6 +81,14 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
         display: ['Space Grotesk', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['12px', { lineHeight: '16px' }],
+        sm: ['14px', { lineHeight: '20px' }],
+        base: ['16px', { lineHeight: '24px' }],
+        lg: ['18px', { lineHeight: '28px' }],
+        xl: ['20px', { lineHeight: '28px' }],
+        '2xl': ['24px', { lineHeight: '32px' }],
       },
       animation: {
         'fade-in': 'fadeIn 0.3s ease-in-out',

@@ -1,6 +1,7 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
 import { Timer } from '../../components/ui/Timer';
 import { Alert } from '../../components/ui/Alert';
@@ -77,10 +78,7 @@ function MockPaymentForm({ reservationId }: { reservationId: string }) {
 
       {!isAuthenticated && (
         <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
-          >
+          <label htmlFor="email" className="text-sm font-medium text-text-secondary">
             Correo Electrónico (para tu recibo)
           </label>
           <input
@@ -88,15 +86,15 @@ function MockPaymentForm({ reservationId }: { reservationId: string }) {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 py-2 text-sm ring-offset-white dark:ring-offset-neutral-950 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 dark:placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 dark:text-neutral-100"
+            className="flex h-10 w-full rounded-md border border-neutral-200 dark:border-neutral-800 bg-background-surface px-3 py-2 text-sm ring-offset-background-surface file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-text-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 text-text-primary"
             placeholder="tu@email.com"
             required
           />
         </div>
       )}
 
-      <div className="p-4 border rounded-lg bg-neutral-50">
-        <p className="text-sm text-neutral-600 mb-2 font-medium">Tarjeta Simulada</p>
+      <div className="p-4 border rounded-lg bg-neutral-50 dark:bg-neutral-800/50 border-neutral-200 dark:border-neutral-800">
+        <p className="text-sm text-text-secondary mb-2 font-medium">Tarjeta Simulada</p>
         <div className="bg-white border border-neutral-200 h-12 rounded flex items-center px-4 text-neutral-500 text-sm gap-2">
           <CreditCard className="w-4 h-4" />
           **** **** **** 4242
@@ -221,22 +219,21 @@ function PaymentForm({ reservationId }: { reservationId: string }) {
 
       {!isAuthenticated && (
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-medium text-neutral-700">
+          <label htmlFor="email" className="text-sm font-medium text-text-primary">
             Correo Electrónico (para tu recibo)
           </label>
-          <input
+          <Input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="flex h-10 w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             placeholder="tu@email.com"
             required
           />
         </div>
       )}
 
-      <div className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm">
+      <div className="p-4 border border-neutral-200 dark:border-neutral-800 rounded-lg bg-white dark:bg-neutral-900 shadow-sm">
         <PaymentElement />
       </div>
 

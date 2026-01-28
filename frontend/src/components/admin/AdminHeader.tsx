@@ -4,14 +4,14 @@ export function AdminHeader() {
   const user = useAdminStore((state) => state.user);
 
   return (
-    <header className="bg-white shadow-sm h-16 flex items-center justify-between px-6">
-      <h2 className="text-lg font-semibold text-gray-800">Panel de Administración</h2>
+    <header className="bg-background-surface shadow-sm h-16 flex items-center justify-between px-6 border-b border-neutral-200 dark:border-neutral-800">
+      <h2 className="text-lg font-semibold text-text-primary">Panel de Administración</h2>
       <div className="flex items-center space-x-4">
         <div className="flex flex-col text-right">
-          <span className="text-sm font-medium text-gray-900">{user?.name}</span>
-          <span className="text-xs text-gray-500">{user?.email}</span>
+          <span className="text-sm font-medium text-text-primary">{user?.name}</span>
+          <span className="text-xs text-text-secondary">{user?.email}</span>
         </div>
-        <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
+        <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
           {user?.name?.charAt(0).toUpperCase()}
         </div>
       </div>

@@ -38,11 +38,11 @@ const variants: Record<ButtonVariant, string> = {
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: 'h-10 px-4 text-sm font-medium', // Increased from h-9
-  md: 'h-12 px-6 text-base font-semibold', // Increased from h-11
-  lg: 'h-14 px-8 text-lg font-bold', // Increased from h-14
-  xl: 'h-16 px-10 text-xl font-bold',
-  icon: 'h-12 w-12 p-3', // Increased to match md height
+  sm: 'h-9 px-3 py-1.5 text-sm font-medium',
+  md: 'h-10 px-4 py-2 text-base font-semibold',
+  lg: 'h-12 px-6 py-3 text-lg font-bold',
+  xl: 'h-14 px-8 py-3 text-xl font-bold',
+  icon: 'h-10 w-10 p-2',
 };
 
 export const buttonVariants = ({

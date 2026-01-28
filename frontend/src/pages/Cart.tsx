@@ -36,15 +36,13 @@ export function Cart() {
 
   return (
     <div className="container mx-auto px-4 py-12 animate-fade-in">
-      <h1 className="text-4xl font-display font-bold mb-8 text-neutral-900 dark:text-neutral-100">
-        Tu Carrito
-      </h1>
+      <h1 className="text-4xl font-display font-bold mb-8 text-text-primary">Tu Carrito</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Cart Items List */}
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm">
-            <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+          <div className="bg-background-surface rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 shadow-sm">
+            <div className="divide-y divide-neutral-200 dark:divide-neutral-800">
               {items.map((item) => (
                 <CartItem
                   key={item.id}

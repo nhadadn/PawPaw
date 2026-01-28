@@ -10,14 +10,8 @@ import { Alert } from '../../components/ui/Alert';
 import { getImageUrl } from '../../lib/utils';
 
 export function AdminCategories() {
-  const {
-    categories,
-    isLoading,
-    error,
-    createCategory,
-    updateCategory,
-    deleteCategory,
-  } = useAdminCategories();
+  const { categories, isLoading, error, createCategory, updateCategory, deleteCategory } =
+    useAdminCategories();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<AdminCategory | undefined>(undefined);
@@ -40,7 +34,7 @@ export function AdminCategories() {
             />
           </div>
           <div className="ml-4">
-            <div className="font-medium text-gray-900">{category.name}</div>
+            <div className="font-medium text-text-primary">{category.name}</div>
           </div>
         </div>
       ),
@@ -49,10 +43,10 @@ export function AdminCategories() {
       header: 'Descripción',
       accessorKey: 'description',
       cell: (category) => (
-        <span className="text-gray-500 text-sm truncate max-w-[300px] block">
-            {category.description || '-'}
+        <span className="text-text-secondary text-sm truncate max-w-[300px] block">
+          {category.description || '-'}
         </span>
-      )
+      ),
     },
   ];
 
@@ -103,7 +97,7 @@ export function AdminCategories() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900">Categorías</h1>
+        <h1 className="text-2xl font-semibold text-text-primary">Categorías</h1>
         <Button onClick={handleCreate} leftIcon={<Plus className="h-4 w-4" />}>
           Nueva Categoría
         </Button>

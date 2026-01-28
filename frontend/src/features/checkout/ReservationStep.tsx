@@ -159,7 +159,7 @@ export function ReservationStep() {
                   variant="outline"
                   size="sm"
                   onClick={handleRemoveInvalidItem}
-                  className="w-fit bg-white hover:bg-neutral-100 text-neutral-900 border-neutral-200"
+                  className="w-fit bg-background-surface hover:bg-neutral-100 dark:hover:bg-neutral-800 text-text-primary border-neutral-200 dark:border-neutral-800"
                   type="button"
                 >
                   Eliminar producto no disponible del carrito
@@ -186,9 +186,7 @@ export function ReservationStep() {
             </CardHeader>
             <CardContent className="pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Nombre Completo
-                </label>
+                <label className="text-sm font-medium text-text-primary">Nombre Completo</label>
                 <Input
                   {...register('fullName')}
                   placeholder="Ej. Juan Pérez"
@@ -197,9 +195,7 @@ export function ReservationStep() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Email
-                </label>
+                <label className="text-sm font-medium text-text-primary">Email</label>
                 <Input
                   {...register('email')}
                   type="email"
@@ -209,9 +205,7 @@ export function ReservationStep() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Dirección
-                </label>
+                <label className="text-sm font-medium text-text-primary">Dirección</label>
                 <Input
                   {...register('address')}
                   placeholder="Calle Principal 123, Col. Centro"
@@ -220,9 +214,7 @@ export function ReservationStep() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Ciudad
-                </label>
+                <label className="text-sm font-medium text-text-primary">Ciudad</label>
                 <Input
                   {...register('city')}
                   placeholder="Ciudad de México"
@@ -231,16 +223,12 @@ export function ReservationStep() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Estado
-                </label>
+                <label className="text-sm font-medium text-text-primary">Estado</label>
                 <Input {...register('state')} placeholder="CDMX" error={errors.state?.message} />
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Código Postal
-                </label>
+                <label className="text-sm font-medium text-text-primary">Código Postal</label>
                 <Input
                   {...register('zipCode')}
                   placeholder="01234"
@@ -249,9 +237,7 @@ export function ReservationStep() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                  Teléfono
-                </label>
+                <label className="text-sm font-medium text-text-primary">Teléfono</label>
                 <Input
                   {...register('phone')}
                   placeholder="55 1234 5678"
@@ -286,12 +272,8 @@ export function ReservationStep() {
                     className="w-4 h-4 text-primary"
                   />
                   <div>
-                    <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                      Envío Estándar
-                    </p>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                      3-5 días hábiles
-                    </p>
+                    <p className="font-medium text-text-primary">Envío Estándar</p>
+                    <p className="text-sm text-text-secondary">3-5 días hábiles</p>
                   </div>
                 </div>
                 <span className="font-medium text-success">Gratis</span>
@@ -313,17 +295,11 @@ export function ReservationStep() {
                     className="w-4 h-4 text-primary"
                   />
                   <div>
-                    <p className="font-medium text-neutral-900 dark:text-neutral-100">
-                      Envío Express
-                    </p>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                      1-2 días hábiles
-                    </p>
+                    <p className="font-medium text-text-primary">Envío Express</p>
+                    <p className="text-sm text-text-secondary">1-2 días hábiles</p>
                   </div>
                 </div>
-                <span className="font-medium text-neutral-900 dark:text-neutral-100">
-                  {formatCurrency(15000)}
-                </span>
+                <span className="font-medium text-text-primary">{formatCurrency(15000)}</span>
               </label>
             </CardContent>
           </Card>
@@ -334,9 +310,9 @@ export function ReservationStep() {
       <div className="lg:col-span-1">
         <div className="sticky top-24 space-y-6">
           <Card>
-            <CardHeader className="pb-4 border-b border-neutral-100 bg-neutral-50/50">
+            <CardHeader className="pb-4 border-b border-neutral-100 bg-background-surface">
               <CardTitle className="flex items-center gap-2 text-lg">
-                <Package className="w-5 h-5 text-neutral-600" />
+                <Package className="w-5 h-5 text-text-secondary" />
                 Resumen del Pedido
               </CardTitle>
             </CardHeader>
@@ -352,43 +328,37 @@ export function ReservationStep() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100 truncate">
-                        {item.name}
-                      </p>
-                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                        Cant: {item.quantity}
-                      </p>
+                      <p className="text-sm font-medium text-text-primary truncate">{item.name}</p>
+                      <p className="text-xs text-text-secondary">Cant: {item.quantity}</p>
                     </div>
-                    <p className="text-sm font-medium text-neutral-900 dark:text-neutral-100">
+                    <p className="text-sm font-medium text-text-primary">
                       {formatCurrency(item.price * item.quantity)}
                     </p>
                   </div>
                 ))}
               </div>
 
-              <div className="border-t border-neutral-100 dark:border-neutral-800 pt-4 space-y-2">
+              <div className="border-t border-neutral-200 dark:border-neutral-800 pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-neutral-600 dark:text-neutral-400">Subtotal</span>
-                  <span className="font-medium text-neutral-900 dark:text-neutral-100">
+                  <span className="text-text-secondary">Subtotal</span>
+                  <span className="font-medium text-text-primary">
                     {formatCurrency(totalPrice())}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-neutral-600 dark:text-neutral-400">Envío</span>
+                  <span className="text-text-secondary">Envío</span>
                   <span
                     className={
                       shippingCost === 0
                         ? 'text-success font-medium'
-                        : 'font-medium text-neutral-900 dark:text-neutral-100'
+                        : 'font-medium text-text-primary'
                     }
                   >
                     {shippingCost === 0 ? 'Gratis' : formatCurrency(shippingCost)}
                   </span>
                 </div>
-                <div className="flex justify-between items-center pt-2 border-t border-neutral-100 dark:border-neutral-800">
-                  <span className="font-bold text-lg text-neutral-900 dark:text-neutral-100">
-                    Total
-                  </span>
+                <div className="flex justify-between items-center pt-2 border-t border-neutral-200 dark:border-neutral-800">
+                  <span className="font-bold text-lg text-text-primary">Total</span>
                   <span className="font-bold text-lg text-primary">{formatCurrency(total)}</span>
                 </div>
               </div>

@@ -129,41 +129,41 @@ export function Home() {
       {/* Features */}
       <section className="container mx-auto px-4 -mt-20 relative z-30">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-neutral-100">
+          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-text-primary">
               <Package className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-neutral-100">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
                 Envíos Globales
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-text-secondary leading-relaxed">
                 Llevamos el estilo urbano a cualquier rincón del mundo.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-neutral-100">
+          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-text-primary">
               <Shield className="w-8 h-8" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-neutral-100">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
                 Compra Segura
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-text-secondary leading-relaxed">
                 Tu seguridad es nuestra prioridad. Pagos 100% encriptados.
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-4 p-8 bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-neutral-100 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
-            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-black dark:text-neutral-100">
+          <div className="flex items-start gap-4 p-8 bg-background-surface rounded-2xl shadow-xl border border-neutral-200 dark:border-neutral-800 hover:-translate-y-1 transition-transform duration-300">
+            <div className="p-4 bg-neutral-100 dark:bg-neutral-800 rounded-xl text-text-primary">
               <Clock className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-display font-bold text-xl mb-2 text-neutral-900 dark:text-neutral-100">
+              <h3 className="font-display font-bold text-xl mb-2 text-text-primary">
                 Soporte 24/7
               </h3>
-              <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">
+              <p className="text-text-secondary leading-relaxed">
                 Equipo de atención al cliente listo para ayudarte siempre.
               </p>
             </div>
@@ -175,10 +175,10 @@ export function Home() {
       <section className="container mx-auto px-4 py-20 space-y-12">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-neutral-200 dark:border-neutral-800 pb-8">
           <div className="space-y-4">
-            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-neutral-900 dark:text-neutral-100">
+            <h2 className="text-4xl md:text-5xl font-display font-black tracking-tight text-text-primary">
               Destacados
             </h2>
-            <p className="text-lg text-neutral-900 dark:text-neutral-100 max-w-md">
+            <p className="text-lg text-text-secondary max-w-md">
               Descubre las piezas más codiciadas de nuestra colección esta semana.
             </p>
           </div>

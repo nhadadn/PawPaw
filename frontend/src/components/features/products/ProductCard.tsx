@@ -133,12 +133,12 @@ const ProductCardComponent = ({
     <>
       <div
         className={cn(
-          'group relative flex flex-col h-full bg-white dark:bg-[#141414] overflow-hidden rounded-xl border border-transparent hover:border-neutral-200 dark:hover:border-neutral-800 transition-all duration-300 hover:shadow-xl',
+          'group relative flex flex-col h-full bg-background-surface overflow-hidden rounded-xl border border-transparent hover:border-neutral-200 dark:hover:border-neutral-800 transition-all duration-300 hover:shadow-xl',
           className
         )}
       >
         {/* Image Container */}
-        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 dark:bg-neutral-800">
+        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
           {/* Badges */}
           <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
             {product.isNew && (
@@ -228,7 +228,7 @@ const ProductCardComponent = ({
             to={`/products/${product.id}`}
             className="group-hover:text-accent transition-colors"
           >
-            <h3 className="font-display font-bold text-neutral-900 dark:text-neutral-100 text-lg leading-tight line-clamp-2">
+            <h3 className="font-display font-bold text-text-primary text-lg leading-tight line-clamp-2">
               {product.name}
             </h3>
           </Link>
@@ -236,16 +236,11 @@ const ProductCardComponent = ({
           {/* Price & Rating Row */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span
-                className={cn(
-                  'font-bold text-lg',
-                  hasDiscount ? 'text-accent' : 'text-neutral-900 dark:text-neutral-100'
-                )}
-              >
+              <span className={cn('font-bold text-lg', 'text-accent-500')}>
                 {formatCurrency(displayPrice)}
               </span>
               {hasDiscount && (
-                <span className="text-xs text-neutral-600 dark:text-neutral-400 line-through font-medium">
+                <span className="text-xs text-text-secondary line-through font-medium">
                   {formatCurrency(product.price)}
                 </span>
               )}

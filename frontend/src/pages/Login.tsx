@@ -22,9 +22,9 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-white dark:bg-black">
-      <div className="w-full max-w-md p-8 bg-white dark:bg-neutral-900 rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-800">
-        <h1 className="text-3xl font-bold font-display text-center mb-8 text-black dark:text-neutral-100">
+    <div className="min-h-[80vh] flex items-center justify-center bg-background-surface">
+      <div className="w-full max-w-md p-8 bg-background-surface rounded-xl shadow-lg border border-neutral-200 dark:border-neutral-800">
+        <h1 className="text-3xl font-bold font-display text-center mb-8 text-text-primary">
           Iniciar Sesión
         </h1>
 

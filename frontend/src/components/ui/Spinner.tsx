@@ -16,7 +16,7 @@ export function Spinner({ className, size = 'md', variant = 'primary' }: Spinner
 
   const variants = {
     primary: 'text-primary',
-    secondary: 'text-neutral-500',
+    secondary: 'text-text-secondary',
     accent: 'text-accent',
     white: 'text-white',
   };

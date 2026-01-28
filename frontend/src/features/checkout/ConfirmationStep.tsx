@@ -47,30 +47,28 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-success/10 mb-4 shadow-sm">
           <CheckCircle2 className="w-10 h-10 text-success" />
         </div>
-        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 dark:text-neutral-100 tracking-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-text-primary tracking-tight">
           ¡Gracias por tu compra!
         </h1>
-        <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto">
+        <p className="text-lg text-text-secondary max-w-lg mx-auto">
           Tu orden ha sido confirmada y está siendo procesada. Hemos enviado los detalles a tu
           correo electrónico.
         </p>
       </div>
 
       <Card className="overflow-hidden border-neutral-200 dark:border-neutral-800 shadow-xl shadow-neutral-100/50 dark:shadow-neutral-900/50">
-        <div className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-100 dark:border-neutral-800 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="bg-background-surface border-b border-neutral-100 dark:border-neutral-800 p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
           <div className="text-center sm:text-left">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400 uppercase tracking-wider font-semibold">
+            <p className="text-sm text-text-secondary uppercase tracking-wider font-semibold">
               Número de Orden
             </p>
-            <p className="text-xl font-mono font-bold text-neutral-900 dark:text-neutral-100">
-              #{order.order_number}
-            </p>
+            <p className="text-xl font-mono font-bold text-text-primary">#{order.order_number}</p>
           </div>
           <Button
             variant="outline"
             size="sm"
             onClick={handleTrackOrder}
-            className="gap-2 hover:bg-white dark:hover:bg-neutral-800 transition-colors"
+            className="gap-2 hover:bg-background-surface transition-colors"
           >
             <Package className="w-4 h-4" />
             Rastrear Pedido
@@ -80,17 +78,15 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
         <CardContent className="p-6 md:p-8 space-y-8">
           {/* Delivery Estimate */}
           <div className="flex flex-col md:flex-row gap-6 items-center md:items-start p-6 bg-blue-50/50 dark:bg-blue-900/20 rounded-xl border border-blue-100/50 dark:border-blue-800/30">
-            <div className="p-4 bg-white dark:bg-blue-900/40 rounded-full shadow-sm text-primary">
+            <div className="p-4 bg-background-surface rounded-full shadow-sm text-primary">
               <Truck className="w-8 h-8" />
             </div>
             <div className="text-center md:text-left space-y-1 flex-1">
-              <p className="font-semibold text-neutral-900 dark:text-neutral-100 text-lg">
-                Estimación de Entrega
-              </p>
-              <p className="text-neutral-600 dark:text-neutral-300 font-medium">
+              <p className="font-semibold text-text-primary text-lg">Estimación de Entrega</p>
+              <p className="text-text-secondary font-medium">
                 {formatDate(deliveryStart)} - {formatDate(deliveryEnd)}
               </p>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">
+              <p className="text-sm text-text-secondary">
                 Envío Estándar a tu dirección registrada
               </p>
             </div>
@@ -98,8 +94,8 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
 
           {/* Order Summary (Simplified) */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg flex items-center gap-2 text-neutral-900 dark:text-neutral-100">
-              <ShoppingBag className="w-5 h-5 text-neutral-500 dark:text-neutral-400" />
+            <h3 className="font-semibold text-lg flex items-center gap-2 text-text-primary">
+              <ShoppingBag className="w-5 h-5 text-text-secondary" />
               Resumen del Pedido
             </h3>
             <div className="border border-neutral-100 dark:border-neutral-800 rounded-xl overflow-hidden">
@@ -108,31 +104,29 @@ export function ConfirmationStep({ order }: ConfirmationStepProps) {
                   order.items.map((item) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between p-4 bg-white dark:bg-neutral-900 hover:bg-neutral-50/50 dark:hover:bg-neutral-800/50 transition-colors"
+                      className="flex items-center justify-between p-4 bg-background-surface hover:bg-neutral-50/50 dark:hover:bg-neutral-800/50 transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="font-medium text-neutral-900 dark:text-neutral-100">
+                        <div className="font-medium text-text-primary">
                           {item.name}{' '}
-                          <span className="text-neutral-400 dark:text-neutral-500 font-normal text-sm ml-1">
+                          <span className="text-text-secondary font-normal text-sm ml-1">
                             x{item.quantity}
                           </span>
                         </div>
                       </div>
-                      <div className="font-medium text-neutral-900 dark:text-neutral-100">
+                      <div className="font-medium text-text-primary">
                         ${((item.price * item.quantity) / 100).toFixed(2)}
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="p-4 text-center text-neutral-500 dark:text-neutral-400">
+                  <div className="p-4 text-center text-text-secondary">
                     No hay detalles de artículos disponibles para esta orden.
                   </div>
                 )}
               </div>
-              <div className="p-4 bg-neutral-50 dark:bg-neutral-900 flex justify-between items-center border-t border-neutral-100 dark:border-neutral-800">
-                <span className="font-bold text-neutral-900 dark:text-neutral-100">
-                  Total Pagado
-                </span>
+              <div className="p-4 bg-background-surface flex justify-between items-center border-t border-neutral-100 dark:border-neutral-800">
+                <span className="font-bold text-text-primary">Total Pagado</span>
                 <span className="font-bold text-xl text-primary">
                   {formatCurrency(order.total_amount || 0)}
                 </span>

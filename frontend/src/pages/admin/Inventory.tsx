@@ -3,6 +3,7 @@ import { useAdminInventory } from '../../hooks/useAdminInventory';
 import { DataTable, type Column } from '../../components/admin/DataTable';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
+import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Alert } from '../../components/ui/Alert';
 import type { AdminInventoryItem } from '../../types/admin';
@@ -10,12 +11,7 @@ import { Edit } from 'lucide-react';
 import { getImageUrl } from '../../lib/utils';
 
 export function AdminInventory() {
-  const {
-    inventory,
-    isLoading,
-    error,
-    updateStock,
-  } = useAdminInventory();
+  const { inventory, isLoading, error, updateStock } = useAdminInventory();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<AdminInventoryItem | null>(null);
@@ -38,8 +34,8 @@ export function AdminInventory() {
             />
           </div>
           <div className="ml-4">
-            <div className="font-medium text-gray-900">{item.name}</div>
-            <div className="text-gray-500 text-xs">{item.sku || 'Sin SKU'}</div>
+            <div className="font-medium text-text-primary">{item.name}</div>
+            <div className="text-text-secondary text-xs">{item.sku || 'Sin SKU'}</div>
           </div>
         </div>
       ),
@@ -47,37 +43,31 @@ export function AdminInventory() {
     {
       header: 'Categoría',
       accessorKey: 'category',
-      cell: (item) => (typeof item.category === 'object' ? item.category?.name : item.category) || 'Sin Categoría',
+      cell: (item) =>
+        (typeof item.category === 'object' ? item.category?.name : item.category) ||
+        'Sin Categoría',
     },
     {
       header: 'Stock Actual',
       accessorKey: 'stock',
       cell: (item) => (
-        <span
-          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-            item.stock > 10
-              ? 'bg-green-100 text-green-800'
-              : item.stock > 0
-              ? 'bg-yellow-100 text-yellow-800'
-              : 'bg-red-100 text-red-800'
-          }`}
-        >
+        <Badge variant={item.stock > 10 ? 'success' : item.stock > 0 ? 'warning' : 'destructive'}>
           {item.stock}
-        </span>
+        </Badge>
       ),
     },
     {
-        header: 'Acciones',
-        cell: (item) => (
-            <button
-                onClick={() => handleEditStock(item)}
-                className="text-indigo-600 hover:text-indigo-900"
-                title="Actualizar Stock"
-            >
-                <Edit className="h-5 w-5" />
-            </button>
-        )
-    }
+      header: 'Acciones',
+      cell: (item) => (
+        <button
+          onClick={() => handleEditStock(item)}
+          className="text-primary hover:text-primary-dark"
+          title="Actualizar Stock"
+        >
+          <Edit className="h-5 w-5" />
+        </button>
+      ),
+    },
   ];
 
   const handleEditStock = (item: AdminInventoryItem) => {
@@ -107,49 +97,46 @@ export function AdminInventory() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900">Inventario</h1>
+        <h1 className="text-2xl font-semibold text-text-primary">Inventario</h1>
       </div>
 
       {error && <Alert variant="error">{error}</Alert>}
 
-      <DataTable
-        columns={columns}
-        data={inventory}
-        isLoading={isLoading}
-      />
+      <DataTable columns={columns} data={inventory} isLoading={isLoading} />
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Actualizar Stock"
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Actualizar Stock">
         {actionError && (
           <div className="mb-4">
             <Alert variant="error">{actionError}</Alert>
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <p className="text-sm text-gray-500 mb-2">
-                    Producto: <span className="font-medium text-gray-900">{selectedItem?.name}</span>
-                </p>
-            </div>
-            <Input 
-                label="Nuevo Stock"
-                type="number"
-                value={newStock}
-                onChange={(e) => setNewStock(e.target.value)}
-                min={0}
-                required
-            />
-            <div className="flex justify-end space-x-2 pt-4">
-                <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)} disabled={isLoading}>
-                    Cancelar
-                </Button>
-                <Button type="submit" isLoading={isLoading}>
-                    Guardar
-                </Button>
-            </div>
+          <div>
+            <p className="text-sm text-text-secondary mb-2">
+              Producto: <span className="font-medium text-text-primary">{selectedItem?.name}</span>
+            </p>
+          </div>
+          <Input
+            label="Nuevo Stock"
+            type="number"
+            value={newStock}
+            onChange={(e) => setNewStock(e.target.value)}
+            min={0}
+            required
+          />
+          <div className="flex justify-end space-x-2 pt-4">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setIsModalOpen(false)}
+              disabled={isLoading}
+            >
+              Cancelar
+            </Button>
+            <Button type="submit" isLoading={isLoading}>
+              Guardar
+            </Button>
+          </div>
         </form>
       </Modal>
     </div>

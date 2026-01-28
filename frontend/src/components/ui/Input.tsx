@@ -15,10 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-2">
         {label && (
-          <label
-            htmlFor={inputId}
-            className="text-sm font-bold text-neutral-900 dark:text-neutral-100 block"
-          >
+          <label htmlFor={inputId} className="text-sm font-bold text-text-primary block">
             {label}
           </label>
         )}
@@ -27,10 +24,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             type={type}
             className={cn(
-              'flex h-12 w-full rounded-lg border-2 border-neutral-500 bg-white px-4 py-2 text-base text-neutral-900 ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-600 placeholder:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors dark:bg-neutral-900 dark:border-neutral-300 dark:text-neutral-100 dark:ring-offset-neutral-950 dark:placeholder:text-neutral-100 dark:placeholder:opacity-100 dark:focus-visible:ring-white',
+              'flex h-12 w-full rounded-lg border-2 border-neutral-200 bg-background-surface px-4 py-2 text-base text-text-primary ring-offset-background-surface file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-text-tertiary placeholder:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors dark:border-neutral-800 dark:bg-neutral-900 dark:ring-offset-neutral-950',
               error
                 ? 'border-error focus-visible:ring-error'
-                : 'focus:border-black dark:focus:border-white',
+                : 'focus:border-primary dark:focus:border-primary',
               icon ? 'pl-11' : '',
               className
             )}
@@ -38,7 +35,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary pointer-events-none">
               {icon}
             </div>
           )}

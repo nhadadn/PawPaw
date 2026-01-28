@@ -1,13 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Package,
-  Tags,
-  ShoppingBag,
-  Users,
-  Box,
-  LogOut,
-} from 'lucide-react';
+import { LayoutDashboard, Package, Tags, ShoppingBag, Users, Box, LogOut } from 'lucide-react';
 import { useAdminStore } from '../../stores/adminStore';
 import { cn } from '../../lib/utils';
 
@@ -24,9 +16,9 @@ export function AdminSidebar() {
   const logout = useAdminStore((state) => state.logout);
 
   return (
-    <div className="flex flex-col w-64 bg-gray-900 text-white min-h-screen">
-      <div className="flex items-center justify-center h-16 border-b border-gray-800">
-        <h1 className="text-xl font-bold">PawPaw Admin</h1>
+    <div className="flex flex-col w-64 bg-background-surface min-h-screen border-r border-neutral-200 dark:border-neutral-800">
+      <div className="flex items-center justify-center h-16 border-b border-neutral-200 dark:border-neutral-800">
+        <h1 className="text-xl font-bold font-display text-text-primary">PawPaw Admin</h1>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-1">
         {navigation.map((item) => (
@@ -37,8 +29,8 @@ export function AdminSidebar() {
               cn(
                 'flex items-center px-4 py-3 text-sm font-medium rounded-md transition-colors',
                 isActive
-                  ? 'bg-gray-800 text-white'
-                  : 'text-gray-400 hover:bg-gray-800 hover:text-white'
+                  ? 'bg-primary text-white'
+                  : 'text-text-secondary hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-text-primary'
               )
             }
           >
@@ -47,10 +39,10 @@ export function AdminSidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-neutral-200 dark:border-neutral-800">
         <button
           onClick={logout}
-          className="flex items-center w-full px-4 py-2 text-sm font-medium text-gray-400 rounded-md hover:bg-gray-800 hover:text-white transition-colors"
+          className="flex items-center w-full px-4 py-2 text-sm font-medium text-text-secondary rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-text-primary transition-colors"
         >
           <LogOut className="mr-3 h-5 w-5" />
           Cerrar Sesión

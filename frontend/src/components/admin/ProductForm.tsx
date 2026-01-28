@@ -176,7 +176,7 @@ export function ProductForm({
       <Input label="Nombre" name="name" value={formData.name} onChange={handleChange} required />
 
       <div className="w-full space-y-2">
-        <label htmlFor="description" className="text-sm font-bold text-neutral-700 block">
+        <label htmlFor="description" className="text-sm font-bold text-text-primary block">
           Descripción
         </label>
         <textarea
@@ -185,7 +185,7 @@ export function ProductForm({
           value={formData.description}
           onChange={handleChange}
           required
-          className="flex min-h-[80px] w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-base ring-offset-white placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary"
+          className="flex min-h-[80px] w-full rounded-lg border-2 border-neutral-200 dark:border-neutral-800 bg-background-surface px-4 py-2 text-base ring-offset-background-surface placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary text-text-primary"
         />
       </div>
 
@@ -209,7 +209,7 @@ export function ProductForm({
       </div>
 
       <div className="w-full space-y-2">
-        <label htmlFor="category" className="text-sm font-bold text-neutral-700 block">
+        <label htmlFor="category" className="text-sm font-bold text-text-primary block">
           Categoría
         </label>
         <select
@@ -218,7 +218,7 @@ export function ProductForm({
           value={formData.category}
           onChange={handleChange}
           required
-          className="flex h-10 w-full rounded-lg border-2 border-neutral-300 bg-white px-4 py-2 text-sm ring-offset-white placeholder:text-neutral-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary"
+          className="flex h-10 w-full rounded-lg border-2 border-neutral-200 dark:border-neutral-800 bg-background-surface px-4 py-2 text-sm ring-offset-background-surface placeholder:text-text-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors focus:border-primary text-text-primary"
         >
           <option value="">Selecciona una categoría</option>
           {categories.map((cat) => (
@@ -230,21 +230,21 @@ export function ProductForm({
       </div>
 
       <div>
-        <label htmlFor="images" className="block text-sm font-bold text-neutral-700 mb-2">
+        <label htmlFor="images" className="block text-sm font-bold text-text-primary mb-2">
           Imágenes
         </label>
 
         {/* Images List */}
         {images.length > 0 && (
           <div className="mb-4">
-            <p className="text-xs text-gray-500 mb-2">
+            <p className="text-xs text-text-secondary mb-2">
               Ordena las imágenes arrastrando o usando los botones:
             </p>
             <div className="flex gap-2 flex-wrap">
               {images.map((img, index) => (
                 <div
                   key={index}
-                  className="relative w-32 h-32 group border rounded-lg overflow-hidden bg-gray-50"
+                  className="relative w-32 h-32 group border rounded-lg overflow-hidden bg-neutral-50 dark:bg-neutral-900"
                 >
                   <img
                     src={img.preview}
@@ -258,7 +258,7 @@ export function ProductForm({
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                        className="bg-error text-white rounded-full p-1 hover:bg-error/90 transition-colors"
                         title="Eliminar"
                       >
                         <X size={14} />
@@ -269,7 +269,7 @@ export function ProductForm({
                         type="button"
                         onClick={() => moveImage(index, 'left')}
                         disabled={index === 0}
-                        className={`bg-white text-gray-800 rounded-full p-1 hover:bg-gray-100 transition-colors ${index === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`bg-background-surface text-text-primary border border-neutral-200 dark:border-neutral-800 rounded-full p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ${index === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         title="Mover a la izquierda"
                       >
                         <ChevronLeft size={16} />
@@ -278,7 +278,7 @@ export function ProductForm({
                         type="button"
                         onClick={() => moveImage(index, 'right')}
                         disabled={index === images.length - 1}
-                        className={`bg-white text-gray-800 rounded-full p-1 hover:bg-gray-100 transition-colors ${index === images.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`bg-background-surface text-text-primary border border-neutral-200 dark:border-neutral-800 rounded-full p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors ${index === images.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
                         title="Mover a la derecha"
                       >
                         <ChevronRight size={16} />
@@ -302,15 +302,15 @@ export function ProductForm({
           accept="image/*"
           multiple
           onChange={handleFileChange}
-          className="block w-full text-sm text-gray-500
+          className="block w-full text-sm text-text-secondary
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
-            file:bg-indigo-50 file:text-indigo-700
-            hover:file:bg-indigo-100"
+            file:bg-primary/10 file:text-primary
+            hover:file:bg-primary/20"
         />
-        {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
-        <p className="text-xs text-gray-500 mt-1">
+        {error && <p className="mt-2 text-sm text-error">{error}</p>}
+        <p className="text-xs text-text-secondary mt-1">
           Puedes seleccionar múltiples imágenes. Se añadirán al final.
         </p>
       </div>

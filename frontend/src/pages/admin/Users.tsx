@@ -9,13 +9,7 @@ import type { AdminUser } from '../../types/admin';
 import { UserCog } from 'lucide-react';
 
 export function AdminUsers() {
-  const {
-    users,
-    isLoading,
-    error,
-    updateUserRole,
-    updateUserStatus,
-  } = useAdminUsers();
+  const { users, isLoading, error, updateUserRole, updateUserStatus } = useAdminUsers();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<AdminUser | null>(null);
@@ -36,19 +30,15 @@ export function AdminUsers() {
       header: 'Usuario',
       cell: (user) => (
         <div>
-          <div className="font-medium text-gray-900">{user.name}</div>
-          <div className="text-gray-500 text-xs">{user.email}</div>
+          <div className="font-medium text-text-primary">{user.name}</div>
+          <div className="text-text-secondary text-xs">{user.email}</div>
         </div>
       ),
     },
     {
       header: 'Rol',
       accessorKey: 'role',
-      cell: (user) => (
-        <Badge variant={roleColors[user.role]}>
-          {user.role}
-        </Badge>
-      ),
+      cell: (user) => <Badge variant={roleColors[user.role]}>{user.role}</Badge>,
     },
     {
       header: 'Estado',
@@ -61,20 +51,22 @@ export function AdminUsers() {
     },
     {
       header: 'Fecha Registro',
-      cell: (user) => new Date(user.createdAt).toLocaleDateString(),
+      cell: (user) => (
+        <span className="text-text-primary">{new Date(user.createdAt).toLocaleDateString()}</span>
+      ),
     },
     {
-        header: 'Acciones',
-        cell: (user) => (
-            <button
-                onClick={() => handleManageUser(user)}
-                className="text-gray-500 hover:text-primary transition-colors"
-                title="Administrar Usuario"
-            >
-                <UserCog className="w-5 h-5" />
-            </button>
-        )
-    }
+      header: 'Acciones',
+      cell: (user) => (
+        <button
+          onClick={() => handleManageUser(user)}
+          className="text-text-secondary hover:text-primary transition-colors"
+          title="Administrar Usuario"
+        >
+          <UserCog className="w-5 h-5" />
+        </button>
+      ),
+    },
   ];
 
   const handleManageUser = (user: AdminUser) => {
@@ -116,85 +108,79 @@ export function AdminUsers() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900">Usuarios</h1>
+        <h1 className="text-2xl font-semibold text-text-primary">Usuarios</h1>
       </div>
 
       {error && <Alert variant="error">{error}</Alert>}
 
-      <DataTable
-        columns={columns}
-        data={users}
-        isLoading={isLoading}
-      />
+      <DataTable columns={columns} data={users} isLoading={isLoading} />
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Administrar Usuario"
-      >
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Administrar Usuario">
         {actionError && (
           <div className="mb-4">
             <Alert variant="error">{actionError}</Alert>
           </div>
         )}
-        
+
         {selectedUser && (
-            <div className="space-y-6">
-                <div>
-                    <h3 className="text-sm font-medium text-gray-900">Información</h3>
-                    <p className="text-sm text-gray-500">{selectedUser.name} ({selectedUser.email})</p>
-                </div>
-
-                <div>
-                    <h3 className="text-sm font-medium text-gray-900 mb-2">Rol</h3>
-                    <div className="flex gap-2">
-                        <Button 
-                            size="sm" 
-                            variant={selectedUser.role === 'admin' ? 'primary' : 'outline'}
-                            onClick={() => handleRoleChange('admin')}
-                            disabled={isLoading}
-                        >
-                            Admin
-                        </Button>
-                        <Button 
-                            size="sm" 
-                            variant={selectedUser.role === 'customer' ? 'primary' : 'outline'}
-                            onClick={() => handleRoleChange('customer')}
-                            disabled={isLoading}
-                        >
-                            Cliente
-                        </Button>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 className="text-sm font-medium text-gray-900 mb-2">Estado</h3>
-                    <div className="flex gap-2">
-                        <Button 
-                            size="sm" 
-                            variant={selectedUser.status === 'active' ? 'primary' : 'outline'}
-                            onClick={() => handleStatusChange('active')}
-                            disabled={isLoading}
-                        >
-                            Activo
-                        </Button>
-                        <Button 
-                            size="sm" 
-                            variant={selectedUser.status === 'inactive' ? 'danger' : 'outline'}
-                            onClick={() => handleStatusChange('inactive')}
-                            disabled={isLoading}
-                        >
-                            Inactivo
-                        </Button>
-                    </div>
-                </div>
-
-                <div className="flex justify-end pt-4 border-t">
-                    <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
-                        Cerrar
-                    </Button>
-                </div>
+          <div className="space-y-6">
+            <div>
+              <h3 className="text-sm font-medium text-text-primary">Información</h3>
+              <p className="text-sm text-text-secondary">
+                {selectedUser.name} ({selectedUser.email})
+              </p>
             </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-text-primary mb-2">Rol</h3>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant={selectedUser.role === 'admin' ? 'primary' : 'outline'}
+                  onClick={() => handleRoleChange('admin')}
+                  disabled={isLoading}
+                >
+                  Admin
+                </Button>
+                <Button
+                  size="sm"
+                  variant={selectedUser.role === 'customer' ? 'primary' : 'outline'}
+                  onClick={() => handleRoleChange('customer')}
+                  disabled={isLoading}
+                >
+                  Cliente
+                </Button>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-sm font-medium text-text-primary mb-2">Estado</h3>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant={selectedUser.status === 'active' ? 'primary' : 'outline'}
+                  onClick={() => handleStatusChange('active')}
+                  disabled={isLoading}
+                >
+                  Activo
+                </Button>
+                <Button
+                  size="sm"
+                  variant={selectedUser.status === 'inactive' ? 'danger' : 'outline'}
+                  onClick={() => handleStatusChange('inactive')}
+                  disabled={isLoading}
+                >
+                  Inactivo
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex justify-end pt-4 border-t">
+              <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
+                Cerrar
+              </Button>
+            </div>
+          </div>
         )}
       </Modal>
     </div>

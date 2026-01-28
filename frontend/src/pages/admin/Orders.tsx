@@ -10,18 +10,16 @@ import { Badge } from '../../components/ui/Badge';
 import { Eye } from 'lucide-react';
 
 export function AdminOrders() {
-  const {
-    orders,
-    isLoading,
-    error,
-    updateOrderStatus,
-  } = useAdminOrders();
+  const { orders, isLoading, error, updateOrderStatus } = useAdminOrders();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<AdminOrder | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
-  const statusColors: Record<AdminOrder['status'], 'default' | 'secondary' | 'destructive' | 'outline'> = {
+  const statusColors: Record<
+    AdminOrder['status'],
+    'default' | 'secondary' | 'destructive' | 'outline'
+  > = {
     pending: 'secondary',
     processing: 'outline',
     shipped: 'default',
@@ -33,16 +31,16 @@ export function AdminOrders() {
     {
       header: 'ID Orden',
       accessorKey: 'id',
-      cell: (order) => <span className="font-mono text-xs">{order.id.slice(0, 8)}...</span>
+      cell: (order) => <span className="font-mono text-xs">{order.id.slice(0, 8)}...</span>,
     },
     {
       header: 'Cliente',
       cell: (order) => (
         <div>
-            <div className="font-medium">{order.user?.name || 'Invitado'}</div>
-            <div className="text-xs text-gray-500">{order.user?.email}</div>
+          <div className="font-medium text-text-primary">{order.user?.name || 'Invitado'}</div>
+          <div className="text-xs text-text-secondary">{order.user?.email}</div>
         </div>
-      )
+      ),
     },
     {
       header: 'Fecha',
@@ -55,24 +53,20 @@ export function AdminOrders() {
     {
       header: 'Estado',
       accessorKey: 'status',
-      cell: (order) => (
-        <Badge variant={statusColors[order.status]}>
-          {order.status}
-        </Badge>
-      ),
+      cell: (order) => <Badge variant={statusColors[order.status]}>{order.status}</Badge>,
     },
     {
-        header: 'Acciones',
-        cell: (order) => (
-            <button
-                onClick={() => handleViewDetails(order)}
-                className="text-gray-500 hover:text-primary transition-colors"
-                title="Ver Detalles"
-            >
-                <Eye className="w-5 h-5" />
-            </button>
-        )
-    }
+      header: 'Acciones',
+      cell: (order) => (
+        <button
+          onClick={() => handleViewDetails(order)}
+          className="text-text-secondary hover:text-primary transition-colors"
+          title="Ver Detalles"
+        >
+          <Eye className="w-5 h-5" />
+        </button>
+      ),
+    },
   ];
 
   const handleViewDetails = (order: AdminOrder) => {
@@ -101,16 +95,12 @@ export function AdminOrders() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-gray-900">Órdenes</h1>
+        <h1 className="text-2xl font-semibold text-text-primary">Órdenes</h1>
       </div>
 
       {error && <Alert variant="error">{error}</Alert>}
 
-      <DataTable
-        columns={columns}
-        data={orders}
-        isLoading={isLoading}
-      />
+      <DataTable columns={columns} data={orders} isLoading={isLoading} />
 
       <Modal
         isOpen={isModalOpen}
