@@ -40,6 +40,7 @@ export function ProductForm({
   });
 
   const [images, setImages] = useState<ImageItem[]>([]);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -101,6 +102,23 @@ export function ProductForm({
     }
   };
 
+  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setError(null);
+    if (file) {
+      if (!file.type.startsWith('video/')) {
+        setError('Solo se permiten archivos de video (MP4, WebM)');
+        return;
+      }
+      if (file.size > 50 * 1024 * 1024) {
+        setError('El video no debe superar los 50MB');
+        return;
+      }
+      setVideoFile(file);
+    }
+    e.target.value = '';
+  };
+
   const removeImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
@@ -147,6 +165,11 @@ export function ProductForm({
         formDataToSend.append('images', img.file);
       }
     });
+
+    // 3. Append video if present
+    if (videoFile) {
+      formDataToSend.append('video', videoFile);
+    }
 
     // 2. Create imageOrder map
     const imageOrder = images.map((img) => {
@@ -313,6 +336,25 @@ export function ProductForm({
         <p className="text-xs text-text-secondary mt-1">
           Puedes seleccionar múltiples imágenes. Se añadirán al final.
         </p>
+      </div>
+
+      <div>
+        <label htmlFor="video" className="block text-sm font-bold text-text-primary mb-2">
+          Video (opcional)
+        </label>
+        <input
+          id="video"
+          type="file"
+          accept="video/*"
+          onChange={handleVideoChange}
+          className="block w-full text-sm text-text-secondary
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-primary/10 file:text-primary
+            hover:file:bg-primary/20"
+        />
+        {videoFile && <p className="mt-2 text-xs text-text-secondary">{videoFile.name}</p>}
       </div>
 
       <div className="flex justify-end space-x-3 pt-4 border-t mt-6">

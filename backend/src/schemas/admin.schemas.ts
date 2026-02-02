@@ -6,6 +6,7 @@ export const ProductSchema = z.object({
   slug: z.string().min(1).optional(), // Optional because it can be auto-generated
   description: z.string().optional(),
   imageUrl: z.string().optional(),
+  videoUrl: z.string().optional(),
   categoryId: z.number().int().positive().optional(),
   priceCents: z.number().int().nonnegative(),
   currency: z.string().default('MXN'),

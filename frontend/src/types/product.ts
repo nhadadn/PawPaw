@@ -25,6 +25,7 @@ export interface Product {
   description: string;
   price: number;
   imageUrl: string;
+  videoUrl?: string | null;
   images?: ProductImage[];
   category: string;
   variants: ProductVariant[];

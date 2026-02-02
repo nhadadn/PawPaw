@@ -109,8 +109,22 @@ router.get('/products/:id', AdminController.getProduct);
  *       201:
  *         description: Product created
  */
-router.post('/products', upload.array('images', 10), AdminController.createProduct);
-router.put('/products/:id', upload.array('images', 10), AdminController.updateProduct);
+router.post(
+  '/products',
+  upload.fields([
+    { name: 'images', maxCount: 10 },
+    { name: 'video', maxCount: 1 },
+  ]),
+  AdminController.createProduct
+);
+router.put(
+  '/products/:id',
+  upload.fields([
+    { name: 'images', maxCount: 10 },
+    { name: 'video', maxCount: 1 },
+  ]),
+  AdminController.updateProduct
+);
 router.delete('/products/:id', AdminController.deleteProduct);
 
 /**

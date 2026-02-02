@@ -47,6 +47,7 @@ export class ShopService {
           productId: v.productId.toString(),
         })) || [],
       imageUrl, // Ensure imageUrl is populated
+      videoUrl: (product as any).videoUrl || undefined,
       images,
     };
   }

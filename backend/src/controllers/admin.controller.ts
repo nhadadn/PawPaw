@@ -51,14 +51,30 @@ export class AdminController {
       logger.info('CreateProduct Payload:', req.body); // Log incoming payload
       logger.info('CreateProduct Files:', req.files);
 
-      const files = req.files as Express.Multer.File[];
-      // Updated to point to /uploads/products/
-      const imageUrls = files?.map((f) => `/uploads/products/${f.filename}`) || [];
+      let imageUrls: string[] = [];
+      let videoUrl: string | undefined;
+
+      if (Array.isArray(req.files)) {
+        imageUrls = req.files?.map((f) => `/uploads/products/${f.filename}`) || [];
+      } else if (req.files && typeof req.files === 'object') {
+        const filesMap = req.files as Record<string, Express.Multer.File[]>;
+        const imagesFiles = filesMap['images'] || [];
+        const videoFiles = filesMap['video'] || [];
+        imageUrls = imagesFiles.map((f) => `/uploads/products/${f.filename}`);
+        if (videoFiles.length > 0) {
+          videoUrl = `/uploads/products/${videoFiles[0].filename}`;
+        }
+      }
+
       logger.info('CreateProduct ImageUrls:', imageUrls);
+      logger.info('CreateProduct VideoUrl:', videoUrl);
 
       if (imageUrls.length > 0) {
         req.body.imageUrl = imageUrls[0]; // Set main image for backward compatibility
         req.body.images = imageUrls;
+      }
+      if (videoUrl) {
+        req.body.videoUrl = videoUrl;
       }
 
       // Convert FormData strings to correct types
@@ -81,7 +97,11 @@ export class AdminController {
       const slug = data.slug || req.body.slug || '';
 
       // images is not in schema yet but we pass it
-      const product = await service.createProduct({ ...data, slug, images: imageUrls });
+      const product = await service.createProduct({
+        ...(data as any),
+        slug,
+        images: imageUrls,
+      } as any);
       res.status(201).json(product);
     } catch (error: unknown) {
       logger.error('CreateProduct Error:', error); // Log error
@@ -113,12 +133,26 @@ export class AdminController {
 
       logger.info('UpdateProduct Body:', JSON.stringify(req.body));
 
-      const files = req.files as Express.Multer.File[];
-      // Updated to point to /uploads/products/
-      const imageUrls = files?.map((f) => `/uploads/products/${f.filename}`) || [];
+      let imageUrls: string[] = [];
+      let videoUrl: string | undefined;
+
+      if (Array.isArray(req.files)) {
+        imageUrls = req.files?.map((f) => `/uploads/products/${f.filename}`) || [];
+      } else if (req.files && typeof req.files === 'object') {
+        const filesMap = req.files as Record<string, Express.Multer.File[]>;
+        const imagesFiles = filesMap['images'] || [];
+        const videoFiles = filesMap['video'] || [];
+        imageUrls = imagesFiles.map((f) => `/uploads/products/${f.filename}`);
+        if (videoFiles.length > 0) {
+          videoUrl = `/uploads/products/${videoFiles[0].filename}`;
+        }
+      }
 
       if (imageUrls.length > 0) {
         req.body.imageUrl = imageUrls[0]; // Update main image if new ones provided
+      }
+      if (videoUrl) {
+        req.body.videoUrl = videoUrl;
       }
 
       // Convert FormData strings to correct types
@@ -145,6 +179,9 @@ export class AdminController {
 
       if (imageUrls.length > 0) {
         updateData.newImages = imageUrls;
+      }
+      if (videoUrl) {
+        updateData.videoUrl = videoUrl;
       }
       if (imageOrder.length > 0) {
         updateData.imageOrder = imageOrder;
