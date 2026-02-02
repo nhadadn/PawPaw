@@ -100,8 +100,15 @@ export function ProductDetail() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-        {/* Gallery */}
-        <ProductGallery images={images} />
+        {/* Media */}
+        <div className="space-y-6">
+          {product.videoUrl && (
+            <video controls className="w-full rounded-lg bg-black" preload="metadata">
+              <source src={getImageUrl(product.videoUrl)} type="video/mp4" />
+            </video>
+          )}
+          <ProductGallery images={images} />
+        </div>
 
         {/* Info */}
         <div className="space-y-8">
@@ -153,8 +160,8 @@ export function ProductDetail() {
                       onClick={() => setSelectedSize(size)}
                       className={`w-14 h-14 rounded-xl flex items-center justify-center font-bold text-sm border-2 transition-all duration-200 ${
                         selectedSize === size
-                          ? 'border-neutral-900 bg-neutral-900 text-white dark:border-neutral-100 dark:bg-neutral-100 dark:text-neutral-900 shadow-lg transform scale-105'
-                          : 'border-neutral-200 dark:border-neutral-700 text-text-secondary hover:border-neutral-900 dark:hover:border-neutral-100'
+                          ? 'border-neutral-900 bg-neutral-900 text-white dark:border-accent dark:bg-accent dark:text-on-light shadow-lg transform scale-105'
+                          : 'border-neutral-200 dark:border-neutral-700 text-text-secondary hover:border-neutral-900 dark:hover:border-accent dark:hover:text-accent'
                       }`}
                     >
                       {size}

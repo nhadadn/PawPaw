@@ -182,9 +182,14 @@
   }
   
   .dark .text-black {
-    color: rgb(var(--color-text-secondary));
-  }
-}
+     color: rgb(var(--color-text-secondary));
+   }
+
+   /* Exception for text on light/gold backgrounds in dark mode */
+   .dark .text-on-light {
+     color: rgb(23 25 35) !important; /* neutral-900 */
+   }
+ }
 
 @layer utilities {
   .auto-contrast {

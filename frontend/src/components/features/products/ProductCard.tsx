@@ -277,10 +277,10 @@ const ProductCardComponent = ({
                   key={size}
                   onClick={(e) => handleSizeSelect(e, size)}
                   className={cn(
-                    'w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border transition-all',
+                    'w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border-2 transition-all duration-200',
                     selectedSize === size
-                      ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white'
-                      : 'border-neutral-200 text-neutral-700 hover:border-neutral-400 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-400 dark:hover:text-white dark:hover:border-neutral-600'
+                      ? 'bg-black text-white border-black dark:bg-accent dark:text-on-light dark:border-accent shadow-md scale-105'
+                      : 'border-neutral-200 text-neutral-600 hover:border-black hover:text-black dark:border-neutral-700 dark:text-text-secondary dark:hover:border-accent dark:hover:text-accent bg-transparent'
                   )}
                 >
                   {size}
