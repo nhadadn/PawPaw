@@ -324,7 +324,7 @@ export class CheckoutService {
     } else {
       try {
         paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-      } catch (e) {
+      } catch (_e) {
         throw new CheckoutError('PAYMENT_FAILED', 'Invalid Payment Intent');
       }
 

@@ -8,7 +8,7 @@ module.exports = {
     const cwd = process.cwd();
     const backendDir = path.join(cwd, 'backend');
     const eslintCmd = path.join(backendDir, 'node_modules', '.bin', 'eslint.cmd');
-    const configPath = path.join(backendDir, '.eslintrc.json');
+    const configPath = path.join(backendDir, 'eslint.config.mjs');
     
     return [
       `"${eslintCmd}" --config "${configPath}" --fix ${filenames.map(f => `"${f}"`).join(' ')}`,

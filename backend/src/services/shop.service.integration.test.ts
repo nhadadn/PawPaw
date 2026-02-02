@@ -55,6 +55,7 @@ describe('ShopService Integration (Cache)', () => {
         slug: 'test-product',
         description: null,
         imageUrl: null,
+        videoUrl: null,
         categoryId: BigInt(2),
         priceCents: 1000,
         currency: 'MXN',

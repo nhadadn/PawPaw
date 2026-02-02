@@ -131,8 +131,7 @@ class MockRedis {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  on(_event: string, _callback: Function) {
+  on(_event: string, _callback: (...args: any[]) => void) {
     // No-op
     return this;
   }
@@ -150,34 +149,28 @@ class MockRedis {
   }
 
   // Set operations (Mock implementation)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async sadd(_key: string, ..._members: string[]): Promise<number> {
     // Basic mock: just return 1 to simulate success
     return 1;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async srem(_key: string, ..._members: string[]): Promise<number> {
     return 1;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async smembers(_key: string): Promise<string[]> {
     return [];
   }
 
   // Sorted Set operations (Mock implementation)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async zadd(_key: string, ..._args: (string | number)[]): Promise<number | string> {
     return 1;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async zrem(_key: string, ..._members: string[]): Promise<number> {
     return 1;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async zrangebyscore(
     _key: string,
     _min: number | string,

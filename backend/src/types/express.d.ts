@@ -14,7 +14,7 @@ declare global {
 
     // Ensure Multer namespace exists within Express for backward compatibility
     namespace Multer {
-      interface File extends multer.File {}
+      type File = multer.File;
     }
   }
 }

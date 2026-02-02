@@ -139,7 +139,6 @@ describe('Admin API Integration', () => {
         .send(productData);
 
       if (res.status !== 201) {
-        // eslint-disable-next-line no-console
         console.error('Create Product Failed:', JSON.stringify(res.body, null, 2));
       }
 

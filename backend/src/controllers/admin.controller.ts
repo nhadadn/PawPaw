@@ -41,7 +41,7 @@ export class AdminController {
       if (!product)
         return res.status(404).json({ error: 'NOT_FOUND', message: 'Product not found' });
       res.json(product);
-    } catch (error) {
+    } catch (_error) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch product' });
     }
   }
@@ -212,7 +212,7 @@ export class AdminController {
       const id = parseInt(req.params.id);
       await service.deleteProduct(id);
       res.status(204).send();
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to delete product' });
     }
   }
@@ -222,7 +222,7 @@ export class AdminController {
     try {
       const categories = await service.getCategories();
       res.json(categories);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res
         .status(500)
         .json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch categories' });
@@ -331,7 +331,7 @@ export class AdminController {
       const offset = (page - 1) * limit;
       const orders = await service.getOrders(limit, offset);
       res.json(orders);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch orders' });
     }
   }
@@ -342,7 +342,7 @@ export class AdminController {
       const order = await service.getOrder(id);
       if (!order) return res.status(404).json({ error: 'NOT_FOUND', message: 'Order not found' });
       res.json(order);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch order' });
     }
   }
@@ -388,7 +388,7 @@ export class AdminController {
       const offset = (page - 1) * limit;
       const users = await service.getUsers(limit, offset);
       res.json(users);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch users' });
     }
   }
@@ -414,7 +414,7 @@ export class AdminController {
     try {
       const stats = await service.getDashboardStats();
       res.json(stats);
-    } catch (error: unknown) {
+    } catch (_error: unknown) {
       res.status(500).json({ error: 'INTERNAL_SERVER_ERROR', message: 'Failed to fetch stats' });
     }
   }

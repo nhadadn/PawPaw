@@ -32,6 +32,7 @@ jest.mock('../repositories/shop.repository', () => ({
         id: BigInt(1),
         name: 'Image Test Product',
         imageUrl: '/uploads/integration-test.jpg',
+        videoUrl: null,
         images: [
           { id: BigInt(1), productId: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 },
         ],
@@ -41,8 +42,9 @@ jest.mock('../repositories/shop.repository', () => ({
     findProductById: jest.fn().mockResolvedValue({
       id: BigInt(1),
       name: 'Image Test Product',
-      imageUrl: '/uploads/integration-test.jpg',
-      images: [
+        imageUrl: '/uploads/integration-test.jpg',
+        videoUrl: null,
+        images: [
         { id: BigInt(1), productId: BigInt(1), url: '/uploads/integration-test.jpg', order: 0 },
       ],
       variants: [],
